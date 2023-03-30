@@ -24,7 +24,7 @@ val Typography = Typography(
     h1 = TextStyle(
         fontFamily = AbrilFatface,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
+        fontSize = 65.sp,
         letterSpacing = 1.15.sp
     ),
     subtitle1 = TextStyle(
@@ -49,7 +49,6 @@ val Typography = Typography(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
-        letterSpacing = 1.sp,
-        textAlign = TextAlign.Center
+        letterSpacing = 1.sp
     )
 )
