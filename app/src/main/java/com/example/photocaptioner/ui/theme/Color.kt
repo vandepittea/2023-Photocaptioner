@@ -2,7 +2,15 @@ package com.example.photocaptioner.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+//light and dark theme
+val White = Color(0xFFFFFFFF)
+
+//light theme
+val LightBlue = Color(0xFF66B2FF)
+val LightGreyLightVersion = Color(0xFFF5F5F5)
+
+
+//dark theme
+val DarkBlue = Color(0xFF1A237E)
+val Black = Color(0xFF212121)
+val LightGreyDarkVersion = Color(0xFF424242)
