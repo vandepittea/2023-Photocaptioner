@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.data.Datasource
@@ -32,7 +33,7 @@ fun AlbumsScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "My Albums",
+                text = stringResource(id = R.string.my_albums),
                 style = MaterialTheme.typography.subtitle1,
                 modifier = Modifier
                         .padding(end = 8.dp)

@@ -9,6 +9,7 @@
 
     //titles
     <string name="recently_edited" translatable="false">Recently Edited</string>
+    <string name="my_albums" translatable="false">My Albums</string>
 
     //icons
     <string name="album_icon" translatable="false">Album Icon</string>
