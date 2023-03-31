@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -40,44 +39,58 @@ fun Button(@StringRes text: Int, onClick: () -> Unit) {
 @Composable
 fun ButtonWithIcon(
     imageVector: ImageVector,
-    contentDescription: String,
-    text: String,
+    contentDescription: Int,
+    text: Int,
     onClick: () -> Unit
 ) {
-    Column(
-        modifier = Modifier.clickable(onClick = onClick),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
+            .height(60.dp),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
     ) {
-        Icon(
-            imageVector = imageVector,
-            contentDescription = contentDescription,
-            tint = MaterialTheme.colors.onPrimary,
-            modifier = Modifier.size(48.dp)
-        )
-        Text(
-            text = text,
-            style = MaterialTheme.typography.button,
-            modifier = Modifier.padding(top = 8.dp)
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = imageVector,
+                contentDescription = stringResource(id = contentDescription),
+                tint = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.size(50.dp)
+            )
+            Text(
+                text = stringResource(id = text),
+                style = MaterialTheme.typography.button
+            )
+        }
     }
 }
 
 @Composable
-fun ImageWithDescription(image: Int, description: String) {
+fun ImageWithDescription(
+    image: Int,
+    description: Int
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = image),
-            contentDescription = description,
+            contentDescription = stringResource(id = description),
             modifier = Modifier
-                .size(120.dp)
-                .clip(RoundedCornerShape(4.dp))
+                .clip(RoundedCornerShape(8.dp))
         )
         Text(
-            text = description,
-            style = MaterialTheme.typography.body2,
+            text = stringResource(id = description),
+            style = MaterialTheme.typography.caption,
             modifier = Modifier.padding(top = 8.dp)
         )
     }
