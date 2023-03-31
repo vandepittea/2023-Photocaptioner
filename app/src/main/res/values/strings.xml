@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name" translatable="false">Photo Captioner</string>
 
+    //buttons
     <string name="get_started" translatable="false">Get Started</string>
+    <string name="take_picture" translatable="false">Take Picture</string>
+    <string name="albums" translatable="false">Albums</string>
+
+    //titles
+    <string name="recently_edited" translatable="false">Recently Edited</string>
+
+    //icons
+    <string name="album_icon" translatable="false">Album Icon</string>
+    <string name="camera_icon" translatable="false">Camera Icon</string>
+
+    //demo data
+    <string name="paris_france_picture" translatable="false">Eiffel Tower in Paris</string>
 </resources>
