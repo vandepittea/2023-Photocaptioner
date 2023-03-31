@@ -15,4 +15,8 @@
 
     //demo data
     <string name="paris_france_picture" translatable="false">Eiffel Tower in Paris</string>
+    <string name="beach_day_picture" translatable="false">Beach day</string>
+    <string name="budapest_hungary_picture" translatable="false">Budapest Hungary</string>
+    <string name="ljubljana_slovenia_picture" translatable="false">Ljubljana Slovenia</string>
+    <string name="school_project_picture" translatable="false">School project</string>
 </resources>

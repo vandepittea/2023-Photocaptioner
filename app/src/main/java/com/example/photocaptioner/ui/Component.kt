@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
@@ -92,12 +94,14 @@ fun ImageWithDescription(
             painter = painterResource(id = image),
             contentDescription = stringResource(id = description),
             modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
                 .clip(RoundedCornerShape(8.dp))
         )
         Text(
             text = stringResource(id = description),
             style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
         )
     }
 }
