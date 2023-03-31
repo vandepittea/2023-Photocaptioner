@@ -1,8 +1,8 @@
 package com.example.photocaptioner.ui
 
+import androidx.compose.ui.Alignment
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -53,11 +52,12 @@ fun ButtonWithIcon(
             .fillMaxWidth()
             .padding(horizontal = 32.dp)
             .height(60.dp),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        contentPadding = PaddingValues(start = 0.dp, end = 0.dp)
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Icon(
                 imageVector = imageVector,
@@ -65,9 +65,15 @@ fun ButtonWithIcon(
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.size(50.dp)
             )
+
             Text(
                 text = stringResource(id = text),
-                style = MaterialTheme.typography.button
+                style = MaterialTheme.typography.button,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .align(Alignment.CenterVertically)
             )
         }
     }
