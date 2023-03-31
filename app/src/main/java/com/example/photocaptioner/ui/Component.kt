@@ -11,9 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
@@ -104,4 +103,24 @@ fun ImageWithDescription(
             modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
         )
     }
+}
+
+@Composable
+fun ButtonIcon(
+    onClick: () -> Unit,
+    icon: ImageVector,
+    description: Int,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        content = {
+            Icon(
+                imageVector = icon,
+                contentDescription = stringResource(id = description),
+                tint = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.size(44.dp)
+            )
+        }
+    )
 }

@@ -5,6 +5,7 @@
     <string name="get_started" translatable="false">Get Started</string>
     <string name="take_picture" translatable="false">Take Picture</string>
     <string name="albums" translatable="false">Albums</string>
+    <string name="add_album" translatable="false">Add album</string>
 
     //titles
     <string name="recently_edited" translatable="false">Recently Edited</string>
