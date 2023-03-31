@@ -29,7 +29,7 @@ val Typography = Typography(
     subtitle1 = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp,
+        fontSize = 50.sp,
         letterSpacing = 0.15.sp
     ),
     body1 = TextStyle(
@@ -41,7 +41,7 @@ val Typography = Typography(
     caption = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Normal,
-        fontSize = 10.sp,
+        fontSize = 20.sp,
         letterSpacing = 0.4.sp
     ),
     button = TextStyle(
