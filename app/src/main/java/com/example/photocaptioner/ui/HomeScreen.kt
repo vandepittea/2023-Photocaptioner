@@ -4,11 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,18 +30,16 @@ fun HomeScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ButtonWithIcon(
-                imageVector = Icons.Filled.AddCircle,
+                painter = painterResource(id = R.drawable.baseline_camera_alt_24),
                 contentDescription = R.string.camera_icon,
-                text = R.string.take_picture,
-                onClick = {}
-            )
+                text = R.string.take_picture
+            ) {}
 
             ButtonWithIcon(
-                imageVector = Icons.Filled.AddCircle,
+                painter = painterResource(id = R.drawable.baseline_photo_album_24),
                 contentDescription = R.string.album_icon,
-                text = R.string.albums,
-                onClick = {}
-            )
+                text = R.string.albums
+            ) {}
         }
 
         Column(

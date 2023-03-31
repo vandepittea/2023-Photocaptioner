@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
@@ -37,7 +37,7 @@ fun Button(@StringRes text: Int, onClick: () -> Unit) {
 
 @Composable
 fun ButtonWithIcon(
-    imageVector: ImageVector,
+    painter: Painter,
     contentDescription: Int,
     text: Int,
     onClick: () -> Unit
@@ -60,7 +60,7 @@ fun ButtonWithIcon(
             modifier = Modifier.fillMaxWidth()
         ) {
             Icon(
-                imageVector = imageVector,
+                painter = painter,
                 contentDescription = stringResource(id = contentDescription),
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.size(50.dp)
