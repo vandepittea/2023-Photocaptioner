@@ -61,3 +61,24 @@ fun ButtonWithIcon(
         )
     }
 }
+
+@Composable
+fun ImageWithDescription(image: Int, description: String) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = description,
+            modifier = Modifier
+                .size(120.dp)
+                .clip(RoundedCornerShape(4.dp))
+        )
+        Text(
+            text = description,
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+    }
+}
