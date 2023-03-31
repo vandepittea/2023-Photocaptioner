@@ -26,14 +26,6 @@ fun StartUpScreen(@StringRes title: Int, image: Int) {
             .background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-        )
-
         Text(
             text = stringResource(title),
             style = MaterialTheme.typography.h1,
@@ -41,6 +33,14 @@ fun StartUpScreen(@StringRes title: Int, image: Int) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)
+        )
+
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
         )
 
         Button(
