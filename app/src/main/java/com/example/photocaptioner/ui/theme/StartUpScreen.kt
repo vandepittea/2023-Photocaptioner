@@ -15,9 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import com.example.photocaptioner.R
 
 @Composable
@@ -67,8 +65,10 @@ fun StartUpScreen(@StringRes title: Int, image: Int) {
 @Preview
 @Composable
 fun StartUpScreenPreview(){
-    StartUpScreen(
-        R.string.app_name,
-        R.drawable.camera
-    )
+    PhotoCaptionerTheme {
+        StartUpScreen(
+            R.string.app_name,
+            R.drawable.camera
+        )
+    }
 }

@@ -47,7 +47,7 @@ val Typography = Typography(
     button = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
+        fontSize = 30.sp,
         letterSpacing = 1.sp
     )
 )
