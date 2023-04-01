@@ -1,14 +1,13 @@
 package com.example.photocaptioner.model
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.photocaptioner.R
-import java.util.*
+import java.time.LocalDate
 
 data class Album(
     @StringRes val name: Int,
     @StringRes val description: Int,
-    val lastChanged: Date,
+    val lastChanged: LocalDate,
     val photos: List<Photo>
 ) {
     val imagePlaceholder: Int
