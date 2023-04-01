@@ -57,8 +57,8 @@ fun HomeScreen() {
             )
 
             ImageWithDescription(
-                image = R.drawable.paris_france,
-                description = R.string.paris_france_picture
+                image = R.drawable.album1_picture1,
+                description = R.string.album1_picture1_description
             )
         }
     }

@@ -147,8 +147,7 @@ fun ImageWithDescriptionAndDate(
 fun ButtonIcon(
     onClick: () -> Unit,
     icon: ImageVector,
-    description: Int,
-    modifier: Modifier = Modifier
+    description: Int
 ) {
     IconButton(
         onClick = onClick,
