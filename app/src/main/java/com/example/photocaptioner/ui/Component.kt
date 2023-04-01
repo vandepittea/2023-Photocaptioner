@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import java.time.LocalDate
 
 @Composable
 fun Button(@StringRes text: Int, onClick: () -> Unit) {
@@ -110,14 +111,14 @@ fun ImageWithDescription(
 
 @Composable
 fun ImageWithDescriptionAndDate(
-    image: Painter,
+    image: Int,
     description: Int,
-    date: Int,
+    date: LocalDate,
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
         Image(
-            painter = image,
+            painter = painterResource(id = image),
             contentDescription = stringResource(id = description),
             modifier = Modifier
                 .height(240.dp)
