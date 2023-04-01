@@ -13,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
@@ -95,12 +96,49 @@ fun ImageWithDescription(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
         )
+
         Text(
             text = stringResource(id = description),
             style = MaterialTheme.typography.caption,
             modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+        )
+    }
+}
+
+@Composable
+fun ImageWithDescriptionAndDate(
+    image: Painter,
+    description: Int,
+    date: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier) {
+        Image(
+            painter = image,
+            contentDescription = stringResource(id = description),
+            modifier = Modifier
+                .height(240.dp)
+                .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+
+        Text(
+            text = stringResource(id = description),
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier
+                .padding(top = 8.dp, bottom = 20.dp)
+        )
+
+        Text(
+            text = "Last updated: $date",
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier
+                .padding(start = 16.dp, bottom = 16.dp)
+                .fillMaxWidth()
         )
     }
 }
