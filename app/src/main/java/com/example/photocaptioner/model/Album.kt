@@ -1,8 +1,18 @@
 package com.example.photocaptioner.model
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.example.photocaptioner.R
+import java.util.*
 
 data class Album(
-    @DrawableRes val image: Int,
-    val name: Int
-)
+    @StringRes val name: Int,
+    @StringRes val description: Int,
+    val lastChanged: Date,
+    val photos: List<Photo>
+) {
+    val imagePlaceholder: Int
+        get() = photos.lastOrNull()?.image ?: R.drawable.default_album_placeholder
+}
+
+
