@@ -53,7 +53,7 @@ fun AlbumsScreen() {
         ) {
             items(Datasource.albumList) { album ->
                 ImageWithDescription(
-                    image = album.image,
+                    image = album.imagePlaceholder,
                     description = album.name
                 )
             }
