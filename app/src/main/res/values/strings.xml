@@ -16,9 +16,21 @@
     <string name="camera_icon" translatable="false">Camera Icon</string>
 
     //demo data
-    <string name="paris_france_picture" translatable="false">Eiffel Tower in Paris</string>
-    <string name="beach_day_picture" translatable="false">Beach day</string>
-    <string name="budapest_hungary_picture" translatable="false">Budapest Hungary</string>
-    <string name="ljubljana_slovenia_picture" translatable="false">Ljubljana Slovenia</string>
-    <string name="school_project_picture" translatable="false">School project</string>
+    <string name="album1_title" translatable="false">My trip to France</string>
+    <string name="album2_title" translatable="false">Budapest travel memories</string>
+    <string name="album3_title" translatable="false">Ljubljana</string>
+    <string name="album4_title" translatable="false">School projects</string>
+    <string name="album5_title" translatable="false">Chilln at the beach</string>
+
+    <string name="album1_description" translatable="false">Best trip ever!</string>
+    <string name="album2_description" translatable="false">My first trip to Budapest and all experiences, interesting places I visited and all the other nice things</string>
+    <string name="album3_description" translatable="false">Ljubljana the best</string>
+    <string name="album4_description" translatable="false">Here you can see all my fantastic group projects</string>
+    <string name="album5_description" translatable="false">Chilln at the beach, what do you want more?</string>
+
+    <string name="album1_picture1_description" translatable="false">Eiffel Tower in Paris</string>
+    <string name="album2_picture1_description" translatable="false">Beach day</string>
+    <string name="album3_picture1_description" translatable="false">Budapest Hungary</string>
+    <string name="album4_picture1_description" translatable="false">Ljubljana Slovenia</string>
+    <string name="album5_picture1_description" translatable="false">School project</string>
 </resources>
