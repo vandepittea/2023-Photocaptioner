@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import java.text.DateFormat
 import java.time.LocalDate
 
 @Composable
@@ -116,7 +117,7 @@ fun ImageWithDescriptionAndDate(
     date: LocalDate,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
+    Column(modifier = modifier) {
         Image(
             painter = painterResource(id = image),
             contentDescription = stringResource(id = description),
@@ -129,17 +130,15 @@ fun ImageWithDescriptionAndDate(
 
         Text(
             text = stringResource(id = description),
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .padding(top = 8.dp, bottom = 20.dp)
+                .padding(top = 8.dp, bottom = 4.dp)
         )
 
         Text(
-            text = "Last updated: $date",
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier
-                .padding(start = 16.dp, bottom = 16.dp)
-                .fillMaxWidth()
+            text = "Created on $date",
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(bottom = 8.dp)
         )
     }
 }
