@@ -35,7 +35,13 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
+        fontSize = 25.sp,
+        letterSpacing = 0.5.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = NunitoSans,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
         letterSpacing = 0.5.sp
     ),
     caption = TextStyle(
