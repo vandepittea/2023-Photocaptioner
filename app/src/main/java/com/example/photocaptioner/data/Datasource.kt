@@ -13,6 +13,8 @@ object Datasource {
             R.string.album1_description,
             LocalDate.of(2022, 4, 13),
             listOf(
+                Photo(R.drawable.album1_picture1, R.string.album1_picture1_description,LocalDate.of(2022, 4, 14)),
+                Photo(R.drawable.album1_picture1, R.string.album1_picture1_description,LocalDate.of(2022, 4, 14)),
                 Photo(R.drawable.album1_picture1, R.string.album1_picture1_description,LocalDate.of(2022, 4, 14))
             )
         ),
