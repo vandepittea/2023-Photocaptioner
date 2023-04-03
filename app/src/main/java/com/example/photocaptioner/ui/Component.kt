@@ -10,12 +10,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import com.example.photocaptioner.R
 import java.text.DateFormat
 import java.time.LocalDate
 
@@ -135,11 +137,23 @@ fun ImageWithDescriptionAndDate(
                 .padding(top = 8.dp, bottom = 4.dp)
         )
 
-        Text(
-            text = "Created on $date",
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_access_time_filled_24),
+                contentDescription = stringResource(id = R.string.time_icon),
+                tint = colors.onBackground
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = "$date",
+                style = MaterialTheme.typography.body2
+            )
+        }
     }
 }
 
