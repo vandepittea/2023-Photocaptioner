@@ -136,8 +136,8 @@ fun AlbumDetailScreen(album: Album) {
                     onClick = {}
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.baseline_download_24),
-                        contentDescription = stringResource(R.string.edit_icon),
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = stringResource(R.string.add_icon),
                         tint = colors.onBackground,
                         modifier = Modifier.size(45.dp)
                     )
@@ -147,8 +147,8 @@ fun AlbumDetailScreen(album: Album) {
                     onClick = {}
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.baseline_download_24),
-                        contentDescription = stringResource(R.string.edit_icon),
+                        painter = painterResource(id = R.drawable.baseline_share_24),
+                        contentDescription = stringResource(R.string.share_icon),
                         tint = colors.onBackground,
                         modifier = Modifier.size(45.dp)
                     )

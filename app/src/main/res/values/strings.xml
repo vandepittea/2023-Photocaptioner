@@ -18,6 +18,8 @@
     <string name="description_icon" translatable="false">Description Icon</string>
     <string name="edit_icon" translatable="false">Edit Icon</string>
     <string name="download_icon" translatable="false">Download Icon</string>
+    <string name="add_icon" translatable="false">Add Icon</string>
+    <string name="share_icon" translatable="false">Share Icon</string>
 
     //demo data
     <string name="album1_title" translatable="false">My trip to France</string>
