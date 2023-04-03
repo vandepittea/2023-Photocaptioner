@@ -88,8 +88,7 @@ fun RecentEdits(
     )
 }
 
-
-    @Preview
+@Preview
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
