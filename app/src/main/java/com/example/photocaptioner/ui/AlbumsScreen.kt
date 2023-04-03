@@ -17,46 +17,70 @@ import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Album
 
 @Composable
-fun AlbumsScreen() {
+fun AlbumsScreen(
+    albumList: List<Album>,
+    title: String,
+    onAddClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(id = R.string.my_albums),
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier
-                        .padding(end = 8.dp)
-            )
+        TopBar(
+            title = title,
+            onAddClick = onAddClick
+        )
 
-            ButtonIcon(
-                onClick = {},
-                icon = Icons.Default.Add,
-                description = R.string.add_album
-            )
-        }
+        AlbumList(albumList = albumList)
+    }
+}
 
-        LazyColumn(
+
+@Composable
+fun TopBar(
+    title: String,
+    onAddClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
-                .fillMaxSize(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
-        ) {
-            items(Datasource.albumList) { album ->
-                ImageWithDescription(
-                    image = album.imagePlaceholder,
-                    description = album.name
-                )
-            }
+                .padding(end = 8.dp)
+        )
+
+        ButtonIcon(
+            onClick = onAddClick,
+            icon = Icons.Default.Add,
+            description = R.string.add_album
+        )
+    }
+}
+
+@Composable
+fun AlbumList(
+    albumList: List<Album>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+    ) {
+        items(albumList) { album ->
+            ImageWithDescription(
+                image = album.imagePlaceholder,
+                description = album.name
+            )
         }
     }
 }
@@ -65,6 +89,6 @@ fun AlbumsScreen() {
 @Composable
 fun AlbumsScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumsScreen()
+        AlbumsScreen(Datasource.albumList, stringResource(id = R.string.my_albums), {})
     }
 }
