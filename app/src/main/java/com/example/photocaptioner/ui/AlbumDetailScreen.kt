@@ -3,8 +3,11 @@ package com.example.photocaptioner.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,11 +29,49 @@ fun AlbumDetailScreen(album: Album) {
             .background(MaterialTheme.colors.background)
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text(
-            text = stringResource(id = album.name),
-            style = MaterialTheme.typography.subtitle1,
-            color = colors.onBackground,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(id = album.name),
+                style = MaterialTheme.typography.subtitle1,
+                color = colors.onBackground,
+                modifier = Modifier
+                    .padding(bottom = 4.dp)
+                    .weight(6f)
+            )
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_download_24),
+                        contentDescription = stringResource(R.string.edit_icon),
+                        tint = colors.onBackground,
+                        modifier = Modifier.
+                                size(45.dp)
+                    )
+                }
+
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = stringResource(R.string.edit_icon),
+                        tint = colors.onBackground,
+                        modifier = Modifier.
+                            size(45.dp)
+                    )
+                }
+            }
+        }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
