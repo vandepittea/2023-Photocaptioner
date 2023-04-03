@@ -50,10 +50,6 @@ fun StartUpScreen(@StringRes title: Int, image: Int, onButtonClick: () -> Unit) 
 @Composable
 fun StartUpScreenPreview(){
     PhotoCaptionerTheme {
-        StartUpScreen(
-            title = R.string.app_name,
-            image = R.drawable.camera,
-            onButtonClick = {}
-        )
+        StartUpScreen(R.string.app_name, R.drawable.camera, onButtonClick = {})
     }
 }
