@@ -3,6 +3,7 @@ package com.example.photocaptioner.ui
 import androidx.compose.ui.Alignment
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
@@ -11,14 +12,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.example.photocaptioner.R
-import java.text.DateFormat
 import java.time.LocalDate
 
 @Composable
@@ -88,7 +93,7 @@ fun ButtonWithIcon(
 @Composable
 fun ImageWithDescription(
     image: Int,
-    description: Int
+    description: Int?
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -96,7 +101,7 @@ fun ImageWithDescription(
     ) {
         Image(
             painter = painterResource(id = image),
-            contentDescription = stringResource(id = description),
+            contentDescription = if (description != null) stringResource(id = description) else null,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
@@ -104,12 +109,35 @@ fun ImageWithDescription(
             contentScale = ContentScale.Crop
         )
 
-        Text(
-            text = stringResource(id = description),
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
-        )
+        if (description != null) {
+            Text(
+                text = stringResource(id = description),
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+            )
+        }
     }
+}
+
+/* TODO */
+@Composable
+fun ImageFromUrl(url: String, description: String?) {
+    val painter: Painter = rememberImagePainter(
+        data = url,
+        builder = {
+            crossfade(true)
+        }
+    )
+
+    Image(
+        painter = painter,
+        contentDescription = description,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
+            .clip(RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop
+    )
 }
 
 @Composable
@@ -174,4 +202,45 @@ fun ButtonIcon(
             )
         }
     )
+}
+
+@Composable
+fun SearchBox(onValueChange: (String) -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp, vertical = 2.dp)
+            .padding(horizontal = 12.dp, vertical = 12.dp)
+    ) {
+        TextField(
+            value = "",
+            onValueChange = onValueChange,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colors.surface,
+                    shape = RoundedCornerShape(8.dp)
+                ),
+            placeholder = {
+                Text(
+                    text = "Search",
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = stringResource(R.string.search_icon),
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                )
+            },
+            textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            )
+        )
+    }
 }
