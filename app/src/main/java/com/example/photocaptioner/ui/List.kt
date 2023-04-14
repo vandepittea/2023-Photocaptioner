@@ -10,7 +10,10 @@ import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.model.Photo
 
 @Composable
-fun AlternatingColumn(items: List<Photo>) {
+fun AlternatingColumn(
+    items: List<Photo>,
+    onPhotoClick: (Photo) -> Unit
+) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -30,7 +33,7 @@ fun AlternatingColumn(items: List<Photo>) {
                         description = item.description,
                         date = item.createdAt,
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { }
+                        onClick = { onPhotoClick(item) }
                     )
                 }
 

@@ -108,7 +108,8 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                 onDownloadClick = { /*TODO*/ },
                 onEditClick = { /*TODO*/ },
                 onAddClick = { /*TODO*/ },
-                onShareClick = { /*TODO*/ }
+                onShareClick = { /*TODO*/ },
+                onPhotoClick = { /*TODO*/ }
             )
         }
     }
