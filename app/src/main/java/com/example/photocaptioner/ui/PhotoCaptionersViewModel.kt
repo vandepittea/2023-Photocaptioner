@@ -25,6 +25,14 @@ class PhotoCaptionersViewModel: ViewModel() {
             )
         }
     }
+
+    fun selectAlbum(album: Album) {
+        _uiState.update {
+            it.copy(
+                selectedAlbum = album
+            )
+        }
+    }
 }
 
 data class PhotoCaptionerUiState(
@@ -32,4 +40,5 @@ data class PhotoCaptionerUiState(
     @StringRes val currentScreen: Int = R.string.start,
     val recentlyEdited: Photo = Datasource.defaultPhoto,
     val albumList: List<Album> = emptyList(),
+    val selectedAlbum: Album = Datasource.defaultAlbum
 )

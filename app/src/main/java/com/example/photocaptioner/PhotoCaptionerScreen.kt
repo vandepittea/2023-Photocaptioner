@@ -15,10 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.photocaptioner.ui.AlbumsScreen
-import com.example.photocaptioner.ui.HomeScreen
-import com.example.photocaptioner.ui.PhotoCaptionersViewModel
-import com.example.photocaptioner.ui.StartUpScreen
+import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 enum class PhotoCaptionerScreen {
@@ -96,12 +93,22 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                 albumList = uiState.albumList,
                 onAddClick = {},
                 onAlbumClick = {
+                    viewModel.selectAlbum(it)
                     viewModel.navigateToScreen(
                         newScreen = it.name,
                         canNavigateBack = true
                     )
                     navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
                 }
+            )
+        }
+        composable(PhotoCaptionerScreen.AlbumDetail.name) {
+            AlbumDetailScreen(
+                album = uiState.selectedAlbum,
+                onDownloadClick = { /*TODO*/ },
+                onEditClick = { /*TODO*/ },
+                onAddClick = { /*TODO*/ },
+                onShareClick = { /*TODO*/ }
             )
         }
     }
