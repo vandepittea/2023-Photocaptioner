@@ -7,10 +7,13 @@
     <string name="albums" translatable="false">Albums</string>
     <string name="add_album" translatable="false">Add album</string>
     <string name="upload" translatable="false">Upload</string>
+    <string name="back_button">Back</string>
 
     //titles
     <string name="recently_edited" translatable="false">Recently Edited</string>
     <string name="my_albums" translatable="false">My Albums</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="start" translatable="false">Start</string>
 
     //icons
     <string name="album_icon" translatable="false">Album Icon</string>

@@ -18,7 +18,6 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
-    recentEditText: Int,
     recentEditImage: Int,
     recentEditImageDescription: Int
 ) {
@@ -45,7 +44,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecentEdits(recentEditText, recentEditImage, recentEditImageDescription)
+            RecentEdits(recentEditImage, recentEditImageDescription)
         }
     }
 }
@@ -72,12 +71,11 @@ fun Buttons(
 
 @Composable
 fun RecentEdits(
-    text: Int,
     image: Int,
     imageDescription: Int
 ) {
     Text(
-        text = stringResource(id = text),
+        text = stringResource(id = R.string.recently_edited),
         style = MaterialTheme.typography.subtitle1,
         modifier = Modifier.padding(vertical = 16.dp, horizontal = 32.dp)
     )
@@ -92,6 +90,6 @@ fun RecentEdits(
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, R.string.recently_edited, R.drawable.album1_picture1, R.string.album1_picture1_description)
+        HomeScreen({}, {}, R.drawable.album1_picture1, R.string.album1_picture1_description)
     }
 }
