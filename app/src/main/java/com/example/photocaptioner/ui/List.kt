@@ -33,7 +33,8 @@ fun AlternatingColumn(items: List<Photo>) {
                         image = item.image,
                         description = item.description,
                         date = item.createdAt,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { }
                     )
                 }
 

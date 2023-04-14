@@ -22,8 +22,8 @@ import com.example.photocaptioner.model.Album
 @Composable
 fun AlbumsScreen(
     albumList: List<Album>,
-    title: String,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onAlbumClick: (Album) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -31,18 +31,19 @@ fun AlbumsScreen(
             .background(MaterialTheme.colors.background)
     ) {
         TopBar(
-            title = title,
             onAddClick = onAddClick
         )
 
-        AlbumList(albumList = albumList)
+        AlbumList(
+            albumList = albumList,
+            onAlbumClick = onAlbumClick
+        )
     }
 }
 
 
 @Composable
 fun TopBar(
-    title: String,
     onAddClick: () -> Unit
 ) {
     Row(
@@ -53,7 +54,7 @@ fun TopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = title,
+            text = stringResource(id = R.string.my_albums),
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
                 .padding(end = 8.dp)
@@ -69,7 +70,8 @@ fun TopBar(
 
 @Composable
 fun AlbumList(
-    albumList: List<Album>
+    albumList: List<Album>,
+    onAlbumClick: (Album) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -79,7 +81,8 @@ fun AlbumList(
         items(albumList) { album ->
             ImageWithDescription(
                 image = album.imagePlaceholder,
-                description = album.name
+                description = album.name,
+                onClick = { onAlbumClick(album) }
             )
         }
     }
@@ -89,6 +92,6 @@ fun AlbumList(
 @Composable
 fun AlbumsScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumsScreen(Datasource.getAlbums(), stringResource(id = R.string.my_albums), {})
+        AlbumsScreen(Datasource.getAlbums(), {}, {})
     }
 }

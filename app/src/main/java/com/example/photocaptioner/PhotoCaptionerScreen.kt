@@ -1,7 +1,6 @@
 package com.example.photocaptioner
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.photocaptioner.ui.AlbumsScreen
 import com.example.photocaptioner.ui.HomeScreen
 import com.example.photocaptioner.ui.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.StartUpScreen
@@ -62,47 +62,47 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
     val viewModel: PhotoCaptionersViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
 
-    Scaffold(
-        topBar = {
-            if (currentScreen != PhotoCaptionerScreen.Start) {
-                PhotoCaptionersAppTopBar(
-                    currentScreen = uiState.selectedScreen,
-                    canNavigateBack = uiState.canNavigateBack,
-                    navigateUp = { navController.navigateUp() },
-                    modifier = modifier
-                )
-            }
+    NavHost(
+        navController = navController,
+        startDestination = PhotoCaptionerScreen.Start.name,
+        modifier = modifier
+    ) {
+        composable(PhotoCaptionerScreen.Start.name) {
+            StartUpScreen(
+                onButtonClick = {
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.home,
+                        canNavigateBack = false
+                    )
+                    navController.navigate(PhotoCaptionerScreen.Home.name)
+                }
+            )
         }
-    ) {innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = PhotoCaptionerScreen.Start.name,
-            modifier = modifier.padding(innerPadding)
-        ) {
-            composable(PhotoCaptionerScreen.Start.name) {
-                StartUpScreen(
-                    onButtonClick = {
-                        viewModel.navigateToScreen(
-                            screen = R.string.home,
-                            canNavigateBack = false
-                        )
-                        navController.navigate(PhotoCaptionerScreen.Home.name)
-                    }
-                )
-            }
-            composable(PhotoCaptionerScreen.Home.name) {
-                HomeScreen(
-                    onTakePictureClick = {},
-                    onAlbumsClick = {
-                        viewModel.navigateToScreen(
-                            screen = R.string.albums,
-                            canNavigateBack = true
-                        )
-                        navController.navigate(PhotoCaptionerScreen.Albums.name)
-                    },
-                    recentlyEdited = uiState.recentlyEdited
-                )
-            }
+        composable(PhotoCaptionerScreen.Home.name) {
+            HomeScreen(
+                onTakePictureClick = {},
+                onAlbumsClick = {
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.my_albums,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.Albums.name)
+                },
+                recentlyEdited = uiState.recentlyEdited
+            )
+        }
+        composable(PhotoCaptionerScreen.Albums.name) {
+            AlbumsScreen(
+                albumList = uiState.albumList,
+                onAddClick = {},
+                onAlbumClick = {
+                    viewModel.navigateToScreen(
+                        newScreen = it.name,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
+                }
+            )
         }
     }
 }

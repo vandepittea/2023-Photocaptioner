@@ -82,7 +82,8 @@ fun RecentEdits(
 
     ImageWithDescription(
         image = photo.image,
-        description = photo.description
+        description = photo.description,
+        onClick = {}
     )
 }
 

@@ -90,31 +90,38 @@ fun ButtonWithIcon(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescription(
     image: Int,
-    description: Int?
+    description: Int?,
+    onClick: () -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Card(
+        elevation = 2.dp,
+        onClick = onClick
     ) {
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = if (description != null) stringResource(id = description) else null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
-        )
-
-        if (description != null) {
-            Text(
-                text = stringResource(id = description),
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = if (description != null) stringResource(id = description) else null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
             )
+
+            if (description != null) {
+                Text(
+                    text = stringResource(id = description),
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+                )
+            }
         }
     }
 }
@@ -140,47 +147,55 @@ fun ImageFromUrl(url: String, description: String?) {
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescriptionAndDate(
     image: Int,
     description: Int,
     date: LocalDate,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = stringResource(id = description),
-            modifier = Modifier
-                .height(240.dp)
-                .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
-        )
-
-        Text(
-            text = stringResource(id = description),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier
-                .padding(top = 8.dp, bottom = 4.dp)
-        )
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_access_time_filled_24),
-                contentDescription = stringResource(id = R.string.time_icon),
-                tint = colors.onBackground
+    Card(
+        elevation = 2.dp,
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Column {
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = stringResource(id = description),
+                modifier = Modifier
+                    .height(240.dp)
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
             )
-
-            Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "$date",
-                style = MaterialTheme.typography.body2
+                text = stringResource(id = description),
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier
+                    .padding(top = 8.dp, bottom = 4.dp)
             )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_access_time_filled_24),
+                    contentDescription = stringResource(id = R.string.time_icon),
+                    tint = colors.onBackground
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "$date",
+                    style = MaterialTheme.typography.body2
+                )
+            }
         }
     }
 }
