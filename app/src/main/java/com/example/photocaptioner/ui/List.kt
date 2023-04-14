@@ -17,14 +17,10 @@ fun AlternatingColumn(items: List<Photo>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         itemsIndexed(items) { index, item ->
-            val row = row(index, 2)
-            val col = column(index, 2)
-            val isEvenRow = row % 2 == 0
-            val isCol0 = col == 0
-            val isCol1 = col == 1
+            val isEvenRow = index % 2 == 0
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (isEvenRow && isCol0 || !isEvenRow && isCol1) {
+                if (isEvenRow) {
                     Spacer(Modifier.weight(1f))
                 }
 
@@ -38,18 +34,10 @@ fun AlternatingColumn(items: List<Photo>) {
                     )
                 }
 
-                if (isEvenRow && isCol1 || !isEvenRow && isCol0) {
+                if (!isEvenRow) {
                     Spacer(Modifier.weight(1f))
                 }
             }
         }
     }
-}
-
-fun row(index: Int, columns: Int): Int {
-    return index / columns
-}
-
-fun column(index: Int, columns: Int): Int {
-    return index % columns
 }
