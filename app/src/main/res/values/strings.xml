@@ -14,6 +14,7 @@
     <string name="my_albums" translatable="false">My Albums</string>
     <string name="home" translatable="false">Home</string>
     <string name="start" translatable="false">Start</string>
+    <string name="upload_pictures" translatable="false">Upload Pictures</string>
 
     //icons
     <string name="album_icon" translatable="false">Album Icon</string>

@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,9 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun StartUpScreen(onButtonClick: () -> Unit) {
+    BackHandler(
+        onBack = {}
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()

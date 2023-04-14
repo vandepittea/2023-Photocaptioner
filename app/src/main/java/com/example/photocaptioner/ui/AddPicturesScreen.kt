@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,6 +11,7 @@ import com.example.photocaptioner.model.MapsPhoto
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -21,11 +21,10 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun AddPicturesScreen(
-    imagesList: List<MapsPhoto>,
     onImageSelected: (MapsPhoto) -> Unit,
-    onSearchQueryChange: (String) -> Unit,
     onUploadButtonClick: () -> Unit,
 ) {
+    var showList by remember { mutableStateOf(false)}
     Box(
         Modifier
             .fillMaxSize()
@@ -35,9 +34,13 @@ fun AddPicturesScreen(
             Modifier
                 .fillMaxSize()
         ) {
-            SearchBox(onValueChange = onSearchQueryChange)
+            SearchBox(
+                onValueChange = {
+                    showList = true;
+                }
+            )
 
-            PicturesList(imagesList = imagesList, onCheckChange = onImageSelected)
+            PicturesList(imagesList = if (showList) defaultImagesList else emptyList(), onCheckChange = onImageSelected)
         }
 
         Column(
@@ -97,7 +100,7 @@ fun UploadButton(onClick: () -> Unit) {
 }
 
 /* TODO */
-val imagesList = listOf(
+val defaultImagesList = listOf(
     MapsPhoto("https://picsum.photos/200/300"),
     MapsPhoto("https://picsum.photos/seed/picsum/200/300"),
     MapsPhoto("https://picsum.photos/id/237/200/300"),
@@ -109,9 +112,8 @@ val imagesList = listOf(
 @Composable
 fun AddPicturesScreenPreview(){
     PhotoCaptionerTheme {
-        AddPicturesScreen(imagesList = imagesList,
+        AddPicturesScreen(
             onImageSelected = {},
-            onSearchQueryChange = {},
             onUploadButtonClick = {})
     }
 }

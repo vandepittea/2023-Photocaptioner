@@ -107,9 +107,21 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                 album = uiState.selectedAlbum,
                 onDownloadClick = { /*TODO*/ },
                 onEditClick = { /*TODO*/ },
-                onAddClick = { /*TODO*/ },
+                onAddClick = {
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.upload_pictures,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.AddPictures.name)
+                },
                 onShareClick = { /*TODO*/ },
                 onPhotoClick = { /*TODO*/ }
+            )
+        }
+        composable(PhotoCaptionerScreen.AddPictures.name) {
+            AddPicturesScreen(
+                onImageSelected = { /*TODO*/ },
+                onUploadButtonClick = { /*TODO*/ }
             )
         }
     }
