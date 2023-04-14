@@ -3,6 +3,8 @@ package com.example.photocaptioner.ui
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.example.photocaptioner.R
+import com.example.photocaptioner.data.Datasource
+import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,5 +26,6 @@ class PhotoCaptionersViewModel: ViewModel() {
 
 data class PhotoCaptionerUiState(
     val canNavigateBack: Boolean = false,
-    @StringRes val selectedScreen: Int = R.string.start
+    @StringRes val selectedScreen: Int = R.string.start,
+    val recentlyEdited: Photo = Datasource.defaultPhoto
 )

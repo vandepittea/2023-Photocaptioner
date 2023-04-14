@@ -221,6 +221,6 @@ fun AlbumFooter(
 @Composable
 fun AlbumDetailScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumDetailScreen(Datasource.albumList[0], {}, {}, {}, {})
+        AlbumDetailScreen(Datasource.defaultAlbum, {}, {}, {}, {})
     }
 }

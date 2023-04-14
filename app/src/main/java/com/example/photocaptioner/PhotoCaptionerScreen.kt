@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.photocaptioner.ui.HomeScreen
 import com.example.photocaptioner.ui.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.StartUpScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -63,12 +64,14 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
 
     Scaffold(
         topBar = {
-            PhotoCaptionersAppTopBar(
-                currentScreen = uiState.selectedScreen,
-                canNavigateBack = uiState.canNavigateBack,
-                navigateUp = { navController.navigateUp() },
-                modifier = modifier
-            )
+            if (currentScreen != PhotoCaptionerScreen.Start) {
+                PhotoCaptionersAppTopBar(
+                    currentScreen = uiState.selectedScreen,
+                    canNavigateBack = uiState.canNavigateBack,
+                    navigateUp = { navController.navigateUp() },
+                    modifier = modifier
+                )
+            }
         }
     ) {innerPadding ->
         NavHost(
@@ -85,6 +88,19 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                         )
                         navController.navigate(PhotoCaptionerScreen.Home.name)
                     }
+                )
+            }
+            composable(PhotoCaptionerScreen.Home.name) {
+                HomeScreen(
+                    onTakePictureClick = {},
+                    onAlbumsClick = {
+                        viewModel.navigateToScreen(
+                            screen = R.string.albums,
+                            canNavigateBack = true
+                        )
+                        navController.navigate(PhotoCaptionerScreen.Albums.name)
+                    },
+                    recentlyEdited = uiState.recentlyEdited
                 )
             }
         }

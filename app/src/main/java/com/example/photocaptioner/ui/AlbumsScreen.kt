@@ -89,6 +89,6 @@ fun AlbumList(
 @Composable
 fun AlbumsScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumsScreen(Datasource.albumList, stringResource(id = R.string.my_albums), {})
+        AlbumsScreen(Datasource.getAlbums(), stringResource(id = R.string.my_albums), {})
     }
 }
