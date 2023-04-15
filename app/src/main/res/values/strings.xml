@@ -11,6 +11,14 @@
     //titles
     <string name="recently_edited" translatable="false">Recently Edited</string>
     <string name="my_albums" translatable="false">My Albums</string>
+    <string name="add_new_album" translatable="false">Add new album</string>
+
+    //labels
+    <string name="album_title" translatable="false">Album Title</string>
+    <string name="album_description" translatable="false">Album Description</string>
+    <string name="choose_picture_source" translatable="false">Choose picture source</string>
+    <string name="gallery" translatable="false">Gallery</string>
+    <string name="maps" translatable="false">Maps</string>
 
     //icons
     <string name="album_icon" translatable="false">Album Icon</string>

@@ -244,3 +244,20 @@ fun SearchBox(onValueChange: (String) -> Unit) {
         )
     }
 }
+
+@Composable
+fun TopBar(
+    @StringRes title: Int,
+) {
+    Row(
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = stringResource(id = title),
+            style = MaterialTheme.typography.subtitle1
+        )
+    }
+}
