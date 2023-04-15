@@ -70,7 +70,7 @@ class PhotoCaptionersViewModel : ViewModel() {
     fun updateNewTitle(newTitle: String) {
         _uiState.update {
             it.copy(
-                newName = newTitle
+                newAlbumName = newTitle
             )
         }
     }
@@ -78,7 +78,7 @@ class PhotoCaptionersViewModel : ViewModel() {
     fun updateNewDescription(newDescription: String) {
         _uiState.update {
             it.copy(
-                newDescription = newDescription
+                newAlbumDescription = newDescription
             )
         }
     }
@@ -88,8 +88,8 @@ class PhotoCaptionersViewModel : ViewModel() {
         _uiState.update {
             it.copy(
                 albumList = it.albumList + newAlbum,
-                newName = "",
-                newDescription = "",
+                newAlbumName = "",
+                newAlbumDescription = "",
                 searchedPhotos = emptyList(),
                 searchValue = ""
             )
@@ -99,7 +99,7 @@ class PhotoCaptionersViewModel : ViewModel() {
     fun updateSelectedAlbumTitle(newTitle: String) {
         _uiState.update {
             it.copy(
-                newName = newTitle
+                newAlbumName = newTitle
             )
         }
     }
@@ -107,13 +107,34 @@ class PhotoCaptionersViewModel : ViewModel() {
     fun updateSelectedAlbumDescription(newDescription: String) {
         _uiState.update {
             it.copy(
-                newDescription = newDescription
+                newAlbumDescription = newDescription
             )
         }
     }
 
     fun saveSelectedAlbum() {
         //  TODO: save the album when working with database
+    }
+
+    fun updateSelectedPhotoDescription(newDescription: String) {
+        _uiState.update {
+            it.copy(
+                newPhotoDescription = newDescription
+            )
+        }
+    }
+
+    fun saveSelectedPhoto() {
+        //  TODO: save the photo when working with database
+    }
+
+    fun selectPhoto(photo: Photo) {
+        _uiState.update {
+            it.copy(
+                selectedPhoto = photo
+                //TODO: change selected photo description when working with database
+            )
+        }
     }
 
 
@@ -128,6 +149,8 @@ data class PhotoCaptionerUiState(
     val searchValue: String = "",
     val searchedPhotos: List<Pair<Boolean, MapsPhoto>> = emptyList(),
     val newPhotos: List<Photo> = emptyList(),
-    val newName: String = "",
-    val newDescription: String = ""
+    val newAlbumName: String = "",
+    val newAlbumDescription: String = "",
+    val selectedPhoto: Photo = Datasource.defaultPhoto,
+    val newPhotoDescription: String = ""
 )

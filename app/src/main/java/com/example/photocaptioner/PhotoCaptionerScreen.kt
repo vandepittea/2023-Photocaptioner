@@ -26,7 +26,8 @@ enum class PhotoCaptionerScreen {
     ChoosePicturesSource,
     AddPictures,
     AddAlbum,
-    EditAlbum
+    EditAlbum,
+    EditPhoto
 }
 
 @Composable
@@ -130,7 +131,14 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                     navController.navigate(PhotoCaptionerScreen.ChoosePicturesSource.name)
                 },
                 onShareClick = { /*TODO*/ },
-                onPhotoClick = { /*TODO*/ }
+                onPhotoClick = {
+                    viewModel.selectPhoto(it)
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.edit_photo,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.EditPhoto.name)
+                }
             )
         }
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
@@ -162,8 +170,8 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
         composable(PhotoCaptionerScreen.AddAlbum.name) {
             AddAlbumsScreen(
                 newPhotos = uiState.newPhotos,
-                newTitle = uiState.newName,
-                newDescription = uiState.newDescription,
+                newTitle = uiState.newAlbumName,
+                newDescription = uiState.newAlbumDescription,
                 onAlbumTitleChange = {
                     viewModel.updateNewTitle(it)
                 },
@@ -194,6 +202,23 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                 },
                 onSave = {
                     viewModel.saveSelectedAlbum()
+                    viewModel.navigateToScreen(
+                        newScreen = uiState.selectedAlbum.name,
+                        canNavigateBack = true
+                    )
+                    navController.popBackStack(PhotoCaptionerScreen.AlbumDetail.name, false)
+                }
+            )
+        }
+        composable(PhotoCaptionerScreen.EditPhoto.name) {
+            EditPhotoScreen(
+                photoToEdit = uiState.selectedPhoto,
+                description = uiState.newPhotoDescription,
+                onPhotoDescriptionChange = {
+                    viewModel.updateSelectedPhotoDescription(it)
+                },
+                onSave = {
+                    viewModel.saveSelectedPhoto()
                     viewModel.navigateToScreen(
                         newScreen = uiState.selectedAlbum.name,
                         canNavigateBack = true
