@@ -120,7 +120,14 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
         }
         composable(PhotoCaptionerScreen.AddPictures.name) {
             AddPicturesScreen(
-                onImageSelected = { /*TODO*/ },
+                searchValue = uiState.searchValue,
+                searchedPhotos = uiState.searchedPhotos,
+                onSearchChanged = {
+                    viewModel.updateSearchValue(it)
+                },
+                onImageSelected = {
+                    viewModel.selectImage(it)
+                },
                 onUploadButtonClick = { /*TODO*/ }
             )
         }

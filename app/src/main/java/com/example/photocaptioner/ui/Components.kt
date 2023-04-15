@@ -220,7 +220,10 @@ fun ButtonIcon(
 }
 
 @Composable
-fun SearchBox(onValueChange: (String) -> Unit) {
+fun SearchBox(
+    searchValue: String,
+    onValueChange: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,7 +231,7 @@ fun SearchBox(onValueChange: (String) -> Unit) {
             .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
         TextField(
-            value = "",
+            value = searchValue,
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()

@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.model.MapsPhoto
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -21,10 +21,12 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun AddPicturesScreen(
-    onImageSelected: (MapsPhoto) -> Unit,
+    searchValue: String,
+    searchedPhotos: List<Pair<Boolean, MapsPhoto>>,
+    onSearchChanged: (String) -> Unit,
+    onImageSelected: (Int) -> Unit,
     onUploadButtonClick: () -> Unit,
 ) {
-    var showList by remember { mutableStateOf(false)}
     Box(
         Modifier
             .fillMaxSize()
@@ -35,12 +37,16 @@ fun AddPicturesScreen(
                 .fillMaxSize()
         ) {
             SearchBox(
+                searchValue = searchValue,
                 onValueChange = {
-                    showList = true;
+                    onSearchChanged(it)
                 }
             )
 
-            PicturesList(imagesList = if (showList) defaultImagesList else emptyList(), onCheckChange = onImageSelected)
+            PicturesList(
+                imagesList = searchedPhotos,
+                onCheckChange = onImageSelected
+            )
         }
 
         Column(
@@ -48,42 +54,53 @@ fun AddPicturesScreen(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .background(MaterialTheme.colors.background)
-                .padding(top = 10.dp)
+                .padding(top = 10.dp, bottom = 10.dp)
         ) {
             UploadButton(onClick = onUploadButtonClick)
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PicturesList(imagesList: List<MapsPhoto>, onCheckChange: (MapsPhoto) -> Unit) {
+fun PicturesList(
+    imagesList: List<Pair<Boolean, MapsPhoto>>,
+    onCheckChange: (Int) -> Unit
+) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(imagesList) { image ->
-            Row(
+        itemsIndexed(imagesList) { index, image ->
+            Card(
+                onClick = { onCheckChange(index) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .background(MaterialTheme.colors.background)
             ) {
-                Checkbox(
-                    checked = image.selected,
-                    onCheckedChange = { onCheckChange(image) }
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.album1_picture1),
-                    contentDescription = null,
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(250.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Crop
-                )
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = image.first,
+                        onCheckedChange = { onCheckChange(index) }
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.album1_picture1),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(250.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
         }
     }
 }
 
-    @Composable
+@Composable
 fun UploadButton(onClick: () -> Unit) {
     Column(
         modifier = Modifier
@@ -99,21 +116,36 @@ fun UploadButton(onClick: () -> Unit) {
     }
 }
 
-/* TODO */
-val defaultImagesList = listOf(
-    MapsPhoto("https://picsum.photos/200/300"),
-    MapsPhoto("https://picsum.photos/seed/picsum/200/300"),
-    MapsPhoto("https://picsum.photos/id/237/200/300"),
-    MapsPhoto("https://picsum.photos/id/238/200/300"),
-    MapsPhoto("https://picsum.photos/id/239/200/300")
-)
+@Preview
+@Composable
+fun AddPicturesScreenPreview() {
+    PhotoCaptionerTheme {
+        AddPicturesScreen(
+            searchValue = "",
+            searchedPhotos = emptyList(),
+            onSearchChanged = {},
+            onImageSelected = {},
+            onUploadButtonClick = {}
+        )
+    }
+}
 
 @Preview
 @Composable
-fun AddPicturesScreenPreview(){
+fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
         AddPicturesScreen(
+            searchValue = "Paris",
+            searchedPhotos = listOf(
+                Pair(false, MapsPhoto("https://picsum.photos/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/seed/picsum/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/id/237/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/id/238/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/id/239/200/300"))
+            ),
+            onSearchChanged = {},
             onImageSelected = {},
-            onUploadButtonClick = {})
+            onUploadButtonClick = {}
+        )
     }
 }
