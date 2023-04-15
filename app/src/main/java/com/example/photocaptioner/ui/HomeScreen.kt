@@ -12,15 +12,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
+import com.example.photocaptioner.data.Datasource
+import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
-    recentEditText: Int,
-    recentEditImage: Int,
-    recentEditImageDescription: Int
+    recentlyEdited: Photo
 ) {
     Column(
         modifier = Modifier
@@ -45,7 +45,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecentEdits(recentEditText, recentEditImage, recentEditImageDescription)
+            RecentEdits(recentlyEdited)
         }
     }
 }
@@ -72,19 +72,18 @@ fun Buttons(
 
 @Composable
 fun RecentEdits(
-    text: Int,
-    image: Int,
-    imageDescription: Int
+    photo: Photo
 ) {
     Text(
-        text = stringResource(id = text),
+        text = stringResource(id = R.string.recently_edited),
         style = MaterialTheme.typography.subtitle1,
         modifier = Modifier.padding(vertical = 16.dp, horizontal = 32.dp)
     )
 
     ImageWithDescription(
-        image = image,
-        description = imageDescription
+        image = photo.image,
+        description = photo.description,
+        onClick = {}
     )
 }
 
@@ -92,6 +91,6 @@ fun RecentEdits(
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, R.string.recently_edited, R.drawable.album1_picture1, R.string.album1_picture1_description)
+        HomeScreen({}, {}, Datasource.defaultPhoto)
     }
 }

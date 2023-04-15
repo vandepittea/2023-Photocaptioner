@@ -19,6 +19,7 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Photo
 
 @Composable
 fun AlbumDetailScreen(
@@ -27,6 +28,7 @@ fun AlbumDetailScreen(
     onEditClick: () -> Unit,
     onAddClick: () -> Unit,
     onShareClick: () -> Unit,
+    onPhotoClick: (Photo) -> Unit,
 ) {
     Box(
         Modifier
@@ -42,6 +44,7 @@ fun AlbumDetailScreen(
                 album = album,
                 onDownloadClick = onDownloadClick,
                 onEditClick = onEditClick,
+                onPhotoClick = onPhotoClick,
             )
         }
 
@@ -64,6 +67,7 @@ fun AlbumDetails(
     album: Album,
     onDownloadClick: () -> Unit,
     onEditClick: () -> Unit,
+    onPhotoClick: (Photo) -> Unit
 ) {
     AlbumHeader(
         name = stringResource(id = album.name),
@@ -80,7 +84,8 @@ fun AlbumDetails(
     )
 
     AlternatingColumn(
-        items = album.photos
+        items = album.photos,
+        onPhotoClick = onPhotoClick,
     )
 }
 
@@ -221,6 +226,6 @@ fun AlbumFooter(
 @Composable
 fun AlbumDetailScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumDetailScreen(Datasource.albumList[0], {}, {}, {}, {})
+        AlbumDetailScreen(Datasource.defaultAlbum, {}, {}, {}, {}, {})
     }
 }
