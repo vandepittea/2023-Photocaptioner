@@ -1,6 +1,6 @@
 package com.example.photocaptioner.ui
 
-import androidx.annotation.StringRes
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +18,10 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
-fun StartUpScreen(@StringRes title: Int, image: Int, onButtonClick: () -> Unit) {
+fun StartUpScreen(onButtonClick: () -> Unit) {
+    BackHandler(
+        onBack = {}
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -26,7 +29,7 @@ fun StartUpScreen(@StringRes title: Int, image: Int, onButtonClick: () -> Unit) 
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
-            text = stringResource(title),
+            text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.h1,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -35,7 +38,7 @@ fun StartUpScreen(@StringRes title: Int, image: Int, onButtonClick: () -> Unit) 
         )
 
         Image(
-            painter = painterResource(id = image),
+            painter = painterResource(id = R.drawable.camera),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -50,6 +53,6 @@ fun StartUpScreen(@StringRes title: Int, image: Int, onButtonClick: () -> Unit) 
 @Composable
 fun StartUpScreenPreview(){
     PhotoCaptionerTheme {
-        StartUpScreen(R.string.app_name, R.drawable.camera, onButtonClick = {})
+        StartUpScreen(onButtonClick = {})
     }
 }

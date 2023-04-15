@@ -172,6 +172,6 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 @Composable
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(Datasource.albumList[0].photos, {}, {}, {}, {}, {})
+        AddAlbumsScreen(Datasource.defaultAlbum.photos, {}, {}, {}, {}, {})
     }
 }
