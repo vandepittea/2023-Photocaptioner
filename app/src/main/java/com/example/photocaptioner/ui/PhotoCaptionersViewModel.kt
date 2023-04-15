@@ -67,6 +67,35 @@ class PhotoCaptionersViewModel : ViewModel() {
         }
     }
 
+    fun updateNewTitle(newTitle: String) {
+        _uiState.update {
+            it.copy(
+                newTitle = newTitle
+            )
+        }
+    }
+
+    fun updateNewDescription(newDescription: String) {
+        _uiState.update {
+            it.copy(
+                newDescription = newDescription
+            )
+        }
+    }
+
+    fun addNewAlbum() {
+        val newAlbum = Datasource.defaultAlbum.copy()
+        _uiState.update {
+            it.copy(
+                albumList = it.albumList + newAlbum,
+                newTitle = "",
+                newDescription = "",
+                searchedPhotos = emptyList(),
+                searchValue = ""
+            )
+        }
+    }
+
 
 }
 
@@ -77,5 +106,8 @@ data class PhotoCaptionerUiState(
     val albumList: List<Album> = emptyList(),
     val selectedAlbum: Album = Datasource.defaultAlbum,
     val searchValue: String = "",
-    val searchedPhotos: List<Pair<Boolean, MapsPhoto>> = emptyList()
+    val searchedPhotos: List<Pair<Boolean, MapsPhoto>> = emptyList(),
+    val newPhotos: List<Photo> = emptyList(),
+    val newTitle: String = "",
+    val newDescription: String = ""
 )

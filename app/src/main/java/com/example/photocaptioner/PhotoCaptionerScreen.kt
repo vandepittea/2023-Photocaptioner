@@ -23,7 +23,9 @@ enum class PhotoCaptionerScreen {
     Home,
     Albums,
     AlbumDetail,
+    ChoosePicturesSource,
     AddPictures,
+    AddAlbum
 }
 
 @Composable
@@ -91,7 +93,13 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
         composable(PhotoCaptionerScreen.Albums.name) {
             AlbumsScreen(
                 albumList = uiState.albumList,
-                onAddClick = {},
+                onAddClick = {
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.add_album,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.AddAlbum.name)
+                },
                 onAlbumClick = {
                     viewModel.selectAlbum(it)
                     viewModel.navigateToScreen(
@@ -109,13 +117,26 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                 onEditClick = { /*TODO*/ },
                 onAddClick = {
                     viewModel.navigateToScreen(
+                        newScreen = R.string.choose_picture_source,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.ChoosePicturesSource.name)
+                },
+                onShareClick = { /*TODO*/ },
+                onPhotoClick = { /*TODO*/ }
+            )
+        }
+        composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
+            ChoosePicturesSourceScreen(
+                onChooseCamera = { /*TODO*/ },
+                onChooseGallery = { /*TODO*/ },
+                onChooseMaps = {
+                    viewModel.navigateToScreen(
                         newScreen = R.string.upload_pictures,
                         canNavigateBack = true
                     )
                     navController.navigate(PhotoCaptionerScreen.AddPictures.name)
-                },
-                onShareClick = { /*TODO*/ },
-                onPhotoClick = { /*TODO*/ }
+                }
             )
         }
         composable(PhotoCaptionerScreen.AddPictures.name) {
@@ -129,6 +150,30 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                     viewModel.selectImage(it)
                 },
                 onUploadButtonClick = { /*TODO*/ }
+            )
+        }
+        composable(PhotoCaptionerScreen.AddAlbum.name) {
+            AddAlbumsScreen(
+                newPhotos = uiState.newPhotos,
+                newTitle = uiState.newTitle,
+                newDescription = uiState.newDescription,
+                onAlbumTitleChange = {
+                    viewModel.updateNewTitle(it)
+                },
+                onAlbumDescriptionChange = {
+                    viewModel.updateNewDescription(it)
+                },
+                onChooseCamera = { /*TODO*/ },
+                onChooseGallery = { /*TODO*/ },
+                onChooseMaps = { /*TODO*/ },
+                onAddNewAlbum = {
+                    viewModel.addNewAlbum()
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.my_albums,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.Albums.name)
+                }
             )
         }
     }

@@ -49,6 +49,11 @@ fun AddAlbumsScreen(
                 onAlbumDescriptionChange = onAlbumDescriptionChange
             )
             Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = stringResource(id = R.string.choose_picture_source),
+                style = MaterialTheme.typography.subtitle2,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             if (newPhotos.isEmpty()) {
                 ImageOptions(
                     onChooseCamera = onChooseCamera,

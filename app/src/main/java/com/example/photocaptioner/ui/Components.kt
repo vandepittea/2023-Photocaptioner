@@ -290,11 +290,6 @@ fun ImageOptions(
     Column(
         modifier = modifier
     ) {
-        Text(
-            text = stringResource(id = R.string.choose_picture_source),
-            style = MaterialTheme.typography.subtitle2,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
         ButtonWithIcon(
             painter = painterResource(id = R.drawable.baseline_camera_alt_24),
             contentDescription = R.string.camera_icon,
