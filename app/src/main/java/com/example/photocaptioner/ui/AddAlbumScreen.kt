@@ -108,44 +108,6 @@ fun TextFields(
 }
 
 @Composable
-fun ImageOptions(
-    onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = stringResource(id = R.string.choose_picture_source),
-            style = MaterialTheme.typography.subtitle2,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        ButtonWithIcon(
-            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
-            contentDescription = R.string.camera_icon,
-            text = R.string.take_picture,
-            onClick = onChooseCamera
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        ButtonWithIcon(
-            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
-            contentDescription = R.string.camera_icon,
-            text = R.string.gallery,
-            onClick = onChooseGallery
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        ButtonWithIcon(
-            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
-            contentDescription = R.string.camera_icon,
-            text = R.string.maps,
-            onClick = onChooseMaps
-        )
-    }
-}
-
-@Composable
 fun AlbumImages(
     imagesList: List<Photo>,
     modifier: Modifier = Modifier,
