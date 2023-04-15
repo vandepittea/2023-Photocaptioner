@@ -70,7 +70,7 @@ class PhotoCaptionersViewModel : ViewModel() {
     fun updateNewTitle(newTitle: String) {
         _uiState.update {
             it.copy(
-                newTitle = newTitle
+                newName = newTitle
             )
         }
     }
@@ -88,12 +88,32 @@ class PhotoCaptionersViewModel : ViewModel() {
         _uiState.update {
             it.copy(
                 albumList = it.albumList + newAlbum,
-                newTitle = "",
+                newName = "",
                 newDescription = "",
                 searchedPhotos = emptyList(),
                 searchValue = ""
             )
         }
+    }
+
+    fun updateSelectedAlbumTitle(newTitle: String) {
+        _uiState.update {
+            it.copy(
+                newName = newTitle
+            )
+        }
+    }
+
+    fun updateSelectedAlbumDescription(newDescription: String) {
+        _uiState.update {
+            it.copy(
+                newDescription = newDescription
+            )
+        }
+    }
+
+    fun saveSelectedAlbum() {
+        //  TODO: save the album when working with database
     }
 
 
@@ -108,6 +128,6 @@ data class PhotoCaptionerUiState(
     val searchValue: String = "",
     val searchedPhotos: List<Pair<Boolean, MapsPhoto>> = emptyList(),
     val newPhotos: List<Photo> = emptyList(),
-    val newTitle: String = "",
+    val newName: String = "",
     val newDescription: String = ""
 )

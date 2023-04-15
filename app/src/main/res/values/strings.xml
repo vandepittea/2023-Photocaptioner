@@ -16,6 +16,7 @@
     <string name="start" translatable="false">Start</string>
     <string name="upload_pictures" translatable="false">Upload Pictures</string>
     <string name="add_new_album" translatable="false">Add new album</string>
+    <string name="edit_album" translatable="false">Edit album</string>
 
     //labels
     <string name="album_title" translatable="false">Album Title</string>
@@ -54,4 +55,5 @@
     <string name="album3_picture1_description" translatable="false">Budapest Hungary</string>
     <string name="album4_picture1_description" translatable="false">Ljubljana Slovenia</string>
     <string name="album5_picture1_description" translatable="false">School project</string>
+    <string name="save">Save</string>
 </resources>

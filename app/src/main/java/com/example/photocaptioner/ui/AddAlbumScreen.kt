@@ -42,7 +42,7 @@ fun AddAlbumsScreen(
     ) {
         Column {
             TopBar(title = R.string.add_new_album)
-            TextFields(
+            AlbumTextFields(
                 title = newTitle,
                 description = newDescription,
                 onAlbumTitleChange = onAlbumTitleChange,
@@ -78,7 +78,7 @@ fun AddAlbumsScreen(
 }
 
 @Composable
-fun TextFields(
+fun AlbumTextFields(
     title: String,
     description: String,
     onAlbumTitleChange: (String) -> Unit,

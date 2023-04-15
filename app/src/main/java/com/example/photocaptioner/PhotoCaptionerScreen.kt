@@ -25,7 +25,8 @@ enum class PhotoCaptionerScreen {
     AlbumDetail,
     ChoosePicturesSource,
     AddPictures,
-    AddAlbum
+    AddAlbum,
+    EditAlbum
 }
 
 @Composable
@@ -114,7 +115,13 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
             AlbumDetailScreen(
                 album = uiState.selectedAlbum,
                 onDownloadClick = { /*TODO*/ },
-                onEditClick = { /*TODO*/ },
+                onEditClick = {
+                    viewModel.navigateToScreen(
+                        newScreen = R.string.edit_album,
+                        canNavigateBack = true
+                    )
+                    navController.navigate(PhotoCaptionerScreen.EditAlbum.name)
+                },
                 onAddClick = {
                     viewModel.navigateToScreen(
                         newScreen = R.string.choose_picture_source,
@@ -155,7 +162,7 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
         composable(PhotoCaptionerScreen.AddAlbum.name) {
             AddAlbumsScreen(
                 newPhotos = uiState.newPhotos,
-                newTitle = uiState.newTitle,
+                newTitle = uiState.newName,
                 newDescription = uiState.newDescription,
                 onAlbumTitleChange = {
                     viewModel.updateNewTitle(it)
@@ -173,6 +180,25 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                         canNavigateBack = true
                     )
                     navController.navigate(PhotoCaptionerScreen.Albums.name)
+                }
+            )
+        }
+        composable(PhotoCaptionerScreen.EditAlbum.name) {
+            EditAlbumScreen(
+                albumToEdit = uiState.selectedAlbum,
+                onAlbumTitleChange = {
+                    viewModel.updateSelectedAlbumTitle(it)
+                },
+                onAlbumDescriptionChange = {
+                    viewModel.updateSelectedAlbumDescription(it)
+                },
+                onSave = {
+                    viewModel.saveSelectedAlbum()
+                    viewModel.navigateToScreen(
+                        newScreen = uiState.selectedAlbum.name,
+                        canNavigateBack = true
+                    )
+                    navController.popBackStack(PhotoCaptionerScreen.AlbumDetail.name, false)
                 }
             )
         }
