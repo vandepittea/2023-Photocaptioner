@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,11 +24,14 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 @Composable
 fun AddAlbumsScreen(
     newPhotos: List<Photo>,
+    newTitle: String,
+    newDescription: String,
     onAlbumTitleChange: (String) -> Unit,
     onAlbumDescriptionChange: (String) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
+    onAddNewAlbum: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -42,9 +43,12 @@ fun AddAlbumsScreen(
         Column {
             TopBar(title = R.string.add_new_album)
             TextFields(
+                title = newTitle,
+                description = newDescription,
                 onAlbumTitleChange = onAlbumTitleChange,
                 onAlbumDescriptionChange = onAlbumDescriptionChange
             )
+            Spacer(modifier = Modifier.height(16.dp))
             if (newPhotos.isEmpty()) {
                 ImageOptions(
                     onChooseCamera = onChooseCamera,
@@ -57,11 +61,21 @@ fun AddAlbumsScreen(
                 )
             }
         }
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
+        ) {
+            NewAlbumFooter(onAddNewAlbum = onAddNewAlbum)
+        }
     }
 }
 
 @Composable
 fun TextFields(
+    title: String,
+    description: String,
     onAlbumTitleChange: (String) -> Unit,
     onAlbumDescriptionChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -70,7 +84,7 @@ fun TextFields(
         modifier = modifier
     ) {
         OutlinedTextField(
-            value = "",
+            value = title,
             onValueChange = { onAlbumTitleChange(it) },
             label = {
                 Text(
@@ -79,8 +93,9 @@ fun TextFields(
                 )
             }
         )
+        Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
-            value = "",
+            value = description,
             onValueChange = { onAlbumDescriptionChange(it) },
             label = {
                 Text(
@@ -108,21 +123,21 @@ fun ImageOptions(
         )
         Spacer(modifier = Modifier.height(8.dp))
         ButtonWithIcon(
-            painter = painterResource(id = R.drawable.camera),
+            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
             contentDescription = R.string.camera_icon,
             text = R.string.take_picture,
             onClick = onChooseCamera
         )
         Spacer(modifier = Modifier.height(8.dp))
         ButtonWithIcon(
-            painter = painterResource(id = R.drawable.camera),
+            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
             contentDescription = R.string.camera_icon,
             text = R.string.gallery,
             onClick = onChooseGallery
         )
         Spacer(modifier = Modifier.height(8.dp))
         ButtonWithIcon(
-            painter = painterResource(id = R.drawable.camera),
+            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
             contentDescription = R.string.camera_icon,
             text = R.string.maps,
             onClick = onChooseMaps
@@ -160,11 +175,29 @@ fun AlbumImages(
     }
 }
 
+@Composable
+fun NewAlbumFooter(
+    onAddNewAlbum: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Button(
+            text = R.string.add_new_album,
+            onClick = onAddNewAlbum
+        )
+    }
+}
+
 @Preview
 @Composable
 fun AddAlbumsScreenPreviewWithoutPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(emptyList(), {}, {}, {}, {}, {})
+        AddAlbumsScreen(emptyList(), "", "", {}, {}, {}, {}, {}, {})
     }
 }
 
@@ -172,6 +205,6 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 @Composable
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(Datasource.defaultAlbum.photos, {}, {}, {}, {}, {})
+        AddAlbumsScreen(Datasource.defaultAlbum.photos, "France", "My first trip to France", {}, {}, {}, {}, {}, {})
     }
 }
