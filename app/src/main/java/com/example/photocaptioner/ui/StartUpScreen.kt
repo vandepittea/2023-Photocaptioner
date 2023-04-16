@@ -19,12 +19,15 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
-fun StartUpScreen(onButtonClick: () -> Unit) {
+fun StartUpScreen(
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     BackHandler(
         onBack = {}
     )
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.SpaceEvenly,

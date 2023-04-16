@@ -23,10 +23,11 @@ import com.example.photocaptioner.model.Album
 fun AlbumsScreen(
     albumList: List<Album>,
     onAddClick: () -> Unit,
-    onAlbumClick: (Album) -> Unit
+    onAlbumClick: (Album) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
@@ -44,10 +45,11 @@ fun AlbumsScreen(
 
 @Composable
 fun TopBar(
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,10 +73,11 @@ fun TopBar(
 @Composable
 fun AlbumList(
     albumList: List<Album>,
-    onAlbumClick: (Album) -> Unit
+    onAlbumClick: (Album) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
     ) {

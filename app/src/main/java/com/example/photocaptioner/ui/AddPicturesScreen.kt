@@ -26,9 +26,10 @@ fun AddPicturesScreen(
     onSearchChanged: (String) -> Unit,
     onImageSelected: (Int) -> Unit,
     onUploadButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
@@ -65,9 +66,13 @@ fun AddPicturesScreen(
 @Composable
 fun PicturesList(
     imagesList: List<Pair<Boolean, MapsPhoto>>,
-    onCheckChange: (Int) -> Unit
+    onCheckChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
         itemsIndexed(imagesList) { index, image ->
             Card(
                 onClick = { onCheckChange(index) },
@@ -101,9 +106,12 @@ fun PicturesList(
 }
 
 @Composable
-fun UploadButton(onClick: () -> Unit) {
+fun UploadButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colors.background)
     ) {

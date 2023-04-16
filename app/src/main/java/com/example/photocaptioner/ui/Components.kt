@@ -27,14 +27,18 @@ import com.example.photocaptioner.R
 import java.time.LocalDate
 
 @Composable
-fun Button(@StringRes text: Int, onClick: () -> Unit) {
+fun Button(
+    @StringRes text: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 32.dp)
             .height(60.dp)
@@ -51,7 +55,8 @@ fun ButtonWithIcon(
     painter: Painter,
     contentDescription: Int,
     text: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
@@ -59,7 +64,7 @@ fun ButtonWithIcon(
             backgroundColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 32.dp)
             .height(60.dp),
@@ -95,11 +100,13 @@ fun ButtonWithIcon(
 fun ImageWithDescription(
     image: Int,
     description: Int?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         elevation = 2.dp,
-        onClick = onClick
+        onClick = onClick,
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -128,7 +135,11 @@ fun ImageWithDescription(
 
 /* TODO */
 @Composable
-fun ImageFromUrl(url: String, description: String?) {
+fun ImageFromUrl(
+    url: String,
+    description: String?,
+    modifier: Modifier = Modifier
+) {
     val painter: Painter = rememberImagePainter(
         data = url,
         builder = {
@@ -139,7 +150,7 @@ fun ImageFromUrl(url: String, description: String?) {
     Image(
         painter = painter,
         contentDescription = description,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(250.dp)
             .clip(RoundedCornerShape(8.dp)),
@@ -204,7 +215,8 @@ fun ImageWithDescriptionAndDate(
 fun ButtonIcon(
     onClick: () -> Unit,
     icon: ImageVector,
-    description: Int
+    description: Int,
+    modifier: Modifier = Modifier
 ) {
     IconButton(
         onClick = onClick,
@@ -215,17 +227,19 @@ fun ButtonIcon(
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.size(44.dp)
             )
-        }
+        },
+        modifier = modifier
     )
 }
 
 @Composable
 fun SearchBox(
     searchValue: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp, vertical = 2.dp)
             .padding(horizontal = 12.dp, vertical = 12.dp)
@@ -266,11 +280,12 @@ fun SearchBox(
 @Composable
 fun TopBar(
     @StringRes title: Int,
+    modifier: Modifier = Modifier
 ) {
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
     ) {
         Text(

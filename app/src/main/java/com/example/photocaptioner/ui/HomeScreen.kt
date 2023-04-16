@@ -20,10 +20,11 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
-    recentlyEdited: Photo
+    recentlyEdited: Photo,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.SpaceBetween
