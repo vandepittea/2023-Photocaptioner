@@ -143,7 +143,7 @@ class PhotoCaptionersViewModel : ViewModel() {
 data class PhotoCaptionerUiState(
     val canNavigateBack: Boolean = false,
     @StringRes val currentScreen: Int = R.string.start,
-    val recentlyEdited: Photo = Datasource.defaultPhoto,
+    val recentlyEdited: Album = Datasource.defaultAlbum,
     val albumList: List<Album> = emptyList(),
     val selectedAlbum: Album = Datasource.defaultAlbum,
     val searchValue: String = "",

@@ -110,7 +110,8 @@ fun PhotoCaptionersApp(
                     )
                     navController.navigate(PhotoCaptionerScreen.Albums.name)
                 },
-                recentlyEdited = uiState.recentlyEdited
+                recentlyEdited = uiState.recentlyEdited,
+                contentType = contentType
             )
         }
         composable(PhotoCaptionerScreen.Albums.name) {
