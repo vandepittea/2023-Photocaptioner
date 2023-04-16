@@ -32,6 +32,12 @@ val Typography = Typography(
         fontSize = 50.sp,
         letterSpacing = 0.15.sp
     ),
+    subtitle2 = TextStyle(
+        fontFamily = NunitoSans,
+        fontWeight = FontWeight.Bold,
+        fontSize = 35.sp,
+        letterSpacing = 0.15.sp
+    ),
     body1 = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Normal,

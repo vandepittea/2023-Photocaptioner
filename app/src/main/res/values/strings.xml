@@ -8,6 +8,7 @@
     <string name="add_album" translatable="false">Add album</string>
     <string name="upload" translatable="false">Upload</string>
     <string name="back_button">Back</string>
+    <string name="save">Save</string>
 
     //titles
     <string name="recently_edited" translatable="false">Recently Edited</string>
@@ -15,6 +16,16 @@
     <string name="home" translatable="false">Home</string>
     <string name="start" translatable="false">Start</string>
     <string name="upload_pictures" translatable="false">Upload Pictures</string>
+    <string name="add_new_album" translatable="false">Add new album</string>
+    <string name="edit_album" translatable="false">Edit album</string>
+    <string name="edit_photo">Edit Photo</string>
+
+    //labels
+    <string name="album_title" translatable="false">Album Title</string>
+    <string name="album_description" translatable="false">Album Description</string>
+    <string name="choose_picture_source" translatable="false">Choose picture source</string>
+    <string name="gallery" translatable="false">Gallery</string>
+    <string name="maps" translatable="false">Maps</string>
 
     //icons
     <string name="album_icon" translatable="false">Album Icon</string>
@@ -46,4 +57,5 @@
     <string name="album3_picture1_description" translatable="false">Budapest Hungary</string>
     <string name="album4_picture1_description" translatable="false">Ljubljana Slovenia</string>
     <string name="album5_picture1_description" translatable="false">School project</string>
+    <string name="photo_description">Photo Description</string>
 </resources>

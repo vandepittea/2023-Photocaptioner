@@ -220,7 +220,10 @@ fun ButtonIcon(
 }
 
 @Composable
-fun SearchBox(onValueChange: (String) -> Unit) {
+fun SearchBox(
+    searchValue: String,
+    onValueChange: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,7 +231,7 @@ fun SearchBox(onValueChange: (String) -> Unit) {
             .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
         TextField(
-            value = "",
+            value = searchValue,
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
@@ -256,6 +259,56 @@ fun SearchBox(onValueChange: (String) -> Unit) {
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             )
+        )
+    }
+}
+
+@Composable
+fun TopBar(
+    @StringRes title: Int,
+) {
+    Row(
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = stringResource(id = title),
+            style = MaterialTheme.typography.subtitle1
+        )
+    }
+}
+
+@Composable
+fun ImageOptions(
+    onChooseCamera: () -> Unit,
+    onChooseGallery: () -> Unit,
+    onChooseMaps: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        ButtonWithIcon(
+            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
+            contentDescription = R.string.camera_icon,
+            text = R.string.take_picture,
+            onClick = onChooseCamera
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        ButtonWithIcon(
+            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
+            contentDescription = R.string.camera_icon,
+            text = R.string.gallery,
+            onClick = onChooseGallery
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        ButtonWithIcon(
+            painter = painterResource(id = R.drawable.baseline_camera_alt_24),
+            contentDescription = R.string.camera_icon,
+            text = R.string.maps,
+            onClick = onChooseMaps
         )
     }
 }
