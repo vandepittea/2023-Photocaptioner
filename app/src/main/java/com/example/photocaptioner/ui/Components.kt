@@ -22,7 +22,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
 import com.example.photocaptioner.R
 import java.time.LocalDate
 
@@ -127,7 +126,7 @@ fun ImageWithDescription(
 }
 
 /* TODO */
-@Composable
+/*@Composable
 fun ImageFromUrl(url: String, description: String?) {
     val painter: Painter = rememberImagePainter(
         data = url,
@@ -145,7 +144,7 @@ fun ImageFromUrl(url: String, description: String?) {
             .clip(RoundedCornerShape(8.dp)),
         contentScale = ContentScale.Crop
     )
-}
+}*/
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

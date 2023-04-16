@@ -1,19 +1,16 @@
 package com.example.photocaptioner
 
-import androidx.annotation.StringRes
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.ui.*
+import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 
 enum class PhotoCaptionerScreen {
     Start,
@@ -27,6 +24,7 @@ enum class PhotoCaptionerScreen {
     EditPhoto
 }
 
+/*@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoCaptionerAppTopBar(
     @StringRes currentScreen: Int,
@@ -48,13 +46,14 @@ fun PhotoCaptionerAppTopBar(
             }
         }
     )
-}
+}*/
 
 @Composable
 fun PhotoCaptionerApp(
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier
 ) {
+    val navigationType: PhotoCaptionerNavigationType
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = PhotoCaptionerScreen.valueOf(
@@ -63,8 +62,28 @@ fun PhotoCaptionerApp(
     val viewModel: PhotoCaptionersViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
 
+    when (windowSize) {
+        WindowWidthSizeClass.Compact -> {
+            navigationType = PhotoCaptionerNavigationType.BOTTOM_NAVIGATION
+        }
+        WindowWidthSizeClass.Medium -> {
+            navigationType = PhotoCaptionerNavigationType.NAVIGATION_RAIL
+        }
+        WindowWidthSizeClass.Expanded -> {
+            navigationType = PhotoCaptionerNavigationType.PERMANENT_NAVIGATION_DRAWER
+        }
+        else -> {
+            navigationType = PhotoCaptionerNavigationType.BOTTOM_NAVIGATION
+        }
+    }
+
     ResponsiveHomeScreen(
+        navigationType = navigationType,
         navController = navController,
+        currentMenuItem = uiState.currentMenuItem,
+        onMenuItemPress = { menuItemType: MenuItemType ->
+            viewModel.updateCurrentMenuItem(menuItemType = menuItemType)
+        },
         onStartUpClick = {
             viewModel.navigateToScreen(
                 newScreen = R.string.home,

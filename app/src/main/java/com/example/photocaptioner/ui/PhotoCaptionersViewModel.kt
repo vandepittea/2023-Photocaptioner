@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
+import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.MapsPhoto
 import com.example.photocaptioner.model.Photo
@@ -26,6 +27,14 @@ class PhotoCaptionersViewModel : ViewModel() {
         )
     )
     val uiState: StateFlow<PhotoCaptionerUiState> = _uiState.asStateFlow()
+
+    fun updateCurrentMenuItem(menuItemType: MenuItemType) {
+        _uiState.update {
+            it.copy(
+                currentMenuItem = menuItemType
+            )
+        }
+    }
 
     fun navigateToScreen(@StringRes newScreen: Int, canNavigateBack: Boolean) {
         _uiState.update {
@@ -136,21 +145,4 @@ class PhotoCaptionersViewModel : ViewModel() {
             )
         }
     }
-
-
 }
-
-data class PhotoCaptionerUiState(
-    val canNavigateBack: Boolean = false,
-    @StringRes val currentScreen: Int = R.string.start,
-    val recentlyEdited: Photo = Datasource.defaultPhoto,
-    val albumList: List<Album> = emptyList(),
-    val selectedAlbum: Album = Datasource.defaultAlbum,
-    val searchValue: String = "",
-    val searchedPhotos: List<Pair<Boolean, MapsPhoto>> = emptyList(),
-    val newPhotos: List<Photo> = emptyList(),
-    val newAlbumName: String = "",
-    val newAlbumDescription: String = "",
-    val selectedPhoto: Photo = Datasource.defaultPhoto,
-    val newPhotoDescription: String = ""
-)
