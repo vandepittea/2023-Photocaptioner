@@ -4,19 +4,18 @@ import androidx.annotation.StringRes
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.ui.*
-import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 enum class PhotoCaptionerScreen {
     Start,
@@ -54,7 +53,10 @@ fun PhotoCaptionersAppTopBar(
 }
 
 @Composable
-fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
+fun PhotoCaptionerApp(
+    windowSize: WindowWidthSizeClass,
+    modifier: Modifier = Modifier
+) {
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = PhotoCaptionerScreen.valueOf(
@@ -227,13 +229,5 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
                 }
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun PhotoCaptionersAppPreview() {
-    PhotoCaptionerTheme {
-        PhotoCaptionersApp()
     }
 }
