@@ -62,4 +62,5 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
     implementation "io.coil-kt:coil-compose:1.4.0"
+    implementation "androidx.compose.material3:material3-window-size-class:$material3_version"
 }

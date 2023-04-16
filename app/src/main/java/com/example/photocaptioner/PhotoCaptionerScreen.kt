@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 enum class PhotoCaptionerScreen {
     Start,
@@ -54,7 +56,10 @@ fun PhotoCaptionersAppTopBar(
 }
 
 @Composable
-fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
+fun PhotoCaptionersApp(
+    windowSize: WindowWidthSizeClass,
+    modifier: Modifier = Modifier
+) {
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = PhotoCaptionerScreen.valueOf(
@@ -62,6 +67,22 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
     )
     val viewModel: PhotoCaptionersViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
+
+    val contentType: PhotoCaptionerContentType
+    when (windowSize) {
+        WindowWidthSizeClass.Compact -> {
+            contentType = PhotoCaptionerContentType.LIST_ONLY
+        }
+        WindowWidthSizeClass.Medium -> {
+            contentType = PhotoCaptionerContentType.LIST_ONLY
+        }
+        WindowWidthSizeClass.Expanded -> {
+            contentType = PhotoCaptionerContentType.LIST_AND_DETAIL
+        }
+        else -> {
+            contentType = PhotoCaptionerContentType.LIST_ONLY
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -234,6 +255,6 @@ fun PhotoCaptionersApp(modifier: Modifier = Modifier) {
 @Composable
 fun PhotoCaptionersAppPreview() {
     PhotoCaptionerTheme {
-        PhotoCaptionersApp()
+        PhotoCaptionersApp(WindowWidthSizeClass.Compact)
     }
 }
