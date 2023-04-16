@@ -3,6 +3,9 @@ package com.example.photocaptioner.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -18,6 +21,7 @@ import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @Composable
 fun AlbumsScreen(
@@ -76,10 +80,13 @@ fun AlbumList(
     onAlbumClick: (Album) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(400.dp),
         modifier = modifier
             .fillMaxSize(),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(albumList) { album ->
             ImageWithDescription(
