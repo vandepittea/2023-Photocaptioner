@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -26,7 +27,8 @@ fun StartUpScreen(onButtonClick: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
-        verticalArrangement = Arrangement.SpaceEvenly
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(R.string.app_name),
@@ -41,7 +43,7 @@ fun StartUpScreen(onButtonClick: () -> Unit) {
             painter = painterResource(id = R.drawable.camera),
             contentDescription = null,
             modifier = Modifier
-                .fillMaxWidth()
+                .height(500.dp)
                 .aspectRatio(1f)
         )
 
