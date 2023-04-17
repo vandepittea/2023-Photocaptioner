@@ -46,7 +46,7 @@ fun StartUpScreen(
             painter = painterResource(id = R.drawable.camera),
             contentDescription = null,
             modifier = Modifier
-                .height(500.dp)
+                .height(300.dp)
                 .aspectRatio(1f)
         )
 
