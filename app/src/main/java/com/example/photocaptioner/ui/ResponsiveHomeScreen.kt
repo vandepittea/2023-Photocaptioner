@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui
 
-import android.view.MenuItem
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
