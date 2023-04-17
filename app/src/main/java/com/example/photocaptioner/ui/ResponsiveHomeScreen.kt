@@ -73,7 +73,6 @@ fun ResponsiveHomeScreen(
     onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
-    isEditingAlbum: Boolean
 ){
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
@@ -138,7 +137,7 @@ fun ResponsiveHomeScreen(
                     onPhotoDescriptionChange,
                     onPhotoSave,
                     modifier,
-                    contentType
+                    contentType,
                 )
             }
         }
@@ -182,7 +181,7 @@ fun ResponsiveHomeScreen(
                 onPhotoDescriptionChange,
                 onPhotoSave,
                 modifier.weight(1f),
-                contentType
+                contentType,
             )
 
             AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
@@ -267,14 +266,28 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AlbumDetail.name) {
-            AlbumDetailScreen(
-                album = detailedAlbum,
-                onDownloadClick = onDownloadClick,
-                onEditClick = onEditClick,
-                onAddClick = onAddPictureClick,
-                onShareClick = onShareClick,
-                onPhotoClick = onPhotoClick
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumsAndAlbumDetailScreen(
+                    albumList = albumList,
+                    onAddClick = onAddAlbumClick,
+                    onAlbumClick = onAlbumClick,
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick
+                )
+            } else {
+                AlbumDetailScreen(
+                    album = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
@@ -311,21 +324,50 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.EditAlbum.name) {
-            EditAlbumScreen(
-                albumToEdit = albumToEdit,
-                onAlbumTitleChange = onAlbumTitleChange,
-                onAlbumDescriptionChange = onAlbumDescriptionChange,
-                onSave = onAlbumSave
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndAlbumEditScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onAlbumTitleChange = onAlbumTitleChange,
+                    onAlbumDescriptionChange = onAlbumDescriptionChange,
+                    onAlbumSave = onAlbumSave
+                )
+            } else {
+                EditAlbumScreen(
+                    albumToEdit = albumToEdit,
+                    onAlbumTitleChange = onAlbumTitleChange,
+                    onAlbumDescriptionChange = onAlbumDescriptionChange,
+                    onSave = onAlbumSave
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.EditPhoto.name) {
-            EditPhotoScreen(
-                photoToEdit = photoToEdit,
-                description = photoDescriptionToEdit,
-                onPhotoDescriptionChange = onPhotoDescriptionChange,
-                onSave = onPhotoSave
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndPhotoEditScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    photoToEdit = photoToEdit,
+                    photoDescriptionToEdit = photoDescriptionToEdit,
+                    onPhotoDescriptionChange = onPhotoDescriptionChange,
+                    onPhotoSave = onPhotoSave
+                )
+            } else {
+                EditPhotoScreen(
+                    photoToEdit = photoToEdit,
+                    description = photoDescriptionToEdit,
+                    onPhotoDescriptionChange = onPhotoDescriptionChange,
+                    onPhotoSave = onPhotoSave
+                )
+            }
         }
     }
 }

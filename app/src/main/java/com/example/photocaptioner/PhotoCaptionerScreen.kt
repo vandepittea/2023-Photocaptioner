@@ -131,7 +131,6 @@ fun PhotoCaptionerApp(
         detailedAlbum = uiState.selectedAlbum,
         onDownloadClick = {},
         onEditClick = {
-            viewModel.editAlbum()
             viewModel.navigateToScreen(
                 newScreen = R.string.edit_album,
                 canNavigateBack = true
@@ -226,6 +225,5 @@ fun PhotoCaptionerApp(
         },
         modifier = modifier,
         contentType = contentType,
-        isEditingAlbum = uiState.isEditingAlbum,
     )
 }

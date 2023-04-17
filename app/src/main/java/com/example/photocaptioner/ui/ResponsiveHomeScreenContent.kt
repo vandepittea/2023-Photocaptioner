@@ -9,32 +9,28 @@ import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.Photo
 
 @Composable
-fun AlbumDetailResponsiveScreenChooser(
+fun AlbumsAndAlbumDetailScreen(
+    albumList: List<Album>,
+    onAddClick: () -> Unit,
+    onAlbumClick: (Album) -> Unit,
     detailedAlbum: Album,
     onDownloadClick: () -> Unit,
     onEditClick: () -> Unit,
     onAddPictureClick: () -> Unit,
     onShareClick: () -> Unit,
     onPhotoClick: (Photo) -> Unit,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
-    onAlbumSave: () -> Unit,
-    isEditingAlbum: Boolean,
     modifier: Modifier = Modifier
 ) {
-    if (isEditingAlbum) {
-        AlbumDetailAndAlbumEditScreen(
-            detailedAlbum = detailedAlbum,
-            onDownloadClick = onDownloadClick,
-            onEditClick = onEditClick,
-            onAddPictureClick = onAddPictureClick,
-            onShareClick = onShareClick,
-            onPhotoClick = onPhotoClick,
-            onAlbumTitleChange = onAlbumTitleChange,
-            onAlbumDescriptionChange = onAlbumDescriptionChange,
-            onAlbumSave = onAlbumSave
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+    ) {
+        AlbumsScreen(
+            albumList = albumList,
+            onAddClick = onAddClick,
+            onAlbumClick = onAlbumClick,
+            modifier = Modifier.weight(1f)
         )
-    } else {
         AlbumDetailScreen(
             album = detailedAlbum,
             onDownloadClick = onDownloadClick,
@@ -42,7 +38,7 @@ fun AlbumDetailResponsiveScreenChooser(
             onAddClick = onAddPictureClick,
             onShareClick = onShareClick,
             onPhotoClick = onPhotoClick,
-            modifier = modifier
+            modifier = Modifier.weight(1f)
         )
     }
 }
@@ -70,22 +66,54 @@ fun AlbumDetailAndAlbumEditScreen(
             onEditClick = onEditClick,
             onAddClick = onAddPictureClick,
             onShareClick = onShareClick,
-            onPhotoClick = onPhotoClick
+            onPhotoClick = onPhotoClick,
+            modifier = Modifier.weight(1f)
         )
         EditAlbumScreen(
             albumToEdit = detailedAlbum,
             onAlbumTitleChange = onAlbumTitleChange,
             onAlbumDescriptionChange = onAlbumDescriptionChange,
-            onSave = onAlbumSave
+            onSave = onAlbumSave,
+            modifier = Modifier.weight(1f)
         )
     }
 }
 
 @Composable
 fun AlbumDetailAndPhotoEditScreen(
-
+    detailedAlbum: Album,
+    onDownloadClick: () -> Unit,
+    onEditClick: () -> Unit,
+    onAddPictureClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPhotoClick: (Photo) -> Unit,
+    photoToEdit: Photo,
+    photoDescriptionToEdit: String,
+    onPhotoDescriptionChange: (String) -> Unit,
+    onPhotoSave: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+    ) {
+        AlbumDetailScreen(
+            album = detailedAlbum,
+            onDownloadClick = onDownloadClick,
+            onEditClick = onEditClick,
+            onAddClick = onAddPictureClick,
+            onShareClick = onShareClick,
+            onPhotoClick = onPhotoClick,
+            modifier = Modifier.weight(1f)
+        )
+        EditPhotoScreen(
+            photoToEdit = photoToEdit,
+            description = photoDescriptionToEdit,
+            onPhotoDescriptionChange = onPhotoDescriptionChange,
+            onPhotoSave = onPhotoSave,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }
 
 @Composable

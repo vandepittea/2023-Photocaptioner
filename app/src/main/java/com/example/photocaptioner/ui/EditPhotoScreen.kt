@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
@@ -24,7 +23,7 @@ fun EditPhotoScreen(
     photoToEdit: Photo,
     description: String,
     onPhotoDescriptionChange : (String) -> Unit,
-    onSave: () -> Unit,
+    onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -62,7 +61,7 @@ fun EditPhotoScreen(
         ) {
             Button(
                 text = R.string.save,
-                onClick = onSave
+                onClick = onPhotoSave
             )
         }
     }
