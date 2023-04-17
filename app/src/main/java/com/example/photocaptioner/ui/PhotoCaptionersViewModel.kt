@@ -120,8 +120,21 @@ class PhotoCaptionersViewModel : ViewModel() {
         }
     }
 
+    fun editAlbum() {
+        _uiState.update {
+            it.copy(
+                isEditingAlbum = true
+            )
+        }
+    }
+
     fun saveSelectedAlbum() {
         //  TODO: save the album when working with database
+        _uiState.update {
+            it.copy(
+                isEditingAlbum = false
+            )
+        }
     }
 
     fun updateSelectedPhotoDescription(newDescription: String) {

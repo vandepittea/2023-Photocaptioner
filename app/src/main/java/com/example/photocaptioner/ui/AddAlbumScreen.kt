@@ -175,12 +175,7 @@ fun AddAlbumPhoto(
         modifier = modifier
     ) {
         if (newPhotos.isEmpty()) {
-            Text(
-                text = stringResource(id = R.string.choose_picture_source),
-                style = MaterialTheme.typography.subtitle2,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            ImageOptions(
+            ChoosePicturesSourceScreen(
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps

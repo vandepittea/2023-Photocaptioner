@@ -72,7 +72,8 @@ fun ResponsiveHomeScreen(
     onPhotoDescriptionChange: (String) -> Unit,
     onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
-    contentType: PhotoCaptionerContentType
+    contentType: PhotoCaptionerContentType,
+    isEditingAlbum: Boolean
 ){
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
@@ -137,7 +138,8 @@ fun ResponsiveHomeScreen(
                     onPhotoDescriptionChange,
                     onPhotoSave,
                     modifier,
-                    contentType
+                    contentType,
+                    isEditingAlbum
                 )
             }
         }
@@ -185,7 +187,8 @@ fun ResponsiveHomeScreen(
                 onPhotoDescriptionChange,
                 onPhotoSave,
                 modifier,
-                contentType
+                contentType,
+                isEditingAlbum
             )
 
             AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
@@ -240,7 +243,8 @@ private fun InAppNavigation(
     onPhotoDescriptionChange: (String) -> Unit,
     onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
-    contentType: PhotoCaptionerContentType
+    contentType: PhotoCaptionerContentType,
+    isEditingAlbum: Boolean
 ) {
     NavHost(
         navController = navController,
@@ -271,14 +275,29 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AlbumDetail.name) {
-            AlbumDetailScreen(
-                album = detailedAlbum,
-                onDownloadClick = onDownloadClick,
-                onEditClick = onEditClick,
-                onAddClick = onAddPictureClick,
-                onShareClick = onShareClick,
-                onPhotoClick = onPhotoClick
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailResponsiveScreenChooser(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onAlbumTitleChange = onAlbumTitleChange,
+                    onAlbumDescriptionChange = onAlbumDescriptionChange,
+                    onAlbumSave = onAlbumSave,
+                    isEditingAlbum = isEditingAlbum
+                )
+            } else {
+                AlbumDetailScreen(
+                    album = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {

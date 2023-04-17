@@ -21,5 +21,6 @@ data class PhotoCaptionerUiState(
     val newAlbumName: String = "",
     val newAlbumDescription: String = "",
     val selectedPhoto: Photo = Datasource.defaultPhoto,
-    val newPhotoDescription: String = ""
+    val newPhotoDescription: String = "",
+    val isEditingAlbum: Boolean = false
 )
