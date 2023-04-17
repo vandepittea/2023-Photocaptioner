@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">Photo Captioner</string>
 
+    //menu
+    <string name="navigation_rail" translatable="false">Navigation Rail</string>
+    <string name="navigation_bottom" translatable="false">Navigation Bottom</string>
+    <string name="navigation_drawer" translatable="false">Navigation Drawer</string>
+    <string name="home_menu" translatable="false">Home</string>
+    <string name="camera_menu" translatable="false">Camera</string>
+    <string name="album_menu" translatable="false">Album</string>
+
     //buttons
     <string name="get_started" translatable="false">Get Started</string>
     <string name="take_picture" translatable="false">Take Picture</string>
