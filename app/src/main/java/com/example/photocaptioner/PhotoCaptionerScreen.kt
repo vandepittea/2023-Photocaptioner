@@ -91,6 +91,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.home,
                 canNavigateBack = false
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Home)
             navController.navigate(PhotoCaptionerScreen.Home.name)
         },
         onTakePictureClick = {},
@@ -99,6 +100,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.my_albums,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.navigate(PhotoCaptionerScreen.Albums.name)
         },
         albumList = uiState.albumList,
@@ -108,6 +110,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.add_album,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.navigate(PhotoCaptionerScreen.AddAlbum.name)
         },
         onAlbumClick = {
@@ -116,6 +119,7 @@ fun PhotoCaptionerApp(
                 newScreen = it.name,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
         },
         detailedAlbum = uiState.selectedAlbum,
@@ -125,6 +129,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.edit_album,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.navigate(PhotoCaptionerScreen.EditAlbum.name)
         },
         onAddPictureClick = {
@@ -132,6 +137,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.choose_picture_source,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Photo)
             navController.navigate(PhotoCaptionerScreen.ChoosePicturesSource.name)
         },
         onShareClick = {},
@@ -141,6 +147,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.edit_photo,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.navigate(PhotoCaptionerScreen.EditPhoto.name)
         },
         onChooseCamera = {},
@@ -150,6 +157,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.upload_pictures,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Photo)
             navController.navigate(PhotoCaptionerScreen.AddPictures.name)
         },
         searchValue = uiState.searchValue,
@@ -176,6 +184,7 @@ fun PhotoCaptionerApp(
                 newScreen = R.string.my_albums,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.navigate(PhotoCaptionerScreen.Albums.name)
         },
         albumToEdit = uiState.selectedAlbum,
@@ -191,6 +200,7 @@ fun PhotoCaptionerApp(
                 newScreen = uiState.selectedAlbum.name,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.popBackStack(PhotoCaptionerScreen.AlbumDetail.name, false)
         },
         photoToEdit = uiState.selectedPhoto,
@@ -204,6 +214,7 @@ fun PhotoCaptionerApp(
                 newScreen = uiState.selectedAlbum.name,
                 canNavigateBack = true
             )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
             navController.popBackStack(PhotoCaptionerScreen.AlbumDetail.name, false)
         }
     )
