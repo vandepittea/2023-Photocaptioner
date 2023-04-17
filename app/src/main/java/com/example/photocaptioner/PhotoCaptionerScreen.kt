@@ -1,5 +1,6 @@
 package com.example.photocaptioner
 
+import android.provider.ContactsContract.Contacts.Photo
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -83,6 +84,7 @@ fun PhotoCaptionerApp(
         currentMenuItem = uiState.currentMenuItem,
         onMenuItemPress = { menuItemType: MenuItemType ->
             viewModel.updateCurrentMenuItem(menuItemType = menuItemType)
+            navController.navigate(menuItemType.name)
         },
         onStartUpClick = {
             viewModel.navigateToScreen(
