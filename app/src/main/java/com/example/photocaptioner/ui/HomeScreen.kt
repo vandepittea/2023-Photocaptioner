@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -23,7 +24,6 @@ fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
     recentlyEdited: Album,
-    contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -95,7 +95,7 @@ fun RecentEdits(
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultAlbum, PhotoCaptionerContentType.LIST_ONLY)
+        HomeScreen({}, {}, Datasource.defaultAlbum)
     }
 }
 
@@ -103,6 +103,6 @@ fun HomeScreenPreview(){
 @Composable
 fun HomeScreenPreviewListAndDetail(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultAlbum, PhotoCaptionerContentType.LIST_ONLY)
+        HomeScreen({}, {}, Datasource.defaultAlbum)
     }
 }

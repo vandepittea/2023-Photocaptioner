@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -82,9 +83,9 @@ fun AlbumList(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(400.dp),
-        modifier = modifier
-            .fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -101,6 +102,14 @@ fun AlbumList(
 @Preview
 @Composable
 fun AlbumsScreenPreview(){
+    PhotoCaptionerTheme {
+        AlbumsScreen(Datasource.getAlbums(), {}, {})
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun AlbumsScreenPreviewWithExtendedScreen(){
     PhotoCaptionerTheme {
         AlbumsScreen(Datasource.getAlbums(), {}, {})
     }

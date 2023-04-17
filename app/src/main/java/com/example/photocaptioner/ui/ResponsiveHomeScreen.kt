@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -139,8 +138,7 @@ fun ResponsiveHomeScreen(
                     onPhotoDescriptionChange,
                     onPhotoSave,
                     modifier,
-                    contentType,
-                    isEditingAlbum
+                    contentType
                 )
             }
         }
@@ -184,23 +182,17 @@ fun ResponsiveHomeScreen(
                 onPhotoDescriptionChange,
                 onPhotoSave,
                 modifier.weight(1f),
-                contentType,
-                isEditingAlbum
+                contentType
             )
 
-            Box(){
-                this@Row.AnimatedVisibility(
-                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                ) {
-                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                    BottomNavigationBar(
-                        currentTab = currentMenuItem,
-                        onTabPressed = onMenuItemPress,
-                        navigationItemContentList = navigationItemContentList,
-                        modifier = Modifier.testTag(bottomNavigationContentDescription)
-                    )
-                }
+            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
+                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                BottomNavigationBar(
+                    currentTab = currentMenuItem,
+                    onTabPressed = onMenuItemPress,
+                    navigationItemContentList = navigationItemContentList,
+                    modifier = Modifier.testTag(bottomNavigationContentDescription)
+                )
             }
         }
     }
@@ -245,8 +237,7 @@ private fun InAppNavigation(
     onPhotoDescriptionChange: (String) -> Unit,
     onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
-    contentType: PhotoCaptionerContentType,
-    isEditingAlbum: Boolean
+    contentType: PhotoCaptionerContentType
 ) {
     NavHost(
         navController = navController,
@@ -263,8 +254,7 @@ private fun InAppNavigation(
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
-                recentlyEdited = recentlyEdited,
-                contentType = contentType
+                recentlyEdited = recentlyEdited
             )
         }
 
@@ -277,29 +267,14 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AlbumDetail.name) {
-            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
-                AlbumDetailResponsiveScreenChooser(
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
-                    onEditClick = onEditClick,
-                    onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
-                    onPhotoClick = onPhotoClick,
-                    onAlbumTitleChange = onAlbumTitleChange,
-                    onAlbumDescriptionChange = onAlbumDescriptionChange,
-                    onAlbumSave = onAlbumSave,
-                    isEditingAlbum = isEditingAlbum
-                )
-            } else {
-                AlbumDetailScreen(
-                    album = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
-                    onEditClick = onEditClick,
-                    onAddClick = onAddPictureClick,
-                    onShareClick = onShareClick,
-                    onPhotoClick = onPhotoClick
-                )
-            }
+            AlbumDetailScreen(
+                album = detailedAlbum,
+                onDownloadClick = onDownloadClick,
+                onEditClick = onEditClick,
+                onAddClick = onAddPictureClick,
+                onShareClick = onShareClick,
+                onPhotoClick = onPhotoClick
+            )
         }
 
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
@@ -356,21 +331,6 @@ private fun InAppNavigation(
 }
 
 @Composable
-private fun MenuIcons(navItem: NavigationItemContent){
-    Icon(
-        painter = painterResource(id = navItem.icon),
-        contentDescription = stringResource(id = navItem.text),
-        tint = MaterialTheme.colors.onBackground,
-        modifier = Modifier.size(38.dp)
-    )
-}
-
-@Composable
-private fun MenuSelected(currentTab: MenuItemType, navItem: NavigationItemContent): Boolean{
-    return currentTab == navItem.menuItemType
-}
-
-@Composable
 private fun NavigationRail(
     currentTab: MenuItemType,
     onTabPressed: ((MenuItemType) -> Unit),
@@ -380,10 +340,13 @@ private fun NavigationRail(
     NavigationRail(modifier = modifier.fillMaxHeight()) {
         for (navItem in navigationItemContentList) {
             NavigationRailItem(
-                selected = MenuSelected(currentTab = currentTab, navItem = navItem),
+                selected = currentTab == navItem.menuItemType,
                 onClick = { onTabPressed(navItem.menuItemType) },
                 icon = {
-                    MenuIcons(navItem = navItem)
+                    Icon(
+                        painter = painterResource(id = navItem.icon),
+                        contentDescription = stringResource(id = navItem.text)
+                    )
                 }
             )
         }
@@ -400,10 +363,13 @@ private fun BottomNavigationBar(
     NavigationBar(modifier = modifier.fillMaxWidth()) {
         for (navItem in navigationItemContentList) {
             NavigationBarItem(
-                selected = MenuSelected(currentTab = currentTab, navItem = navItem),
+                selected = currentTab == navItem.menuItemType,
                 onClick = { onTabPressed(navItem.menuItemType) },
                 icon = {
-                    MenuIcons(navItem = navItem)
+                    Icon(
+                        painter = painterResource(id = navItem.icon),
+                        contentDescription = stringResource(id = navItem.text)
+                    )
                 }
             )
         }
@@ -427,7 +393,7 @@ private fun NavigationDrawerContent(
     ) {
         for (navItem in navigationItemContentList) {
             NavigationDrawerItem(
-                selected = MenuSelected(currentTab = selectedDestination, navItem = navItem),
+                selected = selectedDestination == navItem.menuItemType,
                 label = {
                     Text(
                         text = stringResource(id = navItem.text),
@@ -435,7 +401,10 @@ private fun NavigationDrawerContent(
                     )
                 },
                 icon = {
-                    MenuIcons(navItem = navItem)
+                    Icon(
+                        painter = painterResource(id = navItem.icon),
+                        contentDescription = stringResource(id = navItem.text)
+                    )
                 },
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent
