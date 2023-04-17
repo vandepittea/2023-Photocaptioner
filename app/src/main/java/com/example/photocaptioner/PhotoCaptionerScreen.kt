@@ -210,7 +210,8 @@ fun PhotoCaptionersApp(
                         canNavigateBack = true
                     )
                     navController.navigate(PhotoCaptionerScreen.Albums.name)
-                }
+                },
+                contentType = contentType
             )
         }
         composable(PhotoCaptionerScreen.EditAlbum.name) {

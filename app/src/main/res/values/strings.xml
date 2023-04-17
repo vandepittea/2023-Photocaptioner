@@ -19,6 +19,7 @@
     <string name="add_new_album" translatable="false">Add new album</string>
     <string name="edit_album" translatable="false">Edit album</string>
     <string name="edit_photo">Edit Photo</string>
+    <string name="added_pictures">Added Pictures</string>
 
     //labels
     <string name="album_title" translatable="false">Album Title</string>

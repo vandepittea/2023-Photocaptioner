@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @Composable
 fun AddAlbumsScreen(
@@ -32,6 +34,7 @@ fun AddAlbumsScreen(
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
     onAddNewAlbum: () -> Unit,
+    contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -40,31 +43,29 @@ fun AddAlbumsScreen(
             .background(MaterialTheme.colors.background)
             .padding(16.dp)
     ) {
-        Column {
-            TopBar(title = R.string.add_new_album)
-            AlbumTextFields(
-                title = newTitle,
-                description = newDescription,
+        Log.d("ContentType", contentType.toString())
+        if (contentType == PhotoCaptionerContentType.LIST_ONLY) {
+            AddAlbumInnerScreenListOnly(
+                newPhotos = newPhotos,
+                newTitle = newTitle,
+                newDescription = newDescription,
                 onAlbumTitleChange = onAlbumTitleChange,
-                onAlbumDescriptionChange = onAlbumDescriptionChange
+                onAlbumDescriptionChange = onAlbumDescriptionChange,
+                onChooseCamera = onChooseCamera,
+                onChooseGallery = onChooseGallery,
+                onChooseMaps = onChooseMaps
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = stringResource(id = R.string.choose_picture_source),
-                style = MaterialTheme.typography.subtitle2,
+        } else {
+            AddAlbumInnerScreenListAndDetails(
+                newPhotos = newPhotos,
+                newTitle = newTitle,
+                newDescription = newDescription,
+                onAlbumTitleChange = onAlbumTitleChange,
+                onAlbumDescriptionChange = onAlbumDescriptionChange,
+                onChooseCamera = onChooseCamera,
+                onChooseGallery = onChooseGallery,
+                onChooseMaps = onChooseMaps
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            if (newPhotos.isEmpty()) {
-                ImageOptions(
-                    onChooseCamera = onChooseCamera,
-                    onChooseGallery = onChooseGallery,
-                    onChooseMaps = onChooseMaps
-                )
-            } else {
-                AlbumImages(
-                    imagesList = newPhotos
-                )
-            }
         }
         Column(
             modifier = Modifier
@@ -73,6 +74,126 @@ fun AddAlbumsScreen(
                 .background(MaterialTheme.colors.background)
         ) {
             NewAlbumFooter(onAddNewAlbum = onAddNewAlbum)
+        }
+    }
+}
+
+@Composable
+fun AddAlbumInnerScreenListOnly(
+    newPhotos: List<Photo>,
+    newTitle: String,
+    newDescription: String,
+    onAlbumTitleChange: (String) -> Unit,
+    onAlbumDescriptionChange: (String) -> Unit,
+    onChooseCamera: () -> Unit,
+    onChooseGallery: () -> Unit,
+    onChooseMaps: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        AddAlbumInformation(
+            newTitle = newTitle,
+            newDescription = newDescription,
+            onAlbumTitleChange = onAlbumTitleChange,
+            onAlbumDescriptionChange = onAlbumDescriptionChange
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        AddAlbumPhoto(
+            newPhotos = newPhotos,
+            onChooseCamera = onChooseCamera,
+            onChooseGallery = onChooseGallery,
+            onChooseMaps = onChooseMaps
+        )
+    }
+}
+
+@Composable
+fun AddAlbumInnerScreenListAndDetails(
+    newPhotos: List<Photo>,
+    newTitle: String,
+    newDescription: String,
+    onAlbumTitleChange: (String) -> Unit,
+    onAlbumDescriptionChange: (String) -> Unit,
+    onChooseCamera: () -> Unit,
+    onChooseGallery: () -> Unit,
+    onChooseMaps: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+    ) {
+        AddAlbumInformation(
+            newTitle = newTitle,
+            newDescription = newDescription,
+            onAlbumTitleChange = onAlbumTitleChange,
+            onAlbumDescriptionChange = onAlbumDescriptionChange,
+            modifier = Modifier.weight(1f)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        AddAlbumPhoto(
+            newPhotos = newPhotos,
+            onChooseCamera = onChooseCamera,
+            onChooseGallery = onChooseGallery,
+            onChooseMaps = onChooseMaps,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+fun AddAlbumInformation(
+    newTitle: String,
+    newDescription: String,
+    onAlbumTitleChange: (String) -> Unit,
+    onAlbumDescriptionChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        TopBar(title = R.string.add_new_album)
+        AlbumTextFields(
+            title = newTitle,
+            description = newDescription,
+            onAlbumTitleChange = onAlbumTitleChange,
+            onAlbumDescriptionChange = onAlbumDescriptionChange
+        )
+    }
+}
+
+@Composable
+fun AddAlbumPhoto(
+    newPhotos: List<Photo>,
+    onChooseCamera: () -> Unit,
+    onChooseGallery: () -> Unit,
+    onChooseMaps: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        if (newPhotos.isEmpty()) {
+            Text(
+                text = stringResource(id = R.string.choose_picture_source),
+                style = MaterialTheme.typography.subtitle2,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            ImageOptions(
+                onChooseCamera = onChooseCamera,
+                onChooseGallery = onChooseGallery,
+                onChooseMaps = onChooseMaps
+            )
+        } else {
+            Text(
+                text = stringResource(id = R.string.added_pictures),
+                style = MaterialTheme.typography.subtitle2,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            AlbumImages(
+                imagesList = newPhotos
+            )
         }
     }
 }
@@ -164,7 +285,17 @@ fun NewAlbumFooter(
 @Composable
 fun AddAlbumsScreenPreviewWithoutPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(emptyList(), "", "", {}, {}, {}, {}, {}, {})
+        AddAlbumsScreen(
+            emptyList(),
+            "",
+            "",
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            PhotoCaptionerContentType.LIST_ONLY)
     }
 }
 
@@ -172,6 +303,54 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 @Composable
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(Datasource.defaultAlbum.photos, "France", "My first trip to France", {}, {}, {}, {}, {}, {})
+        AddAlbumsScreen(
+            Datasource.defaultAlbum.photos,
+            "France",
+            "My first trip to France",
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            PhotoCaptionerContentType.LIST_ONLY
+        )
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
+    PhotoCaptionerTheme {
+        AddAlbumsScreen(
+            emptyList(),
+            "",
+            "",
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            PhotoCaptionerContentType.LIST_AND_DETAIL)
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
+    PhotoCaptionerTheme {
+        AddAlbumsScreen(
+            Datasource.defaultAlbum.photos,
+            "France",
+            "My first trip to France",
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            PhotoCaptionerContentType.LIST_AND_DETAIL
+        )
     }
 }
