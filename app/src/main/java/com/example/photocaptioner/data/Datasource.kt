@@ -2,6 +2,7 @@ package com.example.photocaptioner.data
 
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.NavigationItemContent
 import com.example.photocaptioner.model.Photo
 import java.time.LocalDate
 
@@ -55,4 +56,22 @@ object Datasource {
             )
         )
     }
+
+    val navigationItemContentList = listOf(
+        NavigationItemContent(
+            menuItemType = MenuItemType.Home,
+            icon = R.drawable.baseline_home_24,
+            text = R.string.home_menu
+        ),
+        NavigationItemContent(
+            menuItemType = MenuItemType.Photo,
+            icon = R.drawable.baseline_camera_alt_24,
+            text = R.string.camera_menu
+        ),
+        NavigationItemContent(
+            menuItemType = MenuItemType.Album,
+            icon = R.drawable.baseline_photo_album_24,
+            text = R.string.album_menu
+        )
+    )
 }

@@ -61,3 +61,11 @@ fun StartUpScreenPreview(){
         StartUpScreen(onButtonClick = {})
     }
 }
+
+@Preview(widthDp = 1000)
+@Composable
+fun StartUpScreenPreviewWithExpandedView(){
+    PhotoCaptionerTheme {
+        StartUpScreen(onButtonClick = {})
+    }
+}

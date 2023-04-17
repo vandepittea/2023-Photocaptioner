@@ -22,7 +22,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
 import com.example.photocaptioner.R
 import java.time.LocalDate
 
@@ -35,8 +34,8 @@ fun Button(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.onPrimary
+            backgroundColor = colors.primary,
+            contentColor = colors.onPrimary
         ),
         modifier = modifier
             .fillMaxWidth()
@@ -61,8 +60,8 @@ fun ButtonWithIcon(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.onPrimary
+            backgroundColor = colors.primary,
+            contentColor = colors.onPrimary
         ),
         modifier = modifier
             .fillMaxWidth()
@@ -78,7 +77,7 @@ fun ButtonWithIcon(
             Icon(
                 painter = painter,
                 contentDescription = stringResource(id = contentDescription),
-                tint = MaterialTheme.colors.onPrimary,
+                tint = colors.onPrimary,
                 modifier = Modifier.size(50.dp)
             )
 
@@ -134,7 +133,7 @@ fun ImageWithDescription(
 }
 
 /* TODO */
-@Composable
+/*@Composable
 fun ImageFromUrl(
     url: String,
     description: String?,
@@ -156,7 +155,7 @@ fun ImageFromUrl(
             .clip(RoundedCornerShape(8.dp)),
         contentScale = ContentScale.Crop
     )
-}
+}*/
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -224,7 +223,7 @@ fun ButtonIcon(
             Icon(
                 imageVector = icon,
                 contentDescription = stringResource(id = description),
-                tint = MaterialTheme.colors.onPrimary,
+                tint = colors.onPrimary,
                 modifier = Modifier.size(44.dp)
             )
         },
@@ -250,21 +249,21 @@ fun SearchBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colors.surface,
+                    color = colors.surface,
                     shape = RoundedCornerShape(8.dp)
                 ),
             placeholder = {
                 Text(
                     text = "Search",
                     style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                    color = colors.onSurface.copy(alpha = 0.5f)
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Search,
                     contentDescription = stringResource(R.string.search_icon),
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                    tint = colors.onSurface.copy(alpha = 0.5f)
                 )
             },
             textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
