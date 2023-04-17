@@ -10,8 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,6 +30,7 @@ import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource.navigationItemContentList
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -140,11 +143,7 @@ fun ResponsiveHomeScreen(
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background)
-        ) {
+        Column(modifier.fillMaxSize()) {
             InAppNavigation(
                 navController,
                 onStartUpClick,
@@ -182,17 +181,22 @@ fun ResponsiveHomeScreen(
                 photoDescriptionToEdit,
                 onPhotoDescriptionChange,
                 onPhotoSave,
-                modifier
+                modifier.weight(1f)
             )
 
-            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
-                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                BottomNavigationBar(
-                    currentTab = currentMenuItem,
-                    onTabPressed = onMenuItemPress,
-                    navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier.testTag(bottomNavigationContentDescription)
-                )
+            Box(){
+                this@Row.AnimatedVisibility(
+                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
+                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                    BottomNavigationBar(
+                        currentTab = currentMenuItem,
+                        onTabPressed = onMenuItemPress,
+                        navigationItemContentList = navigationItemContentList,
+                        modifier = Modifier.testTag(bottomNavigationContentDescription)
+                    )
+                }
             }
         }
     }
