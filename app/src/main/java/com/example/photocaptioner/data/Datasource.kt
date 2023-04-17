@@ -69,7 +69,7 @@ object Datasource {
             text = R.string.camera_menu
         ),
         NavigationItemContent(
-            menuItemType = MenuItemType.Album,
+            menuItemType = MenuItemType.Albums,
             icon = R.drawable.baseline_photo_album_24,
             text = R.string.album_menu
         )
