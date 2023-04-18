@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.MapsPhoto
 import com.example.photocaptioner.model.Photo
 
 @Composable
@@ -118,14 +119,74 @@ fun AlbumDetailAndPhotoEditScreen(
 
 @Composable
 fun AlbumDetailAndPhotoSourceChooserScreen(
-
+    detailedAlbum: Album,
+    onDownloadClick: () -> Unit,
+    onEditClick: () -> Unit,
+    onAddPictureClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPhotoClick: (Photo) -> Unit,
+    onChooseCamera: () -> Unit,
+    onChooseGallery: () -> Unit,
+    onChooseMaps: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+    ) {
+        AlbumDetailScreen(
+            album = detailedAlbum,
+            onDownloadClick = onDownloadClick,
+            onEditClick = onEditClick,
+            onAddClick = onAddPictureClick,
+            onShareClick = onShareClick,
+            onPhotoClick = onPhotoClick,
+            modifier = Modifier.weight(1f)
+        )
+        ChoosePicturesSourceScreen(
+            onChooseCamera = onChooseCamera,
+            onChooseGallery = onChooseGallery,
+            onChooseMaps = onChooseMaps,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }
 
 @Composable
 fun AlbumDetailAndAddPhotoScreen(
-
+    detailedAlbum: Album,
+    onDownloadClick: () -> Unit,
+    onEditClick: () -> Unit,
+    onAddPictureClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPhotoClick: (Photo) -> Unit,
+    searchValue: String,
+    searchedPhotos: List<Pair<Boolean, MapsPhoto>>,
+    onSearchChanged: (String) -> Unit,
+    onImageSelected: (Int) -> Unit,
+    onUploadButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+    ) {
+        AlbumDetailScreen(
+            album = detailedAlbum,
+            onDownloadClick = onDownloadClick,
+            onEditClick = onEditClick,
+            onAddClick = onAddPictureClick,
+            onShareClick = onShareClick,
+            onPhotoClick = onPhotoClick,
+            modifier = Modifier.weight(1f)
+        )
+        AddPicturesScreen(
+            searchValue = searchValue,
+            searchedPhotos = searchedPhotos,
+            onSearchChanged = onSearchChanged,
+            onImageSelected = onImageSelected,
+            onUploadButtonClick = onUploadButtonClick,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }

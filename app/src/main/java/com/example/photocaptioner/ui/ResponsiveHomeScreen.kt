@@ -291,21 +291,51 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
-            ChoosePicturesSourceScreen(
-                onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
-                onChooseMaps = onChooseMaps
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndPhotoSourceChooserScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onChooseCamera = onChooseCamera,
+                    onChooseGallery = onChooseGallery,
+                    onChooseMaps = onChooseMaps
+                )
+            } else {
+                ChoosePicturesSourceScreen(
+                    onChooseCamera = onChooseCamera,
+                    onChooseGallery = onChooseGallery,
+                    onChooseMaps = onChooseMaps
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.AddPictures.name) {
-            AddPicturesScreen(
-                searchValue = searchValue,
-                searchedPhotos = searchedPhotos,
-                onSearchChanged = onSearchChanged,
-                onImageSelected = onImageSelected,
-                onUploadButtonClick = onPictureUploadButtonClick
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndAddPhotoScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    searchValue = searchValue,
+                    searchedPhotos = searchedPhotos,
+                    onSearchChanged = onSearchChanged,
+                    onImageSelected = onImageSelected,
+                    onUploadButtonClick = onPictureUploadButtonClick
+                )
+            } else {
+                AddPicturesScreen(
+                    searchValue = searchValue,
+                    searchedPhotos = searchedPhotos,
+                    onSearchChanged = onSearchChanged,
+                    onImageSelected = onImageSelected,
+                    onUploadButtonClick = onPictureUploadButtonClick
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.AddAlbum.name) {
