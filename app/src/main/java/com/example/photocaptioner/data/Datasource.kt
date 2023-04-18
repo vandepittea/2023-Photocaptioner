@@ -1,11 +1,5 @@
 package com.example.photocaptioner.data
 
-import android.view.Menu
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.NavigationItemContent

@@ -29,9 +29,10 @@ fun AlbumDetailScreen(
     onAddClick: () -> Unit,
     onShareClick: () -> Unit,
     onPhotoClick: (Photo) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
@@ -94,9 +95,10 @@ fun AlbumHeader(
     name: String,
     onDownloadClick: () -> Unit,
     onEditClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -140,10 +142,11 @@ fun AlbumHeader(
 @Composable
 fun DescriptionRow(
     description: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(bottom = 16.dp)
+        modifier = modifier.padding(bottom = 16.dp)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_description_24),
@@ -164,10 +167,12 @@ fun DescriptionRow(
 
 @Composable
 fun TimeRow(
-    lastChanged: String
+    lastChanged: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_access_time_filled_24),
@@ -189,10 +194,11 @@ fun TimeRow(
 @Composable
 fun AlbumFooter(
     onAddClick: () -> Unit,
-    onShareClick: () -> Unit
+    onShareClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 10.dp),
         horizontalArrangement = Arrangement.SpaceAround,

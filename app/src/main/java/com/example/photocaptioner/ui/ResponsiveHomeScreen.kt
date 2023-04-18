@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -28,6 +28,7 @@ import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource.navigationItemContentList
+import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +40,7 @@ fun ResponsiveHomeScreen(
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
-    recentlyEdited: Photo,
+    recentlyEdited: Album,
     albumList: List<Album> = emptyList(),
     onAddAlbumClick: () -> Unit,
     onAlbumClick: (Album) -> Unit,
@@ -71,8 +72,10 @@ fun ResponsiveHomeScreen(
     photoDescriptionToEdit: String,
     onPhotoDescriptionChange: (String) -> Unit,
     onPhotoSave: () -> Unit,
-    modifier: Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+    contentType: PhotoCaptionerContentType,
+    onRecentlyEditedClick: () -> Unit,
+) {
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
             val navigationRailContentDescription = stringResource(R.string.navigation_rail)
@@ -97,103 +100,102 @@ fun ResponsiveHomeScreen(
                     }
                 },
                 modifier = Modifier.testTag(navigationDrawerContentDescription)
-            ){
+            ) {
                 InAppNavigation(
-                    navController,
-                    onStartUpClick,
-                    onTakePictureClick,
-                    onGoToAlbumsClick,
-                    recentlyEdited,
-                    albumList,
-                    onAddAlbumClick,
-                    onAlbumClick,
-                    detailedAlbum,
-                    onDownloadClick,
-                    onEditClick,
-                    onAddPictureClick,
-                    onShareClick,
-                    onPhotoClick,
-                    onChooseCamera,
-                    onChooseGallery,
-                    onChooseMaps,
-                    searchValue,
-                    searchedPhotos,
-                    onSearchChanged,
-                    onImageSelected,
-                    onPictureUploadButtonClick,
-                    newPhotos,
-                    newTitle,
-                    newDescription,
-                    onAlbumTitleAdd,
-                    onAlbumDescriptionAdd,
-                    onAddNewAlbum,
-                    albumToEdit,
-                    onAlbumTitleChange,
-                    onAlbumDescriptionChange,
-                    onAlbumSave,
-                    photoToEdit,
-                    photoDescriptionToEdit,
-                    onPhotoDescriptionChange,
-                    onPhotoSave,
-                    modifier
+                    navController = navController,
+                    onStartUpClick = onStartUpClick,
+                    onTakePictureClick = onTakePictureClick,
+                    onGoToAlbumsClick = onGoToAlbumsClick,
+                    recentlyEdited = recentlyEdited,
+                    albumList = albumList,
+                    onAddAlbumClick = onAddAlbumClick,
+                    onAlbumClick = onAlbumClick,
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onChooseCamera = onChooseCamera,
+                    onChooseGallery = onChooseGallery,
+                    onChooseMaps = onChooseMaps,
+                    searchValue = searchValue,
+                    searchedPhotos = searchedPhotos,
+                    onSearchChanged = onSearchChanged,
+                    onImageSelected = onImageSelected,
+                    onPictureUploadButtonClick = onPictureUploadButtonClick,
+                    newPhotos = newPhotos,
+                    newTitle = newTitle,
+                    newDescription = newDescription,
+                    onAlbumTitleAdd = onAlbumTitleAdd,
+                    onAlbumDescriptionAdd = onAlbumDescriptionAdd,
+                    onAddNewAlbum = onAddNewAlbum,
+                    albumToEdit = albumToEdit,
+                    onAlbumTitleChange = onAlbumTitleChange,
+                    onAlbumDescriptionChange = onAlbumDescriptionChange,
+                    onAlbumSave = onAlbumSave,
+                    photoToEdit = photoToEdit,
+                    photoDescriptionToEdit = photoDescriptionToEdit,
+                    onPhotoDescriptionChange = onPhotoDescriptionChange,
+                    onPhotoSave = onPhotoSave,
+                    contentType = contentType,
+                    onRecentlyEditedClick = onRecentlyEditedClick,
+                    modifier = modifier
                 )
             }
         }
 
         Column(modifier.fillMaxSize()) {
             InAppNavigation(
-                navController,
-                onStartUpClick,
-                onTakePictureClick,
-                onGoToAlbumsClick,
-                recentlyEdited,
-                albumList,
-                onAddAlbumClick,
-                onAlbumClick,
-                detailedAlbum,
-                onDownloadClick,
-                onEditClick,
-                onAddPictureClick,
-                onShareClick,
-                onPhotoClick,
-                onChooseCamera,
-                onChooseGallery,
-                onChooseMaps,
-                searchValue,
-                searchedPhotos,
-                onSearchChanged,
-                onImageSelected,
-                onPictureUploadButtonClick,
-                newPhotos,
-                newTitle,
-                newDescription,
-                onAlbumTitleAdd,
-                onAlbumDescriptionAdd,
-                onAddNewAlbum,
-                albumToEdit,
-                onAlbumTitleChange,
-                onAlbumDescriptionChange,
-                onAlbumSave,
-                photoToEdit,
-                photoDescriptionToEdit,
-                onPhotoDescriptionChange,
-                onPhotoSave,
-                modifier.weight(1f)
+                navController = navController,
+                onStartUpClick = onStartUpClick,
+                onTakePictureClick = onTakePictureClick,
+                onGoToAlbumsClick = onGoToAlbumsClick,
+                recentlyEdited = recentlyEdited,
+                albumList = albumList,
+                onAddAlbumClick = onAddAlbumClick,
+                onAlbumClick = onAlbumClick,
+                detailedAlbum = detailedAlbum,
+                onDownloadClick = onDownloadClick,
+                onEditClick = onEditClick,
+                onAddPictureClick = onAddPictureClick,
+                onShareClick = onShareClick,
+                onPhotoClick = onPhotoClick,
+                onChooseCamera = onChooseCamera,
+                onChooseGallery = onChooseGallery,
+                onChooseMaps = onChooseMaps,
+                searchValue = searchValue,
+                searchedPhotos = searchedPhotos,
+                onSearchChanged = onSearchChanged,
+                onImageSelected = onImageSelected,
+                onPictureUploadButtonClick = onPictureUploadButtonClick,
+                newPhotos = newPhotos,
+                newTitle = newTitle,
+                newDescription = newDescription,
+                onAlbumTitleAdd = onAlbumTitleAdd,
+                onAlbumDescriptionAdd = onAlbumDescriptionAdd,
+                onAddNewAlbum = onAddNewAlbum,
+                albumToEdit = albumToEdit,
+                onAlbumTitleChange = onAlbumTitleChange,
+                onAlbumDescriptionChange = onAlbumDescriptionChange,
+                onAlbumSave = onAlbumSave,
+                photoToEdit = photoToEdit,
+                photoDescriptionToEdit = photoDescriptionToEdit,
+                onPhotoDescriptionChange = onPhotoDescriptionChange,
+                onPhotoSave = onPhotoSave,
+                contentType = contentType,
+                onRecentlyEditedClick = onRecentlyEditedClick,
+                modifier = modifier
             )
 
-            Box(){
-                this@Row.AnimatedVisibility(
-                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                ) {
-                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                    BottomNavigationBar(
-                        currentTab = currentMenuItem,
-                        onTabPressed = onMenuItemPress,
-                        navigationItemContentList = navigationItemContentList,
-                        modifier = Modifier.testTag(bottomNavigationContentDescription)
-                    )
-                }
+            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
+                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                BottomNavigationBar(
+                    currentTab = currentMenuItem,
+                    onTabPressed = onMenuItemPress,
+                    navigationItemContentList = navigationItemContentList,
+                    modifier = Modifier.testTag(bottomNavigationContentDescription)
+                )
             }
         }
     }
@@ -205,7 +207,7 @@ private fun InAppNavigation(
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
-    recentlyEdited: Photo,
+    recentlyEdited: Album,
     albumList: List<Album> = emptyList(),
     onAddAlbumClick: () -> Unit,
     onAlbumClick: (Album) -> Unit,
@@ -237,7 +239,9 @@ private fun InAppNavigation(
     photoDescriptionToEdit: String,
     onPhotoDescriptionChange: (String) -> Unit,
     onPhotoSave: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentType: PhotoCaptionerContentType,
+    onRecentlyEditedClick: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -254,7 +258,8 @@ private fun InAppNavigation(
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
-                recentlyEdited = recentlyEdited
+                recentlyEdited = recentlyEdited,
+                onRecentlyEditedClick = onRecentlyEditedClick
             )
         }
 
@@ -267,22 +272,50 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AlbumDetail.name) {
-            AlbumDetailScreen(
-                album = detailedAlbum,
-                onDownloadClick = onDownloadClick,
-                onEditClick = onEditClick,
-                onAddClick = onAddPictureClick,
-                onShareClick = onShareClick,
-                onPhotoClick = onPhotoClick
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumsAndAlbumDetailScreen(
+                    albumList = albumList,
+                    onAddClick = onAddAlbumClick,
+                    onAlbumClick = onAlbumClick,
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick
+                )
+            } else {
+                AlbumDetailScreen(
+                    album = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
-            ChoosePicturesSourceScreen(
-                onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
-                onChooseMaps = onChooseMaps
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndPhotoSourceChooserScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onChooseCamera = onChooseCamera,
+                    onChooseGallery = onChooseGallery,
+                    onChooseMaps = onChooseMaps
+                )
+            } else {
+                ChoosePicturesSourceScreen(
+                    onChooseCamera = onChooseCamera,
+                    onChooseGallery = onChooseGallery,
+                    onChooseMaps = onChooseMaps
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.AddPictures.name) {
@@ -305,43 +338,58 @@ private fun InAppNavigation(
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
-                onAddNewAlbum = onAddNewAlbum
+                onAddNewAlbum = onAddNewAlbum,
+                contentType = contentType
             )
         }
 
         composable(PhotoCaptionerScreen.EditAlbum.name) {
-            EditAlbumScreen(
-                albumToEdit = albumToEdit,
-                onAlbumTitleChange = onAlbumTitleChange,
-                onAlbumDescriptionChange = onAlbumDescriptionChange,
-                onSave = onAlbumSave
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndAlbumEditScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onAlbumTitleChange = onAlbumTitleChange,
+                    onAlbumDescriptionChange = onAlbumDescriptionChange,
+                    onAlbumSave = onAlbumSave
+                )
+            } else {
+                EditAlbumScreen(
+                    albumToEdit = albumToEdit,
+                    onAlbumTitleChange = onAlbumTitleChange,
+                    onAlbumDescriptionChange = onAlbumDescriptionChange,
+                    onSave = onAlbumSave
+                )
+            }
         }
 
         composable(PhotoCaptionerScreen.EditPhoto.name) {
-            EditPhotoScreen(
-                photoToEdit = photoToEdit,
-                description = photoDescriptionToEdit,
-                onPhotoDescriptionChange = onPhotoDescriptionChange,
-                onSave = onPhotoSave
-            )
+            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
+                AlbumDetailAndPhotoEditScreen(
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    photoToEdit = photoToEdit,
+                    photoDescriptionToEdit = photoDescriptionToEdit,
+                    onPhotoDescriptionChange = onPhotoDescriptionChange,
+                    onPhotoSave = onPhotoSave
+                )
+            } else {
+                EditPhotoScreen(
+                    photoToEdit = photoToEdit,
+                    description = photoDescriptionToEdit,
+                    onPhotoDescriptionChange = onPhotoDescriptionChange,
+                    onPhotoSave = onPhotoSave
+                )
+            }
         }
     }
-}
-
-@Composable
-private fun MenuIcons(navItem: NavigationItemContent){
-    Icon(
-        painter = painterResource(id = navItem.icon),
-        contentDescription = stringResource(id = navItem.text),
-        tint = MaterialTheme.colors.onBackground,
-        modifier = Modifier.size(38.dp)
-    )
-}
-
-@Composable
-private fun MenuSelected(currentTab: MenuItemType, navItem: NavigationItemContent): Boolean{
-    return currentTab == navItem.menuItemType
 }
 
 @Composable
@@ -354,10 +402,13 @@ private fun NavigationRail(
     NavigationRail(modifier = modifier.fillMaxHeight()) {
         for (navItem in navigationItemContentList) {
             NavigationRailItem(
-                selected = MenuSelected(currentTab = currentTab, navItem = navItem),
+                selected = currentTab == navItem.menuItemType,
                 onClick = { onTabPressed(navItem.menuItemType) },
                 icon = {
-                    MenuIcons(navItem = navItem)
+                    Icon(
+                        painter = painterResource(id = navItem.icon),
+                        contentDescription = stringResource(id = navItem.text)
+                    )
                 }
             )
         }
@@ -374,10 +425,13 @@ private fun BottomNavigationBar(
     NavigationBar(modifier = modifier.fillMaxWidth()) {
         for (navItem in navigationItemContentList) {
             NavigationBarItem(
-                selected = MenuSelected(currentTab = currentTab, navItem = navItem),
+                selected = currentTab == navItem.menuItemType,
                 onClick = { onTabPressed(navItem.menuItemType) },
                 icon = {
-                    MenuIcons(navItem = navItem)
+                    Icon(
+                        painter = painterResource(id = navItem.icon),
+                        contentDescription = stringResource(id = navItem.text)
+                    )
                 }
             )
         }
@@ -401,7 +455,7 @@ private fun NavigationDrawerContent(
     ) {
         for (navItem in navigationItemContentList) {
             NavigationDrawerItem(
-                selected = MenuSelected(currentTab = selectedDestination, navItem = navItem),
+                selected = selectedDestination == navItem.menuItemType,
                 label = {
                     Text(
                         text = stringResource(id = navItem.text),
@@ -409,7 +463,10 @@ private fun NavigationDrawerContent(
                     )
                 },
                 icon = {
-                    MenuIcons(navItem = navItem)
+                    Icon(
+                        painter = painterResource(id = navItem.icon),
+                        contentDescription = stringResource(id = navItem.text)
+                    )
                 },
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent

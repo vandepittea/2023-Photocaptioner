@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -13,17 +14,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
-    recentlyEdited: Photo
+    recentlyEdited: Album,
+    onRecentlyEditedClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
+    BackHandler(
+        onBack = {}
+    )
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.SpaceBetween
@@ -45,7 +51,10 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecentEdits(recentlyEdited)
+            RecentEdits(
+                recentlyEdited = recentlyEdited,
+                onRecentlyEditedClick = onRecentlyEditedClick
+            )
         }
     }
 }
@@ -72,7 +81,8 @@ fun Buttons(
 
 @Composable
 fun RecentEdits(
-    photo: Photo
+    recentlyEdited: Album,
+    onRecentlyEditedClick: () -> Unit
 ) {
     Text(
         text = stringResource(id = R.string.recently_edited),
@@ -81,16 +91,24 @@ fun RecentEdits(
     )
 
     ImageWithDescription(
-        image = photo.image,
-        description = photo.description,
-        onClick = {}
+        image = recentlyEdited.photos.first().image,
+        description = recentlyEdited.description,
+        onClick = onRecentlyEditedClick
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultPhoto)
+        HomeScreen({}, {}, Datasource.defaultAlbum, {})
+    }
+}
+
+@Preview(showBackground = true, widthDp = 1000)
+@Composable
+fun HomeScreenPreviewListAndDetail(){
+    PhotoCaptionerTheme {
+        HomeScreen({}, {}, Datasource.defaultAlbum, {})
     }
 }

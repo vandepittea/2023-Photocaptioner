@@ -2,7 +2,6 @@ package com.example.photocaptioner.ui
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
-import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.model.Album

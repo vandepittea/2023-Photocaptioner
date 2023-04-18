@@ -1,8 +1,12 @@
 package com.example.photocaptioner.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -18,15 +22,17 @@ import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @Composable
 fun AlbumsScreen(
     albumList: List<Album>,
     onAddClick: () -> Unit,
-    onAlbumClick: (Album) -> Unit
+    onAlbumClick: (Album) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
@@ -44,10 +50,11 @@ fun AlbumsScreen(
 
 @Composable
 fun TopBar(
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,12 +78,16 @@ fun TopBar(
 @Composable
 fun AlbumList(
     albumList: List<Album>,
-    onAlbumClick: (Album) -> Unit
+    onAlbumClick: (Album) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(400.dp),
         modifier = Modifier
-            .fillMaxSize(),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(albumList) { album ->
             ImageWithDescription(
@@ -91,6 +102,14 @@ fun AlbumList(
 @Preview
 @Composable
 fun AlbumsScreenPreview(){
+    PhotoCaptionerTheme {
+        AlbumsScreen(Datasource.getAlbums(), {}, {})
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun AlbumsScreenPreviewWithExtendedScreen(){
     PhotoCaptionerTheme {
         AlbumsScreen(Datasource.getAlbums(), {}, {})
     }

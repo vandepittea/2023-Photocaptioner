@@ -13,20 +13,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
-fun StartUpScreen(onButtonClick: () -> Unit) {
+fun StartUpScreen(
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     BackHandler(
         onBack = {}
     )
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
-        verticalArrangement = Arrangement.SpaceEvenly
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(R.string.app_name),
@@ -41,7 +46,7 @@ fun StartUpScreen(onButtonClick: () -> Unit) {
             painter = painterResource(id = R.drawable.camera),
             contentDescription = null,
             modifier = Modifier
-                .fillMaxWidth()
+                .height(300.dp)
                 .aspectRatio(1f)
         )
 
@@ -52,6 +57,14 @@ fun StartUpScreen(onButtonClick: () -> Unit) {
 @Preview
 @Composable
 fun StartUpScreenPreview(){
+    PhotoCaptionerTheme {
+        StartUpScreen(onButtonClick = {})
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun StartUpScreenPreviewWithExpandedView(){
     PhotoCaptionerTheme {
         StartUpScreen(onButtonClick = {})
     }
