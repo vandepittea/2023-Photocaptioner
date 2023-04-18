@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -15,15 +14,14 @@ import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Album
-import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
-import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @Composable
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
     recentlyEdited: Album,
+    onRecentlyEditedClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -49,7 +47,10 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecentEdits(recentlyEdited)
+            RecentEdits(
+                recentlyEdited = recentlyEdited,
+                onRecentlyEditedClick = onRecentlyEditedClick
+            )
         }
     }
 }
@@ -76,7 +77,8 @@ fun Buttons(
 
 @Composable
 fun RecentEdits(
-    album: Album
+    recentlyEdited: Album,
+    onRecentlyEditedClick: () -> Unit
 ) {
     Text(
         text = stringResource(id = R.string.recently_edited),
@@ -85,9 +87,9 @@ fun RecentEdits(
     )
 
     ImageWithDescription(
-        image = album.photos.first().image,
-        description = album.description,
-        onClick = {}
+        image = recentlyEdited.photos.first().image,
+        description = recentlyEdited.description,
+        onClick = onRecentlyEditedClick
     )
 }
 
@@ -95,7 +97,7 @@ fun RecentEdits(
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultAlbum)
+        HomeScreen({}, {}, Datasource.defaultAlbum, {})
     }
 }
 
@@ -103,6 +105,6 @@ fun HomeScreenPreview(){
 @Composable
 fun HomeScreenPreviewListAndDetail(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultAlbum)
+        HomeScreen({}, {}, Datasource.defaultAlbum, {})
     }
 }

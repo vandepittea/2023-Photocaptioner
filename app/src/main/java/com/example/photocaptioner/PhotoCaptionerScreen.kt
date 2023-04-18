@@ -1,6 +1,5 @@
 package com.example.photocaptioner
 
-import android.provider.ContactsContract.Contacts.Photo
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -225,5 +224,14 @@ fun PhotoCaptionerApp(
         },
         modifier = modifier,
         contentType = contentType,
+        onRecentlyEditedClick = {
+            viewModel.selectAlbum(uiState.recentlyEdited)
+            viewModel.navigateToScreen(
+                newScreen = uiState.selectedAlbum.name,
+                canNavigateBack = true
+            )
+            viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
+            navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
+        }
     )
 }
