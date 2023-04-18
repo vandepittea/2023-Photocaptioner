@@ -69,14 +69,17 @@ fun PhotoCaptionerApp(
             navigationType = PhotoCaptionerNavigationType.BOTTOM_NAVIGATION
             contentType = PhotoCaptionerContentType.LIST_ONLY
         }
+
         WindowWidthSizeClass.Medium -> {
             navigationType = PhotoCaptionerNavigationType.NAVIGATION_RAIL
             contentType = PhotoCaptionerContentType.LIST_ONLY
         }
+
         WindowWidthSizeClass.Expanded -> {
             navigationType = PhotoCaptionerNavigationType.PERMANENT_NAVIGATION_DRAWER
             contentType = PhotoCaptionerContentType.LIST_AND_DETAIL
         }
+
         else -> {
             navigationType = PhotoCaptionerNavigationType.BOTTOM_NAVIGATION
             contentType = PhotoCaptionerContentType.LIST_ONLY
@@ -173,7 +176,10 @@ fun PhotoCaptionerApp(
         onImageSelected = {
             viewModel.selectImage(it)
         },
-        onPictureUploadButtonClick = {},
+        onPictureUploadButtonClick = {
+            // Improve when we can use pictures with urls
+            navController.navigateUp()
+        },
         newPhotos = uiState.newPhotos,
         newTitle = uiState.newAlbumName,
         newDescription = uiState.newAlbumDescription,

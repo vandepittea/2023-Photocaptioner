@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -24,6 +25,9 @@ fun HomeScreen(
     onRecentlyEditedClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler(
+        onBack = {}
+    )
     Column(
         modifier = modifier
             .fillMaxSize()

@@ -75,7 +75,7 @@ fun ResponsiveHomeScreen(
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: () -> Unit,
-){
+) {
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
             val navigationRailContentDescription = stringResource(R.string.navigation_rail)
@@ -100,33 +100,33 @@ fun ResponsiveHomeScreen(
                     }
                 },
                 modifier = Modifier.testTag(navigationDrawerContentDescription)
-            ){
+            ) {
                 InAppNavigation(
                     navController = navController,
-                    onStartUpClick =  onStartUpClick,
-                    onTakePictureClick =  onTakePictureClick,
-                    onGoToAlbumsClick =  onGoToAlbumsClick,
-                    recentlyEdited =  recentlyEdited,
-                    albumList =  albumList,
-                    onAddAlbumClick =  onAddAlbumClick,
+                    onStartUpClick = onStartUpClick,
+                    onTakePictureClick = onTakePictureClick,
+                    onGoToAlbumsClick = onGoToAlbumsClick,
+                    recentlyEdited = recentlyEdited,
+                    albumList = albumList,
+                    onAddAlbumClick = onAddAlbumClick,
                     onAlbumClick = onAlbumClick,
-                    detailedAlbum =  detailedAlbum,
-                    onDownloadClick =  onDownloadClick,
-                    onEditClick =  onEditClick,
-                    onAddPictureClick =  onAddPictureClick,
-                    onShareClick =  onShareClick,
-                    onPhotoClick =  onPhotoClick,
-                    onChooseCamera =  onChooseCamera,
-                    onChooseGallery =  onChooseGallery,
-                    onChooseMaps =  onChooseMaps,
-                    searchValue =  searchValue,
-                    searchedPhotos =  searchedPhotos,
-                    onSearchChanged =  onSearchChanged,
-                    onImageSelected =  onImageSelected,
-                    onPictureUploadButtonClick =  onPictureUploadButtonClick,
-                    newPhotos =  newPhotos,
-                    newTitle =  newTitle,
-                    newDescription =  newDescription,
+                    detailedAlbum = detailedAlbum,
+                    onDownloadClick = onDownloadClick,
+                    onEditClick = onEditClick,
+                    onAddPictureClick = onAddPictureClick,
+                    onShareClick = onShareClick,
+                    onPhotoClick = onPhotoClick,
+                    onChooseCamera = onChooseCamera,
+                    onChooseGallery = onChooseGallery,
+                    onChooseMaps = onChooseMaps,
+                    searchValue = searchValue,
+                    searchedPhotos = searchedPhotos,
+                    onSearchChanged = onSearchChanged,
+                    onImageSelected = onImageSelected,
+                    onPictureUploadButtonClick = onPictureUploadButtonClick,
+                    newPhotos = newPhotos,
+                    newTitle = newTitle,
+                    newDescription = newDescription,
                     onAlbumTitleAdd = onAlbumTitleAdd,
                     onAlbumDescriptionAdd = onAlbumDescriptionAdd,
                     onAddNewAlbum = onAddNewAlbum,
@@ -148,30 +148,30 @@ fun ResponsiveHomeScreen(
         Column(modifier.fillMaxSize()) {
             InAppNavigation(
                 navController = navController,
-                onStartUpClick =  onStartUpClick,
-                onTakePictureClick =  onTakePictureClick,
-                onGoToAlbumsClick =  onGoToAlbumsClick,
-                recentlyEdited =  recentlyEdited,
-                albumList =  albumList,
-                onAddAlbumClick =  onAddAlbumClick,
+                onStartUpClick = onStartUpClick,
+                onTakePictureClick = onTakePictureClick,
+                onGoToAlbumsClick = onGoToAlbumsClick,
+                recentlyEdited = recentlyEdited,
+                albumList = albumList,
+                onAddAlbumClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick,
-                detailedAlbum =  detailedAlbum,
-                onDownloadClick =  onDownloadClick,
-                onEditClick =  onEditClick,
-                onAddPictureClick =  onAddPictureClick,
-                onShareClick =  onShareClick,
-                onPhotoClick =  onPhotoClick,
-                onChooseCamera =  onChooseCamera,
-                onChooseGallery =  onChooseGallery,
-                onChooseMaps =  onChooseMaps,
-                searchValue =  searchValue,
-                searchedPhotos =  searchedPhotos,
-                onSearchChanged =  onSearchChanged,
-                onImageSelected =  onImageSelected,
-                onPictureUploadButtonClick =  onPictureUploadButtonClick,
-                newPhotos =  newPhotos,
-                newTitle =  newTitle,
-                newDescription =  newDescription,
+                detailedAlbum = detailedAlbum,
+                onDownloadClick = onDownloadClick,
+                onEditClick = onEditClick,
+                onAddPictureClick = onAddPictureClick,
+                onShareClick = onShareClick,
+                onPhotoClick = onPhotoClick,
+                onChooseCamera = onChooseCamera,
+                onChooseGallery = onChooseGallery,
+                onChooseMaps = onChooseMaps,
+                searchValue = searchValue,
+                searchedPhotos = searchedPhotos,
+                onSearchChanged = onSearchChanged,
+                onImageSelected = onImageSelected,
+                onPictureUploadButtonClick = onPictureUploadButtonClick,
+                newPhotos = newPhotos,
+                newTitle = newTitle,
+                newDescription = newDescription,
                 onAlbumTitleAdd = onAlbumTitleAdd,
                 onAlbumDescriptionAdd = onAlbumDescriptionAdd,
                 onAddNewAlbum = onAddNewAlbum,
@@ -319,29 +319,13 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AddPictures.name) {
-            if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
-                AlbumDetailAndAddPhotoScreen(
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
-                    onEditClick = onEditClick,
-                    onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
-                    onPhotoClick = onPhotoClick,
-                    searchValue = searchValue,
-                    searchedPhotos = searchedPhotos,
-                    onSearchChanged = onSearchChanged,
-                    onImageSelected = onImageSelected,
-                    onUploadButtonClick = onPictureUploadButtonClick
-                )
-            } else {
-                AddPicturesScreen(
-                    searchValue = searchValue,
-                    searchedPhotos = searchedPhotos,
-                    onSearchChanged = onSearchChanged,
-                    onImageSelected = onImageSelected,
-                    onUploadButtonClick = onPictureUploadButtonClick
-                )
-            }
+            AddPicturesScreen(
+                searchValue = searchValue,
+                searchedPhotos = searchedPhotos,
+                onSearchChanged = onSearchChanged,
+                onImageSelected = onImageSelected,
+                onUploadButtonClick = onPictureUploadButtonClick
+            )
         }
 
         composable(PhotoCaptionerScreen.AddAlbum.name) {

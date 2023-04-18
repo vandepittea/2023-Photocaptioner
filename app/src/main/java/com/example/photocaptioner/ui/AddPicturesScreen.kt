@@ -4,6 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -69,10 +72,14 @@ fun PicturesList(
     onCheckChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(400.dp),
         modifier = modifier
             .fillMaxSize()
-    ) {
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ){
         itemsIndexed(imagesList) { index, image ->
             Card(
                 onClick = { onCheckChange(index) },
@@ -141,6 +148,40 @@ fun AddPicturesScreenPreview() {
 @Preview
 @Composable
 fun AddPicturesScreenPreviewWithPictures() {
+    PhotoCaptionerTheme {
+        AddPicturesScreen(
+            searchValue = "Paris",
+            searchedPhotos = listOf(
+                Pair(false, MapsPhoto("https://picsum.photos/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/seed/picsum/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/id/237/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/id/238/200/300")),
+                Pair(false, MapsPhoto("https://picsum.photos/id/239/200/300"))
+            ),
+            onSearchChanged = {},
+            onImageSelected = {},
+            onUploadButtonClick = {}
+        )
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun AddPicturesScreenPreviewWithExtendedView() {
+    PhotoCaptionerTheme {
+        AddPicturesScreen(
+            searchValue = "",
+            searchedPhotos = emptyList(),
+            onSearchChanged = {},
+            onImageSelected = {},
+            onUploadButtonClick = {}
+        )
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
         AddPicturesScreen(
             searchValue = "Paris",
