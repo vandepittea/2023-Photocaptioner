@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens
 
 import androidx.annotation.StringRes
 import com.example.photocaptioner.R

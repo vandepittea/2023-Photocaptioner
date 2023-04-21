@@ -3,7 +3,6 @@ package com.example.photocaptioner
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -19,14 +18,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.ui.*
-import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 
