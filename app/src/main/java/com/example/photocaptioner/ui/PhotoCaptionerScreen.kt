@@ -204,6 +204,9 @@ fun PhotoCaptionerApp(
                 searchedPhotos = uiState.searchedPhotos,
                 onSearchChanged = {
                     viewModel.updateSearchValue(it)
+                    if(it.isNotEmpty()){
+                        viewModel.searchImages(it)
+                    }
                 },
                 onImageSelected = {
                     viewModel.selectImage(it)
