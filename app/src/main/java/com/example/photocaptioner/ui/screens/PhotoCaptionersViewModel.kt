@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui.screens
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -36,19 +37,6 @@ class PhotoCaptionersViewModel(
     )
     val uiState: StateFlow<PhotoCaptionerUiState> = _uiState.asStateFlow()
 
-    fun searchImages(query: String) {
-        viewModelScope.launch {
-            try {
-                val images = unsplashRepository.searchImages(query)
-                _uiState.update {
-                    it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, MapsPhoto(imageUrl)) })
-                }
-            } catch (e: Exception) {
-                // Handle error
-            }
-        }
-    }
-
     fun updateCurrentMenuItem(menuItemType: MenuItemType) {
         _uiState.update {
             it.copy(
@@ -79,6 +67,19 @@ class PhotoCaptionersViewModel(
             it.copy(
                 searchValue = newSearchValue
             )
+        }
+    }
+
+    fun searchImages(query: String) {
+        viewModelScope.launch {
+            try {
+                val images = unsplashRepository.searchImages(query)
+                _uiState.update {
+                    it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, MapsPhoto(imageUrl)) })
+                }
+            } catch (e: Exception) {
+                // Handle error
+            }
         }
     }
 
