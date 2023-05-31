@@ -11,9 +11,9 @@ import java.util.*
 data class Photo(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val name: String,
-    val description: String,
-    val createdAt: LocalDate,
-    val filePath: String,
-    val albumId: Long
+    val name: String = "",
+    val description: String = "",
+    val createdAt: LocalDate = LocalDate.now(),
+    val filePath: String = "",
+    val albumId: Long = 0
 )

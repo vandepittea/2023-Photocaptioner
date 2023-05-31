@@ -10,6 +10,7 @@ import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
+import com.example.photocaptioner.ui.screens.album.EditPhotoScreen
 
 @Composable
 fun AlbumsAndAlbumDetailScreen(
@@ -113,7 +114,7 @@ fun AlbumDetailAndPhotoEditScreen(
             photoToEdit = photoToEdit,
             description = photoDescriptionToEdit,
             onPhotoDescriptionChange = onPhotoDescriptionChange,
-            onPhotoSave = onPhotoSave,
+            navigateBack = onPhotoSave,
             modifier = Modifier.weight(1f)
         )
     }

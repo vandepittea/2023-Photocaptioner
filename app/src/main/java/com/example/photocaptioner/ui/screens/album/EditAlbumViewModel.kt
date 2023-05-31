@@ -28,8 +28,7 @@ class EditAlbumViewModel(
             editAlbumUiState = AlbumUiState(
                 albumsRepository.getAlbum(albumId)
                     .filterNotNull()
-                    .first(),
-                isEntryValid = validateInput(editAlbumUiState.albumDetails)
+                    .first()
             )
         }
     }

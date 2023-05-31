@@ -11,7 +11,7 @@ class OfflineAlbumsRepository(private val albumDAO: AlbumDAO) : AlbumsRepository
     override fun getAlbum(albumId: Long): Flow<AlbumWithImages> = albumDAO.getAlbum(albumId)
     override fun getLatestAlbum(): Flow<AlbumWithImages> = albumDAO.getLatestAlbum()
 
-    override fun getImage(imageId: Long): Flow<Photo> = albumDAO.getImage(imageId)
+    override fun getPhoto(imageId: Long): Flow<Photo> = albumDAO.getImage(imageId)
 
     override suspend fun insertAlbum(album: Album) = albumDAO.insertAlbum(album)
 

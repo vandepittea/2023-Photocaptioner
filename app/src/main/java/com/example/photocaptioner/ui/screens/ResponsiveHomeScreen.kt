@@ -33,7 +33,7 @@ import com.example.photocaptioner.ui.AlbumsAndAlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
-import com.example.photocaptioner.ui.EditPhotoScreen
+import com.example.photocaptioner.ui.screens.album.EditPhotoScreen
 import com.example.photocaptioner.ui.HomeScreen
 import com.example.photocaptioner.ui.PhotoCaptionerScreen
 import com.example.photocaptioner.ui.StartUpScreen
@@ -392,7 +392,7 @@ private fun InAppNavigation(
                     photoToEdit = photoToEdit,
                     description = photoDescriptionToEdit,
                     onPhotoDescriptionChange = onPhotoDescriptionChange,
-                    onPhotoSave = onPhotoSave
+                    navigateBack = onPhotoSave
                 )
             }
         }
