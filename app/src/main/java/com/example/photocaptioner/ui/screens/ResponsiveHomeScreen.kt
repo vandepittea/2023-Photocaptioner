@@ -1,6 +1,6 @@
 package com.example.photocaptioner.ui
 
-import androidx.activity.compose.BackHandler
+import CameraPage
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,8 +10,11 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -184,17 +187,22 @@ fun ResponsiveHomeScreen(
                 onPhotoSave = onPhotoSave,
                 contentType = contentType,
                 onRecentlyEditedClick = onRecentlyEditedClick,
-                modifier = modifier
+                modifier = modifier.weight(1f)
             )
 
-            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
-                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                BottomNavigationBar(
-                    currentTab = currentMenuItem,
-                    onTabPressed = onMenuItemPress,
-                    navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier.testTag(bottomNavigationContentDescription)
-                )
+            Box(){
+                this@Row.AnimatedVisibility(
+                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
+                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                    BottomNavigationBar(
+                        currentTab = currentMenuItem,
+                        onTabPressed = onMenuItemPress,
+                        navigationItemContentList = navigationItemContentList,
+                        modifier = Modifier.testTag(bottomNavigationContentDescription)
+                    )
+                }
             }
         }
     }
@@ -260,6 +268,11 @@ private fun InAppNavigation(
                 recentlyEdited = recentlyEdited,
                 onRecentlyEditedClick = onRecentlyEditedClick
             )
+        }
+
+        composable(PhotoCaptionerScreen.Photo.name) {
+            val lifecycleOwner = LocalLifecycleOwner.current
+            CameraPage(lifecycleOwner)
         }
 
         composable(PhotoCaptionerScreen.Albums.name) {

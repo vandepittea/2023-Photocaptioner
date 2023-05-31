@@ -31,6 +31,7 @@ import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 enum class PhotoCaptionerScreen(@StringRes val title: Int) {
     Start(R.string.start),
     Home(R.string.home),
+    Photo(R.string.photo),
     Albums(R.string.albums),
     AlbumDetail(R.string.album_menu),
     ChoosePicturesSource(R.string.choose_picture_source),
