@@ -17,20 +17,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesViewModel
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun AddOnlinePicturesScreen(
-    searchValue: String,
-    searchedPhotos: List<Pair<Boolean, MapsPhoto>>,
-    onSearchChanged: (String) -> Unit,
-    onImageSelected: (Int) -> Unit,
     onUploadButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddOnlinePicturesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val uiState by viewModel.addOnlinePicturesUiState.collectAsState()
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -41,15 +42,16 @@ fun AddOnlinePicturesScreen(
                 .fillMaxSize()
         ) {
             SearchBox(
-                searchValue = searchValue,
+                searchValue = uiState.searchValue,
                 onValueChange = {
-                    onSearchChanged(it)
+                    viewModel.updateSearchValue(it)
+                    viewModel.searchImages(it)
                 }
             )
 
             PicturesList(
-                imagesList = searchedPhotos,
-                onCheckChange = onImageSelected
+                imagesList = uiState.searchedPhotos,
+                onCheckChange = { viewModel.selectImage(it) }
             )
         }
 
@@ -60,7 +62,7 @@ fun AddOnlinePicturesScreen(
                 .background(MaterialTheme.colors.background)
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
-            UploadButton(onClick = onUploadButtonClick)
+            UploadButton(onClick = onUploadButtonClick) //TODO: veranderen wanneer we weten bij welk album te adden
         }
     }
 }
@@ -68,7 +70,7 @@ fun AddOnlinePicturesScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PicturesList(
-    imagesList: List<Pair<Boolean, MapsPhoto>>,
+    imagesList: List<Pair<Boolean, Photo>>,
     onCheckChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -99,9 +101,9 @@ fun PicturesList(
                     )
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
-                            .data(image.second.url)
+                            .data(image.second.filePath)
                             .build(),
-                        contentDescription = null,
+                        contentDescription = image.second.description,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(250.dp)
@@ -138,10 +140,6 @@ fun UploadButton(
 fun AddPicturesScreenPreview() {
     PhotoCaptionerTheme {
         AddOnlinePicturesScreen(
-            searchValue = "",
-            searchedPhotos = emptyList(),
-            onSearchChanged = {},
-            onImageSelected = {},
             onUploadButtonClick = {}
         )
     }
@@ -152,16 +150,6 @@ fun AddPicturesScreenPreview() {
 fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
         AddOnlinePicturesScreen(
-            searchValue = "Paris",
-            searchedPhotos = listOf(
-                Pair(false, MapsPhoto("https://picsum.photos/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/seed/picsum/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/237/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/238/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/239/200/300"))
-            ),
-            onSearchChanged = {},
-            onImageSelected = {},
             onUploadButtonClick = {}
         )
     }
@@ -172,10 +160,6 @@ fun AddPicturesScreenPreviewWithPictures() {
 fun AddPicturesScreenPreviewWithExtendedView() {
     PhotoCaptionerTheme {
         AddOnlinePicturesScreen(
-            searchValue = "",
-            searchedPhotos = emptyList(),
-            onSearchChanged = {},
-            onImageSelected = {},
             onUploadButtonClick = {}
         )
     }
@@ -186,16 +170,6 @@ fun AddPicturesScreenPreviewWithExtendedView() {
 fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
         AddOnlinePicturesScreen(
-            searchValue = "Paris",
-            searchedPhotos = listOf(
-                Pair(false, MapsPhoto("https://picsum.photos/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/seed/picsum/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/237/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/238/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/239/200/300"))
-            ),
-            onSearchChanged = {},
-            onImageSelected = {},
             onUploadButtonClick = {}
         )
     }
