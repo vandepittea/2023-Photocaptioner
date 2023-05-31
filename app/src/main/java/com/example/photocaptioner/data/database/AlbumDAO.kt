@@ -21,6 +21,7 @@ interface AlbumDAO {
     @Query("SELECT * FROM albums WHERE id = :id")
     fun getAlbum(id: Long): Flow<AlbumWithImages>
 
+    @Transaction
     @Query("SELECT * FROM albums ORDER BY lastChanged DESC LIMIT 1")
     fun getLatestAlbum(): Flow<AlbumWithImages>
 

@@ -164,9 +164,7 @@ fun ImageFromUrl(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescriptionAndDate(
-    image: Int,
-    description: Int,
-    date: LocalDate,
+    photo: Photo,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -176,18 +174,20 @@ fun ImageWithDescriptionAndDate(
         modifier = modifier
     ) {
         Column {
-            Image(
-                painter = painterResource(id = image),
-                contentDescription = stringResource(id = description),
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(photo.filePath)
+                    .build(),
+                contentDescription = photo.description,
                 modifier = Modifier
-                    .height(240.dp)
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(8.dp)),
+                    .height(250.dp)
+                    .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
 
             Text(
-                text = stringResource(id = description),
+                text = photo.description,
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(top = 8.dp, bottom = 4.dp)
@@ -206,7 +206,7 @@ fun ImageWithDescriptionAndDate(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = "$date",
+                    text = "${photo.createdAt}",
                     style = MaterialTheme.typography.body2
                 )
             }

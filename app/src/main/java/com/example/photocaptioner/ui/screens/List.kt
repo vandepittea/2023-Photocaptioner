@@ -29,9 +29,7 @@ fun AlternatingColumn(
 
                 Column(Modifier.weight(5f)) {
                     ImageWithDescriptionAndDate(
-                        image = item.image,
-                        description = item.description,
-                        date = item.createdAt,
+                        photo = item,
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { onPhotoClick(item) }
                     )

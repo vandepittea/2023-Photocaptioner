@@ -26,6 +26,7 @@ import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource.navigationItemContentList
+import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.AlbumDetailAndAlbumEditScreen
 import com.example.photocaptioner.ui.AlbumDetailAndPhotoEditScreen
 import com.example.photocaptioner.ui.AlbumDetailAndPhotoSourceChooserScreen
@@ -52,36 +53,15 @@ fun ResponsiveHomeScreen(
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
-    albumList: List<Album> = emptyList(),
     onAddAlbumClick: () -> Unit,
-    onAlbumClick: (Album) -> Unit,
-    detailedAlbum: Album,
-    onDownloadClick: () -> Unit,
+    onAlbumClick: (AlbumWithImages) -> Unit,
     onEditClick: () -> Unit,
     onAddPictureClick: () -> Unit,
-    onShareClick: () -> Unit,
     onPhotoClick: (Photo) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
-    searchValue: String,
-    searchedPhotos: List<Pair<Boolean, MapsPhoto>>,
-    onSearchChanged: (String) -> Unit,
-    onImageSelected: (Int) -> Unit,
-    onPictureUploadButtonClick: () -> Unit,
-    newPhotos: List<Photo> = emptyList(),
-    newTitle: String,
-    newDescription: String,
-    onAlbumTitleAdd: (String) -> Unit,
-    onAlbumDescriptionAdd: (String) -> Unit,
-    onAddNewAlbum: () -> Unit,
-    albumToEdit: Album,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
-    onAlbumSave: () -> Unit,
-    photoToEdit: Photo,
-    photoDescriptionToEdit: String,
-    onPhotoDescriptionChange: (String) -> Unit,
+    navigateBack: () -> Unit,
     onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
@@ -117,36 +97,15 @@ fun ResponsiveHomeScreen(
                     onStartUpClick = onStartUpClick,
                     onTakePictureClick = onTakePictureClick,
                     onGoToAlbumsClick = onGoToAlbumsClick,
-                    albumList = albumList,
                     onAddAlbumClick = onAddAlbumClick,
                     onAlbumClick = onAlbumClick,
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
                     onEditClick = onEditClick,
                     onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
                     onPhotoClick = onPhotoClick,
                     onChooseCamera = onChooseCamera,
                     onChooseGallery = onChooseGallery,
                     onChooseMaps = onChooseMaps,
-                    searchValue = searchValue,
-                    searchedPhotos = searchedPhotos,
-                    onSearchChanged = onSearchChanged,
-                    onImageSelected = onImageSelected,
-                    onPictureUploadButtonClick = onPictureUploadButtonClick,
-                    newPhotos = newPhotos,
-                    newTitle = newTitle,
-                    newDescription = newDescription,
-                    onAlbumTitleAdd = onAlbumTitleAdd,
-                    onAlbumDescriptionAdd = onAlbumDescriptionAdd,
-                    onAddNewAlbum = onAddNewAlbum,
-                    albumToEdit = albumToEdit,
-                    onAlbumTitleChange = onAlbumTitleChange,
-                    onAlbumDescriptionChange = onAlbumDescriptionChange,
-                    onAlbumSave = onAlbumSave,
-                    photoToEdit = photoToEdit,
-                    photoDescriptionToEdit = photoDescriptionToEdit,
-                    onPhotoDescriptionChange = onPhotoDescriptionChange,
+                    navigateBack = navigateBack,
                     onPhotoSave = onPhotoSave,
                     contentType = contentType,
                     onRecentlyEditedClick = onRecentlyEditedClick,
@@ -161,36 +120,15 @@ fun ResponsiveHomeScreen(
                 onStartUpClick = onStartUpClick,
                 onTakePictureClick = onTakePictureClick,
                 onGoToAlbumsClick = onGoToAlbumsClick,
-                albumList = albumList,
                 onAddAlbumClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick,
-                detailedAlbum = detailedAlbum,
-                onDownloadClick = onDownloadClick,
                 onEditClick = onEditClick,
                 onAddPictureClick = onAddPictureClick,
-                onShareClick = onShareClick,
                 onPhotoClick = onPhotoClick,
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
-                searchValue = searchValue,
-                searchedPhotos = searchedPhotos,
-                onSearchChanged = onSearchChanged,
-                onImageSelected = onImageSelected,
-                onPictureUploadButtonClick = onPictureUploadButtonClick,
-                newPhotos = newPhotos,
-                newTitle = newTitle,
-                newDescription = newDescription,
-                onAlbumTitleAdd = onAlbumTitleAdd,
-                onAlbumDescriptionAdd = onAlbumDescriptionAdd,
-                onAddNewAlbum = onAddNewAlbum,
-                albumToEdit = albumToEdit,
-                onAlbumTitleChange = onAlbumTitleChange,
-                onAlbumDescriptionChange = onAlbumDescriptionChange,
-                onAlbumSave = onAlbumSave,
-                photoToEdit = photoToEdit,
-                photoDescriptionToEdit = photoDescriptionToEdit,
-                onPhotoDescriptionChange = onPhotoDescriptionChange,
+                navigateBack = navigateBack,
                 onPhotoSave = onPhotoSave,
                 contentType = contentType,
                 onRecentlyEditedClick = onRecentlyEditedClick,
@@ -216,36 +154,15 @@ private fun InAppNavigation(
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
-    albumList: List<Album> = emptyList(),
     onAddAlbumClick: () -> Unit,
-    onAlbumClick: (Album) -> Unit,
-    detailedAlbum: Album,
-    onDownloadClick: () -> Unit,
+    onAlbumClick: (AlbumWithImages) -> Unit,
     onEditClick: () -> Unit,
     onAddPictureClick: () -> Unit,
-    onShareClick: () -> Unit,
     onPhotoClick: (Photo) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
-    searchValue: String,
-    searchedPhotos: List<Pair<Boolean, MapsPhoto>>,
-    onSearchChanged: (String) -> Unit,
-    onImageSelected: (Int) -> Unit,
-    onPictureUploadButtonClick: () -> Unit,
-    newPhotos: List<Photo> = emptyList(),
-    newTitle: String,
-    newDescription: String,
-    onAlbumTitleAdd: (String) -> Unit,
-    onAlbumDescriptionAdd: (String) -> Unit,
-    onAddNewAlbum: () -> Unit,
-    albumToEdit: Album,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
-    onAlbumSave: () -> Unit,
-    photoToEdit: Photo,
-    photoDescriptionToEdit: String,
-    onPhotoDescriptionChange: (String) -> Unit,
+    navigateBack: () -> Unit,
     onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
@@ -272,7 +189,6 @@ private fun InAppNavigation(
 
         composable(PhotoCaptionerScreen.Albums.name) {
             AlbumsScreen(
-                albumList = albumList,
                 onAddClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick
             )
@@ -281,23 +197,16 @@ private fun InAppNavigation(
         composable(PhotoCaptionerScreen.AlbumDetail.name) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumsAndAlbumDetailScreen(
-                    albumList = albumList,
                     onAddClick = onAddAlbumClick,
                     onAlbumClick = onAlbumClick,
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
                     onEditClick = onEditClick,
                     onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
                     onPhotoClick = onPhotoClick
                 )
             } else {
                 AlbumDetailScreen(
-                    album = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
                     onEditClick = onEditClick,
                     onAddClick = onAddPictureClick,
-                    onShareClick = onShareClick,
                     onPhotoClick = onPhotoClick
                 )
             }
@@ -306,11 +215,8 @@ private fun InAppNavigation(
         composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoSourceChooserScreen(
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
                     onEditClick = onEditClick,
                     onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
                     onPhotoClick = onPhotoClick,
                     onChooseCamera = onChooseCamera,
                     onChooseGallery = onChooseGallery,
@@ -326,26 +232,15 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AddPictures.name) {
-            AddOnlinePicturesScreen(
-                searchValue = searchValue,
-                searchedPhotos = searchedPhotos,
-                onSearchChanged = onSearchChanged,
-                onImageSelected = onImageSelected,
-                onUploadButtonClick = onPictureUploadButtonClick
-            )
+            AddOnlinePicturesScreen()
         }
 
         composable(PhotoCaptionerScreen.AddAlbum.name) {
             AddAlbumsScreen(
-                newPhotos = newPhotos,
-                newTitle = newTitle,
-                newDescription = newDescription,
-                onAlbumTitleChange = onAlbumTitleAdd,
-                onAlbumDescriptionChange = onAlbumDescriptionAdd,
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
-                onAddNewAlbum = onAddNewAlbum,
+                navigateBack = navigateBack,
                 contentType = contentType
             )
         }
@@ -353,22 +248,14 @@ private fun InAppNavigation(
         composable(PhotoCaptionerScreen.EditAlbum.name) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndAlbumEditScreen(
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
                     onEditClick = onEditClick,
                     onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
                     onPhotoClick = onPhotoClick,
-                    onAlbumTitleChange = onAlbumTitleChange,
-                    onAlbumDescriptionChange = onAlbumDescriptionChange,
-                    onAlbumSave = onAlbumSave
+                    navigateBack = navigateBack
                 )
             } else {
                 EditAlbumScreen(
-                    albumToEdit = albumToEdit,
-                    onAlbumTitleChange = onAlbumTitleChange,
-                    onAlbumDescriptionChange = onAlbumDescriptionChange,
-                    onSave = onAlbumSave
+                    navigateBack = navigateBack
                 )
             }
         }
@@ -376,22 +263,13 @@ private fun InAppNavigation(
         composable(PhotoCaptionerScreen.EditPhoto.name) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoEditScreen(
-                    detailedAlbum = detailedAlbum,
-                    onDownloadClick = onDownloadClick,
                     onEditClick = onEditClick,
                     onAddPictureClick = onAddPictureClick,
-                    onShareClick = onShareClick,
                     onPhotoClick = onPhotoClick,
-                    photoToEdit = photoToEdit,
-                    photoDescriptionToEdit = photoDescriptionToEdit,
-                    onPhotoDescriptionChange = onPhotoDescriptionChange,
                     onPhotoSave = onPhotoSave
                 )
             } else {
                 EditPhotoScreen(
-                    photoToEdit = photoToEdit,
-                    description = photoDescriptionToEdit,
-                    onPhotoDescriptionChange = onPhotoDescriptionChange,
                     navigateBack = onPhotoSave
                 )
             }

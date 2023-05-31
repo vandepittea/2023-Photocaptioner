@@ -1,10 +1,14 @@
 package com.example.photocaptioner.ui
 
-import androidx.lifecycle.ViewModelProvider
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.photocaptioner.PhotoCaptionerApplication
+import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.ui.screens.album.AddAlbumViewModel
 import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesViewModel
 import com.example.photocaptioner.ui.screens.album.AlbumDetailViewModel
@@ -16,37 +20,34 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             HomeViewModel(
-                PhotoCaptionerApplication().container.provideAlbumsRepository()
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
         initializer {
             AlbumsViewModel(
-                PhotoCaptionerApplication().container.provideAlbumsRepository()
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
         initializer {
             AddAlbumViewModel(
-                PhotoCaptionerApplication().container.provideAlbumsRepository()
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
         initializer {
             AddOnlinePicturesViewModel(
-                PhotoCaptionerApplication().container.provideAlbumsRepository(),
-                PhotoCaptionerApplication().container.provideUnsplashRepository()
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository(),
+                PhotoCaptionerApplicationHolder.instance.container.provideUnsplashRepository()
             )
         }
         initializer {
             AlbumDetailViewModel(
-                PhotoCaptionerApplication().container.provideAlbumsRepository()
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
         initializer {
             EditAlbumViewModel(
-                PhotoCaptionerApplication().container.provideAlbumsRepository()
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
     }
 }
-
-fun CreationExtras.PhotoCaptionerApplication(): PhotoCaptionerApplication =
-    (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as PhotoCaptionerApplication)

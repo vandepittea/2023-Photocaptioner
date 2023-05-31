@@ -69,7 +69,8 @@ fun PhotoCaptionerAppTopBar(
 @Composable
 fun PhotoCaptionerApp(
     windowSize: WindowWidthSizeClass,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: PhotoCaptionersViewModel = PhotoCaptionersViewModel()
 ) {
     val navigationType: PhotoCaptionerNavigationType
     val contentType: PhotoCaptionerContentType
@@ -78,7 +79,6 @@ fun PhotoCaptionerApp(
     val currentScreen = PhotoCaptionerScreen.valueOf(
         backStackEntry.value?.destination?.route ?: PhotoCaptionerScreen.Start.name
     )
-    val viewModel: PhotoCaptionersViewModel = viewModel(factory = PhotoCaptionersViewModel.Factory)
     val uiState by viewModel.uiState.collectAsState()
 
     when (windowSize) {
@@ -128,154 +128,51 @@ fun PhotoCaptionerApp(
                     navController.navigate(menuItemType.name)
                 },
                 onStartUpClick = {
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.home,
-                        canNavigateBack = false
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Home)
                     navController.navigate(PhotoCaptionerScreen.Home.name)
                 },
                 onTakePictureClick = {},
                 onGoToAlbumsClick = {
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.my_albums,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.Albums.name)
+                    //TODO: Navigate to Albums
+                    viewModel.canNavigateBack(true)
                 },
-                albumList = uiState.albumList,
                 onAddAlbumClick = {
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.add_album,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.AddAlbum.name)
+                    //TODO: Navigate to Add Album
+                    viewModel.canNavigateBack(true)
                 },
                 onAlbumClick = {
-                    viewModel.selectAlbum(it)
-                    viewModel.navigateToScreen(
-                        newScreen = it.name,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
+                    //TODO: Navigate to Album Detail
+                    viewModel.canNavigateBack(true)
                 },
-                detailedAlbum = uiState.selectedAlbum,
-                onDownloadClick = {},
                 onEditClick = {
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.edit_album,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.EditAlbum.name)
+                    //TODO: Navigate to Edit Album
+                    viewModel.canNavigateBack(true)
                 },
                 onAddPictureClick = {
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.choose_picture_source,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Photo)
-                    navController.navigate(PhotoCaptionerScreen.ChoosePicturesSource.name)
+                    //TODO: Navigate to Choose Picture Source
+                    viewModel.canNavigateBack(true)
                 },
-                onShareClick = {},
                 onPhotoClick = {
-                    viewModel.selectPhoto(it)
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.edit_photo,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.EditPhoto.name)
+                    //TODO: Navigate to Edit Photo
+                    viewModel.canNavigateBack(true)
                 },
                 onChooseCamera = {},
                 onChooseGallery = {},
                 onChooseMaps = {
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.upload_pictures,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Photo)
-                    navController.navigate(PhotoCaptionerScreen.AddPictures.name)
-                },
-                searchValue = uiState.searchValue,
-                searchedPhotos = uiState.searchedPhotos,
-                onSearchChanged = {
-                    viewModel.updateSearchValue(it)
-                    if(it.isNotEmpty()){
-                        viewModel.searchImages(it)
-                    }
-                },
-                onImageSelected = {
-                    viewModel.selectImage(it)
-                },
-                onPictureUploadButtonClick = {
-                    // Improve when we can use pictures with urls
-                    navController.navigateUp()
-                },
-                newPhotos = uiState.newPhotos,
-                newTitle = uiState.newAlbumName,
-                newDescription = uiState.newAlbumDescription,
-                onAlbumTitleAdd = {
-                    viewModel.updateNewTitle(it)
-                },
-                onAlbumDescriptionAdd = {
-                    viewModel.updateNewDescription(it)
-                },
-                onAddNewAlbum = {
-                    viewModel.addNewAlbum()
-                    viewModel.navigateToScreen(
-                        newScreen = R.string.my_albums,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.Albums.name)
-                },
-                albumToEdit = uiState.selectedAlbum,
-                onAlbumTitleChange = {
-                    viewModel.updateSelectedAlbumTitle(it)
-                },
-                onAlbumDescriptionChange = {
-                    viewModel.updateSelectedAlbumDescription(it)
-                },
-                onAlbumSave = {
-                    viewModel.saveSelectedAlbum()
-                    viewModel.navigateToScreen(
-                        newScreen = uiState.selectedAlbum.name,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.popBackStack(PhotoCaptionerScreen.AlbumDetail.name, false)
-                },
-                photoToEdit = uiState.selectedPhoto,
-                photoDescriptionToEdit = uiState.newPhotoDescription,
-                onPhotoDescriptionChange = {
-                    viewModel.updateSelectedPhotoDescription(it)
+                    //TODO: Navigate to Maps
+                    viewModel.canNavigateBack(true)
                 },
                 onPhotoSave = {
-                    viewModel.saveSelectedPhoto()
-                    viewModel.navigateToScreen(
-                        newScreen = uiState.selectedAlbum.name,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.popBackStack(PhotoCaptionerScreen.AlbumDetail.name, false)
+                    //TODO: Save Photo
+                    viewModel.canNavigateBack(false)
                 },
                 modifier = modifier,
                 contentType = contentType,
                 onRecentlyEditedClick = {
-
-                    if (uiState.recentlyEdited != null) {
-                        viewModel.selectAlbum(uiState.recentlyEdited!!)
-                        viewModel.navigateToScreen(
-                            newScreen = uiState.selectedAlbum.name,
-                            canNavigateBack = true
-                        )
-                        viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                        navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
-                    }
+                    //TODO: Go to recently edited screen
+                    viewModel.canNavigateBack(true)
+                },
+                navigateBack = {
+                    navController.navigateUp()
                 }
             )
         }

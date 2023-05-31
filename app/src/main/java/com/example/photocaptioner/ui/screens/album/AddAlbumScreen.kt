@@ -224,7 +224,7 @@ fun AlbumImages(
         modifier = modifier
             .fillMaxSize()
     ) {
-        items(imagesList) { image ->
+        items(imagesList) { photo ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -233,9 +233,9 @@ fun AlbumImages(
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(context = LocalContext.current)
-                        .data(image.filePath)
+                        .data(photo.filePath)
                         .build(),
-                    contentDescription = image.description,
+                    contentDescription = photo.description,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(250.dp)
