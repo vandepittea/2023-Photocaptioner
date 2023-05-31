@@ -1,7 +1,5 @@
 package com.example.photocaptioner.ui
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,7 +23,7 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
-fun AddPicturesScreen(
+fun AddOnlinePicturesScreen(
     searchValue: String,
     searchedPhotos: List<Pair<Boolean, MapsPhoto>>,
     onSearchChanged: (String) -> Unit,
@@ -139,7 +137,7 @@ fun UploadButton(
 @Composable
 fun AddPicturesScreenPreview() {
     PhotoCaptionerTheme {
-        AddPicturesScreen(
+        AddOnlinePicturesScreen(
             searchValue = "",
             searchedPhotos = emptyList(),
             onSearchChanged = {},
@@ -153,7 +151,7 @@ fun AddPicturesScreenPreview() {
 @Composable
 fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
-        AddPicturesScreen(
+        AddOnlinePicturesScreen(
             searchValue = "Paris",
             searchedPhotos = listOf(
                 Pair(false, MapsPhoto("https://picsum.photos/200/300")),
@@ -173,7 +171,7 @@ fun AddPicturesScreenPreviewWithPictures() {
 @Composable
 fun AddPicturesScreenPreviewWithExtendedView() {
     PhotoCaptionerTheme {
-        AddPicturesScreen(
+        AddOnlinePicturesScreen(
             searchValue = "",
             searchedPhotos = emptyList(),
             onSearchChanged = {},
@@ -187,7 +185,7 @@ fun AddPicturesScreenPreviewWithExtendedView() {
 @Composable
 fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
-        AddPicturesScreen(
+        AddOnlinePicturesScreen(
             searchValue = "Paris",
             searchedPhotos = listOf(
                 Pair(false, MapsPhoto("https://picsum.photos/200/300")),

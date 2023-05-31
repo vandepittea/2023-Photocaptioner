@@ -6,21 +6,33 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.AlbumWithImages
+import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AlbumDAO {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(album: AlbumDB)
-
-    @Update
-    suspend fun update(album: AlbumDB)
-
     @Transaction
     @Query("SELECT * FROM albums")
-    fun getAllAlbums(): Flow<List<AlbumWithImages>>
+    fun getAlbums(): Flow<List<AlbumWithImages>>
 
     @Transaction
     @Query("SELECT * FROM albums WHERE id = :id")
     fun getAlbum(id: Long): Flow<AlbumWithImages>
+
+    @Query("SELECT * FROM photos WHERE id = :id")
+    fun getImage(id: Long): Flow<Photo>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAlbum(album: Album)
+
+    @Update
+    suspend fun updateAlbum(album: Album)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertImage(image: Photo)
+
+    @Update
+    suspend fun updateImage(image: Photo)
 }

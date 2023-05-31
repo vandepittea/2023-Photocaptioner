@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 
-@Entity(tableName = "images")
+@Entity(tableName = "photos")
 data class PhotoDB(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

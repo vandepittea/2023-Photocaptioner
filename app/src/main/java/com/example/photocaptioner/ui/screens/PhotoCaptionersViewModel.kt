@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui.screens
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +10,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.photocaptioner.PhotoCaptionerApplication
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.data.database.ImagesRepository
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.data.UnsplashRepository
 import com.example.photocaptioner.model.Album
@@ -25,8 +23,7 @@ import kotlinx.coroutines.launch
 
 class PhotoCaptionersViewModel(
     private val unsplashRepository: UnsplashRepository,
-    private val albumsRepository: AlbumsRepository,
-    private val imagesRepository: ImagesRepository
+    private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -168,17 +165,30 @@ class PhotoCaptionersViewModel(
         }
     }
 
+    fun getAlbum(id: Int) {
+        viewModelScope.launch {
+            try {
+                val album = albumsRepository.getAlbum(id.toLong())
+                _uiState.update {
+                    it.copy(
+                        selectedAlbum = album
+                    )
+                }
+            } catch (e: Exception) {
+                // Handle error
+            }
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as PhotoCaptionerApplication)
                 val unsplashRepository = application.container.provideUnsplashRepository()
                 val albumsRepository = application.container.provideAlbumsRepository()
-                val imagesRepository = application.container.provideImagesRepository()
                 PhotoCaptionersViewModel(
                     unsplashRepository = unsplashRepository,
-                    albumsRepository = albumsRepository,
-                    imagesRepository = imagesRepository
+                    albumsRepository = albumsRepository
                 )
             }
         }

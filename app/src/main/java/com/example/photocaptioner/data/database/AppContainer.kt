@@ -10,11 +10,6 @@ class AppContainer(private val context: Context) {
             PhotoCaptionerDatabase.getDatabase(context).albumDao()
         )
     }
-    private val imagesRepository: ImagesRepository by lazy {
-        OfflineImagesRepository(
-            PhotoCaptionerDatabase.getDatabase(context).imageDao()
-        )
-    }
 
     fun provideUnsplashRepository(): UnsplashRepository {
         return unsplashRepository
@@ -22,9 +17,5 @@ class AppContainer(private val context: Context) {
 
     fun provideAlbumsRepository(): AlbumsRepository {
         return albumsRepository
-    }
-
-    fun provideImagesRepository(): ImagesRepository {
-        return imagesRepository
     }
 }

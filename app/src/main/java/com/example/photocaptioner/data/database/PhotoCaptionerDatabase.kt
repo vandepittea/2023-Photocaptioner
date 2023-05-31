@@ -5,11 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.Photo
 
-@Database(entities = [PhotoDB::class, AlbumDB::class], version = 1, exportSchema = false)
+@Database(entities = [Photo::class, Album::class], version = 4, exportSchema = false)
 @TypeConverters(LocalDateConverter::class)
 abstract class PhotoCaptionerDatabase : RoomDatabase() {
-    abstract fun imageDao(): ImageDAO
     abstract fun albumDao(): AlbumDAO
 
     companion object {

@@ -1,13 +1,14 @@
-package com.example.photocaptioner.data.database
+package com.example.photocaptioner.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.photocaptioner.data.database.PhotoDB
 
 data class AlbumWithImages(
-    @Embedded val album: AlbumDB,
+    @Embedded val album: Album,
     @Relation(
         parentColumn = "id",
         entityColumn = "albumId"
     )
-    val images: List<PhotoDB>
+    val photos: List<Photo>
 )

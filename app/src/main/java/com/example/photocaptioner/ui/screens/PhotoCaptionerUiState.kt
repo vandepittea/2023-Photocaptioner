@@ -12,7 +12,7 @@ data class PhotoCaptionerUiState(
     val currentMenuItem: MenuItemType = MenuItemType.Home,
     val canNavigateBack: Boolean = false,
     @StringRes val currentScreen: Int = R.string.start,
-    val recentlyEdited: Album = Datasource.defaultAlbum,
+    val recentlyEdited: Int = 0,
     val albumList: List<Album> = emptyList(),
     val selectedAlbum: Album = Datasource.defaultAlbum,
     val searchValue: String = "",

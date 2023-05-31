@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -39,7 +38,6 @@ fun ResponsiveHomeScreen(
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
-    recentlyEdited: Album,
     albumList: List<Album> = emptyList(),
     onAddAlbumClick: () -> Unit,
     onAlbumClick: (Album) -> Unit,
@@ -105,7 +103,6 @@ fun ResponsiveHomeScreen(
                     onStartUpClick = onStartUpClick,
                     onTakePictureClick = onTakePictureClick,
                     onGoToAlbumsClick = onGoToAlbumsClick,
-                    recentlyEdited = recentlyEdited,
                     albumList = albumList,
                     onAddAlbumClick = onAddAlbumClick,
                     onAlbumClick = onAlbumClick,
@@ -150,7 +147,6 @@ fun ResponsiveHomeScreen(
                 onStartUpClick = onStartUpClick,
                 onTakePictureClick = onTakePictureClick,
                 onGoToAlbumsClick = onGoToAlbumsClick,
-                recentlyEdited = recentlyEdited,
                 albumList = albumList,
                 onAddAlbumClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick,
@@ -206,7 +202,6 @@ private fun InAppNavigation(
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
-    recentlyEdited: Album,
     albumList: List<Album> = emptyList(),
     onAddAlbumClick: () -> Unit,
     onAlbumClick: (Album) -> Unit,
@@ -257,7 +252,6 @@ private fun InAppNavigation(
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
-                recentlyEdited = recentlyEdited,
                 onRecentlyEditedClick = onRecentlyEditedClick
             )
         }
@@ -318,7 +312,7 @@ private fun InAppNavigation(
         }
 
         composable(PhotoCaptionerScreen.AddPictures.name) {
-            AddPicturesScreen(
+            AddOnlinePicturesScreen(
                 searchValue = searchValue,
                 searchedPhotos = searchedPhotos,
                 onSearchChanged = onSearchChanged,

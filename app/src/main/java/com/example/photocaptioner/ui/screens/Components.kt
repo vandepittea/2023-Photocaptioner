@@ -19,10 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Photo
 import java.time.LocalDate
 
 @Composable
@@ -97,8 +101,8 @@ fun ButtonWithIcon(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescription(
-    image: Int,
-    description: Int?,
+    image: Photo,
+    description: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -111,9 +115,11 @@ fun ImageWithDescription(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(id = image),
-                contentDescription = if (description != null) stringResource(id = description) else null,
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(image.filePath)
+                    .build(),
+                contentDescription = image.description,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)
@@ -121,13 +127,11 @@ fun ImageWithDescription(
                 contentScale = ContentScale.Crop
             )
 
-            if (description != null) {
-                Text(
-                    text = stringResource(id = description),
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
-                )
-            }
+            Text(
+                text = description,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+            )
         }
     }
 }

@@ -13,24 +13,30 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.AlbumWithImages
+import com.example.photocaptioner.ui.screens.album.AlbumsViewModel
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @Composable
 fun AlbumsScreen(
-    albumList: List<Album>,
     onAddClick: () -> Unit,
-    onAlbumClick: (Album) -> Unit,
-    modifier: Modifier = Modifier
+    onAlbumClick: (AlbumWithImages) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: AlbumsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val albumsUiState by viewModel.albumsUiState.collectAsState()
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -41,7 +47,7 @@ fun AlbumsScreen(
         )
 
         AlbumList(
-            albumList = albumList,
+            albumList = albumsUiState.albums,
             onAlbumClick = onAlbumClick
         )
     }
@@ -77,8 +83,8 @@ fun TopBar(
 
 @Composable
 fun AlbumList(
-    albumList: List<Album>,
-    onAlbumClick: (Album) -> Unit,
+    albumList: List<AlbumWithImages>,
+    onAlbumClick: (AlbumWithImages) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -89,11 +95,11 @@ fun AlbumList(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(albumList) { album ->
+        items(albumList) { albumWithImages ->
             ImageWithDescription(
-                image = album.imagePlaceholder,
-                description = album.name,
-                onClick = { onAlbumClick(album) }
+                image = albumWithImages.photos[0],
+                description = albumWithImages.album.name,
+                onClick = { onAlbumClick(albumWithImages) }
             )
         }
     }
@@ -103,7 +109,7 @@ fun AlbumList(
 @Composable
 fun AlbumsScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumsScreen(Datasource.getAlbums(), {}, {})
+        AlbumsScreen({}, {})
     }
 }
 
@@ -111,6 +117,6 @@ fun AlbumsScreenPreview(){
 @Composable
 fun AlbumsScreenPreviewWithExtendedScreen(){
     PhotoCaptionerTheme {
-        AlbumsScreen(Datasource.getAlbums(), {}, {})
+        AlbumsScreen({}, {})
     }
 }

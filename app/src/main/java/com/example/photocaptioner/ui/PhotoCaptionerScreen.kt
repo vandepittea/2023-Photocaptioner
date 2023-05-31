@@ -143,7 +143,6 @@ fun PhotoCaptionerApp(
                     viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
                     navController.navigate(PhotoCaptionerScreen.Albums.name)
                 },
-                recentlyEdited = uiState.recentlyEdited,
                 albumList = uiState.albumList,
                 onAddAlbumClick = {
                     viewModel.navigateToScreen(
@@ -266,13 +265,16 @@ fun PhotoCaptionerApp(
                 modifier = modifier,
                 contentType = contentType,
                 onRecentlyEditedClick = {
-                    viewModel.selectAlbum(uiState.recentlyEdited)
-                    viewModel.navigateToScreen(
-                        newScreen = uiState.selectedAlbum.name,
-                        canNavigateBack = true
-                    )
-                    viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
-                    navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
+
+                    if (uiState.recentlyEdited != null) {
+                        viewModel.selectAlbum(uiState.recentlyEdited!!)
+                        viewModel.navigateToScreen(
+                            newScreen = uiState.selectedAlbum.name,
+                            canNavigateBack = true
+                        )
+                        viewModel.updateCurrentMenuItem(menuItemType = MenuItemType.Albums)
+                        navController.navigate(PhotoCaptionerScreen.AlbumDetail.name)
+                    }
                 }
             )
         }
