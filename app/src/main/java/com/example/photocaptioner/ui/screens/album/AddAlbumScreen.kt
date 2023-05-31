@@ -25,12 +25,18 @@ import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.TopBar
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import kotlinx.coroutines.launch
 
+object AddAlbumDestination : NavigationDestination {
+    override val route = "add_albums"
+    override val titleRes = R.string.add_album
+}
+
 @Composable
-fun AddAlbumsScreen(
+fun AddAlbumScreen(
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
@@ -269,7 +275,7 @@ fun NewAlbumFooter(
 @Composable
 fun AddAlbumsScreenPreviewWithoutPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(
+        AddAlbumScreen(
             {},
             {},
             {},
@@ -283,7 +289,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 @Composable
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(
+        AddAlbumScreen(
             {},
             {},
             {},
@@ -297,7 +303,7 @@ fun AddAlbumsScreenPreviewWithPhotos() {
 @Composable
 fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(
+        AddAlbumScreen(
             {},
             {},
             {},
@@ -310,7 +316,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
 @Composable
 fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
     PhotoCaptionerTheme {
-        AddAlbumsScreen(
+        AddAlbumScreen(
             {},
             {},
             {},

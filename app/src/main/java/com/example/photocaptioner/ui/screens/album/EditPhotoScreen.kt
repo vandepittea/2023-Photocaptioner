@@ -20,8 +20,16 @@ import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.Button
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
+
+object EditPhotoDestination : NavigationDestination {
+    override val route = "edit_photo"
+    override val titleRes = R.string.edit_photo
+    const val photoIdArg = "photoId"
+    val routeWithArgs = "$route/{$photoIdArg}"
+}
 
 @Composable
 fun EditPhotoScreen(

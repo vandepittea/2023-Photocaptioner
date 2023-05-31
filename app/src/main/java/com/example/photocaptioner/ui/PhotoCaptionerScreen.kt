@@ -26,31 +26,24 @@ import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.screens.ResponsiveHomeScreen
+import com.example.photocaptioner.ui.screens.album.AddAlbumDestination
+import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesDestination
+import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
+import com.example.photocaptioner.ui.screens.album.AlbumsDestination
+import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
+import com.example.photocaptioner.ui.screens.album.EditPhotoDestination
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
-
-enum class PhotoCaptionerScreen(@StringRes val title: Int) {
-    Start(R.string.start),
-    Home(R.string.home),
-    Albums(R.string.albums),
-    AlbumDetail(R.string.album_menu),
-    ChoosePicturesSource(R.string.choose_picture_source),
-    AddPictures(R.string.upload_pictures),
-    AddAlbum(R.string.add_album),
-    EditAlbum(R.string.edit_album),
-    EditPhoto(R.string.edit_photo)
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoCaptionerAppTopBar(
-    currentScreen: PhotoCaptionerScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(stringResource(id = currentScreen.title)) },
+        title = { Text("Needs to change") },
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
@@ -75,10 +68,6 @@ fun PhotoCaptionerApp(
     val navigationType: PhotoCaptionerNavigationType
     val contentType: PhotoCaptionerContentType
     val navController = rememberNavController()
-    val backStackEntry = navController.currentBackStackEntryAsState()
-    val currentScreen = PhotoCaptionerScreen.valueOf(
-        backStackEntry.value?.destination?.route ?: PhotoCaptionerScreen.Start.name
-    )
     val uiState by viewModel.uiState.collectAsState()
 
     when (windowSize) {
@@ -106,7 +95,6 @@ fun PhotoCaptionerApp(
     Scaffold(
         topBar = {
             PhotoCaptionerAppTopBar(
-                currentScreen = currentScreen,
                 canNavigateBack = uiState.canNavigateBack,
                 navigateUp = {
                     navController.navigateUp()
@@ -128,47 +116,43 @@ fun PhotoCaptionerApp(
                     navController.navigate(menuItemType.name)
                 },
                 onStartUpClick = {
-                    navController.navigate(PhotoCaptionerScreen.Home.name)
+                    navController.navigate(HomeDestination.route)
                 },
                 onTakePictureClick = {},
                 onGoToAlbumsClick = {
-                    //TODO: Navigate to Albums
+                    navController.navigate(AlbumsDestination.route)
                     viewModel.canNavigateBack(true)
                 },
                 onAddAlbumClick = {
-                    //TODO: Navigate to Add Album
+                    navController.navigate(AddAlbumDestination.route)
                     viewModel.canNavigateBack(true)
                 },
                 onAlbumClick = {
-                    //TODO: Navigate to Album Detail
+                    navController.navigate("${AlbumDetailDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
                 onEditClick = {
-                    //TODO: Navigate to Edit Album
+                    navController.navigate("${EditAlbumDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
                 onAddPictureClick = {
-                    //TODO: Navigate to Choose Picture Source
+                    navController.navigate(ChoosePicturesDestination.route)
                     viewModel.canNavigateBack(true)
                 },
                 onPhotoClick = {
-                    //TODO: Navigate to Edit Photo
+                    navController.navigate("${EditPhotoDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
                 onChooseCamera = {},
                 onChooseGallery = {},
                 onChooseMaps = {
-                    //TODO: Navigate to Maps
+                    navController.navigate(AddOnlinePicturesDestination.route)
                     viewModel.canNavigateBack(true)
-                },
-                onPhotoSave = {
-                    //TODO: Save Photo
-                    viewModel.canNavigateBack(false)
                 },
                 modifier = modifier,
                 contentType = contentType,
                 onRecentlyEditedClick = {
-                    //TODO: Go to recently edited screen
+                    navController.navigate("${AlbumDetailDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
                 navigateBack = {

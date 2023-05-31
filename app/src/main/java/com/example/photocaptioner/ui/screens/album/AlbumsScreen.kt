@@ -24,11 +24,17 @@ import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.ButtonIcon
 import com.example.photocaptioner.ui.ImageWithDescription
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
+
+object AlbumsDestination : NavigationDestination {
+    override val route = "albums"
+    override val titleRes = R.string.my_albums
+}
 
 @Composable
 fun AlbumsScreen(
     onAddClick: () -> Unit,
-    onAlbumClick: (AlbumWithImages) -> Unit,
+    onAlbumClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AlbumsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -80,7 +86,7 @@ fun TopBar(
 @Composable
 fun AlbumList(
     albumList: List<AlbumWithImages>,
-    onAlbumClick: (AlbumWithImages) -> Unit,
+    onAlbumClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -95,7 +101,7 @@ fun AlbumList(
             ImageWithDescription(
                 image = albumWithImages.photos[0],
                 description = albumWithImages.album.name,
-                onClick = { onAlbumClick(albumWithImages) }
+                onClick = { onAlbumClick(albumWithImages.album.id) }
             )
         }
     }

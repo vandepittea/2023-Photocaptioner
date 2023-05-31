@@ -18,29 +18,35 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.photocaptioner.data.MenuItemType
-import com.example.photocaptioner.model.Album
-import com.example.photocaptioner.model.MapsPhoto
 import com.example.photocaptioner.model.NavigationItemContent
-import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource.navigationItemContentList
-import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.AlbumDetailAndAlbumEditScreen
 import com.example.photocaptioner.ui.AlbumDetailAndPhotoEditScreen
 import com.example.photocaptioner.ui.AlbumDetailAndPhotoSourceChooserScreen
 import com.example.photocaptioner.ui.AlbumsAndAlbumDetailScreen
+import com.example.photocaptioner.ui.ChoosePicturesDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
+import com.example.photocaptioner.ui.HomeDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
 import com.example.photocaptioner.ui.screens.album.EditPhotoScreen
 import com.example.photocaptioner.ui.HomeScreen
-import com.example.photocaptioner.ui.PhotoCaptionerScreen
+import com.example.photocaptioner.ui.StartUpDestination
 import com.example.photocaptioner.ui.StartUpScreen
-import com.example.photocaptioner.ui.screens.album.AddAlbumsScreen
+import com.example.photocaptioner.ui.screens.album.AddAlbumDestination
+import com.example.photocaptioner.ui.screens.album.AddAlbumScreen
+import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesDestination
 import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesScreen
+import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
+import com.example.photocaptioner.ui.screens.album.AlbumsDestination
+import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
+import com.example.photocaptioner.ui.screens.album.EditPhotoDestination
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,18 +60,17 @@ fun ResponsiveHomeScreen(
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumClick: (AlbumWithImages) -> Unit,
-    onEditClick: () -> Unit,
-    onAddPictureClick: () -> Unit,
-    onPhotoClick: (Photo) -> Unit,
+    onAlbumClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit,
+    onAddPictureClick: (Long) -> Unit,
+    onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
     navigateBack: () -> Unit,
-    onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
-    onRecentlyEditedClick: () -> Unit,
+    onRecentlyEditedClick: (Long) -> Unit,
 ) {
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
@@ -106,7 +111,6 @@ fun ResponsiveHomeScreen(
                     onChooseGallery = onChooseGallery,
                     onChooseMaps = onChooseMaps,
                     navigateBack = navigateBack,
-                    onPhotoSave = onPhotoSave,
                     contentType = contentType,
                     onRecentlyEditedClick = onRecentlyEditedClick,
                     modifier = modifier
@@ -129,7 +133,6 @@ fun ResponsiveHomeScreen(
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
                 navigateBack = navigateBack,
-                onPhotoSave = onPhotoSave,
                 contentType = contentType,
                 onRecentlyEditedClick = onRecentlyEditedClick,
                 modifier = modifier
@@ -155,31 +158,30 @@ private fun InAppNavigation(
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumClick: (AlbumWithImages) -> Unit,
-    onEditClick: () -> Unit,
-    onAddPictureClick: () -> Unit,
-    onPhotoClick: (Photo) -> Unit,
+    onAlbumClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit,
+    onAddPictureClick: (Long) -> Unit,
+    onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
     navigateBack: () -> Unit,
-    onPhotoSave: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
-    onRecentlyEditedClick: () -> Unit
+    onRecentlyEditedClick: (Long) -> Unit
 ) {
     NavHost(
         navController = navController,
-        startDestination = PhotoCaptionerScreen.Start.name,
+        startDestination = StartUpDestination.route,
         modifier = modifier
     ) {
-        composable(PhotoCaptionerScreen.Start.name) {
+        composable(route = StartUpDestination.route) {
             StartUpScreen(
                 onButtonClick = onStartUpClick
             )
         }
 
-        composable(PhotoCaptionerScreen.Home.name) {
+        composable(route = HomeDestination.route) {
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
@@ -187,14 +189,17 @@ private fun InAppNavigation(
             )
         }
 
-        composable(PhotoCaptionerScreen.Albums.name) {
+        composable(route = AlbumsDestination.route) {
             AlbumsScreen(
                 onAddClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick
             )
         }
 
-        composable(PhotoCaptionerScreen.AlbumDetail.name) {
+        composable(
+            route = AlbumDetailDestination.routeWithArgs,
+            arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
+        ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumsAndAlbumDetailScreen(
                     onAddClick = onAddAlbumClick,
@@ -212,7 +217,7 @@ private fun InAppNavigation(
             }
         }
 
-        composable(PhotoCaptionerScreen.ChoosePicturesSource.name) {
+        composable(route = ChoosePicturesDestination.route) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoSourceChooserScreen(
                     onEditClick = onEditClick,
@@ -231,12 +236,15 @@ private fun InAppNavigation(
             }
         }
 
-        composable(PhotoCaptionerScreen.AddPictures.name) {
+        composable(
+            route = AddOnlinePicturesDestination.routeWithArgs,
+            arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
+        ) {
             AddOnlinePicturesScreen()
         }
 
-        composable(PhotoCaptionerScreen.AddAlbum.name) {
-            AddAlbumsScreen(
+        composable(route = AddAlbumDestination.route) {
+            AddAlbumScreen(
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
@@ -245,7 +253,10 @@ private fun InAppNavigation(
             )
         }
 
-        composable(PhotoCaptionerScreen.EditAlbum.name) {
+        composable(
+            route = EditAlbumDestination.routeWithArgs,
+            arguments = listOf(navArgument(EditAlbumDestination.albumIdArg) { type = NavType.LongType })
+        ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndAlbumEditScreen(
                     onEditClick = onEditClick,
@@ -260,17 +271,20 @@ private fun InAppNavigation(
             }
         }
 
-        composable(PhotoCaptionerScreen.EditPhoto.name) {
+        composable(
+            route = EditPhotoDestination.routeWithArgs,
+            arguments = listOf(navArgument(EditPhotoDestination.photoIdArg) { type = NavType.LongType })
+        ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoEditScreen(
                     onEditClick = onEditClick,
                     onAddPictureClick = onAddPictureClick,
                     onPhotoClick = onPhotoClick,
-                    onPhotoSave = onPhotoSave
+                    navigateBack = navigateBack
                 )
             } else {
                 EditPhotoScreen(
-                    navigateBack = onPhotoSave
+                    navigateBack = navigateBack
                 )
             }
         }

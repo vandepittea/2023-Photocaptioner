@@ -11,7 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+
+object ChoosePicturesDestination : NavigationDestination {
+    override val route = "choose_pictures"
+    override val titleRes = R.string.choose_picture_source
+}
 
 @Composable
 fun ChoosePicturesSourceScreen(

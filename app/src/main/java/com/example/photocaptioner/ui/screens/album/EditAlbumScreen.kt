@@ -17,8 +17,16 @@ import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.Button
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
+
+object EditAlbumDestination : NavigationDestination {
+    override val route = "edit_album"
+    override val titleRes = R.string.edit_album
+    const val albumIdArg = "albumId"
+    val routeWithArgs = "$route/{$albumIdArg}"
+}
 
 @Composable
 fun EditAlbumScreen(

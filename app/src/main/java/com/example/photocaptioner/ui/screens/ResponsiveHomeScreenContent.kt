@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.photocaptioner.model.Album
-import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
@@ -16,10 +13,10 @@ import com.example.photocaptioner.ui.screens.album.EditPhotoScreen
 @Composable
 fun AlbumsAndAlbumDetailScreen(
     onAddClick: () -> Unit,
-    onAlbumClick: (AlbumWithImages) -> Unit,
-    onEditClick: () -> Unit,
-    onAddPictureClick: () -> Unit,
-    onPhotoClick: (Photo) -> Unit,
+    onAlbumClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit,
+    onAddPictureClick: (Long) -> Unit,
+    onPhotoClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -42,9 +39,9 @@ fun AlbumsAndAlbumDetailScreen(
 
 @Composable
 fun AlbumDetailAndAlbumEditScreen(
-    onEditClick: () -> Unit,
-    onAddPictureClick: () -> Unit,
-    onPhotoClick: (Photo) -> Unit,
+    onEditClick: (Long) -> Unit,
+    onAddPictureClick: (Long) -> Unit,
+    onPhotoClick: (Long) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -67,10 +64,10 @@ fun AlbumDetailAndAlbumEditScreen(
 
 @Composable
 fun AlbumDetailAndPhotoEditScreen(
-    onEditClick: () -> Unit,
-    onAddPictureClick: () -> Unit,
-    onPhotoClick: (Photo) -> Unit,
-    onPhotoSave: () -> Unit,
+    onEditClick: (Long) -> Unit,
+    onAddPictureClick: (Long) -> Unit,
+    onPhotoClick: (Long) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -84,7 +81,7 @@ fun AlbumDetailAndPhotoEditScreen(
             modifier = Modifier.weight(1f)
         )
         EditPhotoScreen(
-            navigateBack = onPhotoSave,
+            navigateBack = navigateBack,
             modifier = Modifier.weight(1f)
         )
     }
@@ -92,9 +89,9 @@ fun AlbumDetailAndPhotoEditScreen(
 
 @Composable
 fun AlbumDetailAndPhotoSourceChooserScreen(
-    onEditClick: () -> Unit,
-    onAddPictureClick: () -> Unit,
-    onPhotoClick: (Photo) -> Unit,
+    onEditClick: (Long) -> Unit,
+    onAddPictureClick: (Long) -> Unit,
+    onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,

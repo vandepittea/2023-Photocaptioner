@@ -24,7 +24,15 @@ import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.ButtonWithIcon
 import com.example.photocaptioner.ui.SearchBox
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+
+object AddOnlinePicturesDestination : NavigationDestination {
+    override val route = "add_online_pictures"
+    override val titleRes = R.string.upload_pictures
+    const val albumIdArg = "albumId"
+    val routeWithArgs = "$route/{$albumIdArg}"
+}
 
 @Composable
 fun AddOnlinePicturesScreen(

@@ -20,13 +20,19 @@ import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.screens.home.HomeViewModel
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+
+object HomeDestination : NavigationDestination {
+    override val route = "home"
+    override val titleRes = R.string.app_name
+}
 
 @Composable
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
-    onRecentlyEditedClick: () -> Unit,
+    onRecentlyEditedClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -60,7 +66,7 @@ fun HomeScreen(
             if (homeUiState.recentlyEditedAlbum != null) {
                 RecentEdits(
                     recentlyEdited = homeUiState.recentlyEditedAlbum!!,
-                    onRecentlyEditedClick = onRecentlyEditedClick
+                    onRecentlyEditedClick = { onRecentlyEditedClick(homeUiState.recentlyEditedAlbum!!.album.id) }
                 )
             }
         }
