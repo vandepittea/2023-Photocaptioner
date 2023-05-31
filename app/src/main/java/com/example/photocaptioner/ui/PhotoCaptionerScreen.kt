@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.photocaptioner.R
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel

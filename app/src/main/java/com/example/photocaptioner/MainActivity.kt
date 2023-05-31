@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import com.example.photocaptioner.ui.PhotoCaptionerApp
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
