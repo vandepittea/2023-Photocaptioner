@@ -5,10 +5,10 @@ import androidx.room.Relation
 import com.example.photocaptioner.data.database.PhotoDB
 
 data class AlbumWithImages(
-    @Embedded val album: Album,
+    @Embedded val album: Album = Album(),
     @Relation(
         parentColumn = "id",
         entityColumn = "albumId"
     )
-    val photos: List<Photo>
+    val photos: List<Photo> = emptyList()
 )

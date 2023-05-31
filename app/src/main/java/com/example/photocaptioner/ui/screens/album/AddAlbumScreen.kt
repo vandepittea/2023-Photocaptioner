@@ -9,34 +9,39 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.screens.album.AddAlbumViewModel
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddAlbumsScreen(
     newPhotos: List<Photo>,
-    newTitle: String,
-    newDescription: String,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
-    onAddNewAlbum: () -> Unit,
+    navigateBack: () -> Unit,
     contentType: PhotoCaptionerContentType,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddAlbumViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Box(
         modifier
             .fillMaxSize()
@@ -46,25 +51,19 @@ fun AddAlbumsScreen(
         Log.d("ContentType", contentType.toString())
         if (contentType == PhotoCaptionerContentType.LIST_ONLY) {
             AddAlbumInnerScreenListOnly(
-                newPhotos = newPhotos,
-                newTitle = newTitle,
-                newDescription = newDescription,
-                onAlbumTitleChange = onAlbumTitleChange,
-                onAlbumDescriptionChange = onAlbumDescriptionChange,
+                newPhotos = viewModel.allAlbumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
-                onChooseMaps = onChooseMaps
+                onChooseMaps = onChooseMaps,
+                viewModel = viewModel,
             )
         } else {
             AddAlbumInnerScreenListAndDetails(
-                newPhotos = newPhotos,
-                newTitle = newTitle,
-                newDescription = newDescription,
-                onAlbumTitleChange = onAlbumTitleChange,
-                onAlbumDescriptionChange = onAlbumDescriptionChange,
+                newPhotos = viewModel.allAlbumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
-                onChooseMaps = onChooseMaps
+                onChooseMaps = onChooseMaps,
+                viewModel = viewModel,
             )
         }
         Column(
@@ -73,7 +72,12 @@ fun AddAlbumsScreen(
                 .fillMaxWidth()
                 .background(MaterialTheme.colors.background)
         ) {
-            NewAlbumFooter(onAddNewAlbum = onAddNewAlbum)
+            NewAlbumFooter(onAddNewAlbum = {
+                coroutineScope.launch {
+                    viewModel.saveItem()
+                    navigateBack()
+                }
+            })
         }
     }
 }
@@ -81,23 +85,17 @@ fun AddAlbumsScreen(
 @Composable
 fun AddAlbumInnerScreenListOnly(
     newPhotos: List<Photo>,
-    newTitle: String,
-    newDescription: String,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddAlbumViewModel
 ) {
     Column(
         modifier = modifier
     ) {
         AddAlbumInformation(
-            newTitle = newTitle,
-            newDescription = newDescription,
-            onAlbumTitleChange = onAlbumTitleChange,
-            onAlbumDescriptionChange = onAlbumDescriptionChange
+            viewModel = viewModel
         )
         Spacer(modifier = Modifier.height(16.dp))
         AddAlbumPhoto(
@@ -112,24 +110,18 @@ fun AddAlbumInnerScreenListOnly(
 @Composable
 fun AddAlbumInnerScreenListAndDetails(
     newPhotos: List<Photo>,
-    newTitle: String,
-    newDescription: String,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddAlbumViewModel
 ) {
     Row(
         modifier = modifier
     ) {
         AddAlbumInformation(
-            newTitle = newTitle,
-            newDescription = newDescription,
-            onAlbumTitleChange = onAlbumTitleChange,
-            onAlbumDescriptionChange = onAlbumDescriptionChange,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            viewModel = viewModel
         )
         Spacer(modifier = Modifier.width(16.dp))
         AddAlbumPhoto(
@@ -144,21 +136,18 @@ fun AddAlbumInnerScreenListAndDetails(
 
 @Composable
 fun AddAlbumInformation(
-    newTitle: String,
-    newDescription: String,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddAlbumViewModel
 ) {
     Column(
         modifier = modifier
     ) {
         TopBar(title = R.string.add_new_album)
         AlbumTextFields(
-            title = newTitle,
-            description = newDescription,
-            onAlbumTitleChange = onAlbumTitleChange,
-            onAlbumDescriptionChange = onAlbumDescriptionChange
+            title = viewModel.allAlbumUiState.albumDetails.album.name,
+            description = viewModel.allAlbumUiState.albumDetails.album.description,
+            onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
+            onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) }
         )
     }
 }
@@ -244,9 +233,11 @@ fun AlbumImages(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = image.image),
-                    contentDescription = null,
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(image.filePath)
+                        .build(),
+                    contentDescription = image.description,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(250.dp)
@@ -282,15 +273,12 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
             emptyList(),
-            "",
-            "",
             {},
             {},
             {},
             {},
-            {},
-            {},
-            PhotoCaptionerContentType.LIST_ONLY)
+            PhotoCaptionerContentType.LIST_ONLY
+        )
     }
 }
 
@@ -300,10 +288,6 @@ fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
             Datasource.defaultAlbum.photos,
-            "France",
-            "My first trip to France",
-            {},
-            {},
             {},
             {},
             {},
@@ -319,10 +303,6 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
             emptyList(),
-            "",
-            "",
-            {},
-            {},
             {},
             {},
             {},
@@ -337,10 +317,6 @@ fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
             Datasource.defaultAlbum.photos,
-            "France",
-            "My first trip to France",
-            {},
-            {},
             {},
             {},
             {},

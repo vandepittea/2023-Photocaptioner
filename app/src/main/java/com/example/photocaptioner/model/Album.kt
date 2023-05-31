@@ -9,9 +9,9 @@ import java.time.LocalDate
 data class Album(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val name: String,
-    val description: String,
-    val lastChanged: LocalDate
+    val name: String = "",
+    val description: String = "",
+    val lastChanged: LocalDate = LocalDate.now()
 )
 
 

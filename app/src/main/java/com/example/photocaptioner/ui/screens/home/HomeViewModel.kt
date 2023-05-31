@@ -16,13 +16,12 @@ class HomeViewModel(
     albumsRepository: AlbumsRepository
 ) : ViewModel() {
        val homeUiState: StateFlow<HomeUiState> =
-           albumsRepository.getAlbum(0)
-               .map {HomeUiState(it.album.id, it)
+           albumsRepository.getLatestAlbum()
+               .map {HomeUiState(it)
                }
                .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), HomeUiState())
 }
 
 data class HomeUiState(
-    val recentlyEditedId: Long = 0,
     val recentlyEditedAlbum: AlbumWithImages? = null,
 )

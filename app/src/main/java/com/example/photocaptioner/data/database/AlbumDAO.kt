@@ -21,6 +21,9 @@ interface AlbumDAO {
     @Query("SELECT * FROM albums WHERE id = :id")
     fun getAlbum(id: Long): Flow<AlbumWithImages>
 
+    @Query("SELECT * FROM albums ORDER BY lastChanged DESC LIMIT 1")
+    fun getLatestAlbum(): Flow<AlbumWithImages>
+
     @Query("SELECT * FROM photos WHERE id = :id")
     fun getImage(id: Long): Flow<Photo>
 
@@ -31,8 +34,8 @@ interface AlbumDAO {
     suspend fun updateAlbum(album: Album)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertImage(image: Photo)
+    suspend fun insertPhoto(image: Photo)
 
     @Update
-    suspend fun updateImage(image: Photo)
+    suspend fun updatePhoto(image: Photo)
 }
