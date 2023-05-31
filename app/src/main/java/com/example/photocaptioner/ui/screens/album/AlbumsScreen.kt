@@ -85,7 +85,7 @@ fun AlbumList(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(400.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),

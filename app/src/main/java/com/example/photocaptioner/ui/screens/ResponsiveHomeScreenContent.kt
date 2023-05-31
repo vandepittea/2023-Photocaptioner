@@ -9,6 +9,7 @@ import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
+import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
 
 @Composable
 fun AlbumsAndAlbumDetailScreen(

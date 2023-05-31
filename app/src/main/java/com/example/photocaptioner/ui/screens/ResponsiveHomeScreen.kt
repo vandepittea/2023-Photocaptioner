@@ -32,7 +32,7 @@ import com.example.photocaptioner.ui.AlbumDetailAndPhotoSourceChooserScreen
 import com.example.photocaptioner.ui.AlbumsAndAlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
-import com.example.photocaptioner.ui.EditAlbumScreen
+import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
 import com.example.photocaptioner.ui.EditPhotoScreen
 import com.example.photocaptioner.ui.HomeScreen
 import com.example.photocaptioner.ui.PhotoCaptionerScreen

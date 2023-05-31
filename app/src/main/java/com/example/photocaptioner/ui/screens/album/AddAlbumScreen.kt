@@ -22,6 +22,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.TopBar
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -48,7 +49,7 @@ fun AddAlbumsScreen(
         Log.d("ContentType", contentType.toString())
         if (contentType == PhotoCaptionerContentType.LIST_ONLY) {
             AddAlbumInnerScreenListOnly(
-                newPhotos = viewModel.allAlbumUiState.albumDetails.photos,
+                newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
@@ -56,7 +57,7 @@ fun AddAlbumsScreen(
             )
         } else {
             AddAlbumInnerScreenListAndDetails(
-                newPhotos = viewModel.allAlbumUiState.albumDetails.photos,
+                newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
@@ -141,8 +142,8 @@ fun AddAlbumInformation(
     ) {
         TopBar(title = R.string.add_new_album)
         AlbumTextFields(
-            title = viewModel.allAlbumUiState.albumDetails.album.name,
-            description = viewModel.allAlbumUiState.albumDetails.album.description,
+            title = viewModel.addAlbumUiState.albumDetails.album.name,
+            description = viewModel.addAlbumUiState.albumDetails.album.description,
             onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
             onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) }
         )

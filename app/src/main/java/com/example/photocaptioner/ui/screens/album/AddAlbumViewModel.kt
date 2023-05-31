@@ -8,40 +8,40 @@ import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
 
 class AddAlbumViewModel(private val albumsRepository: AlbumsRepository) : ViewModel() {
-    var allAlbumUiState by mutableStateOf(AddAlbumUiState())
+    var addAlbumUiState by mutableStateOf(AlbumUiState())
         private set
 
     fun updateAlbumTitleUiState(title: String) {
-        allAlbumUiState = AddAlbumUiState(
-            albumDetails = allAlbumUiState.albumDetails.copy(album = allAlbumUiState.albumDetails.album.copy(name = title)),
-            isEntryValid = validateInput(allAlbumUiState.albumDetails)
+        addAlbumUiState = AlbumUiState(
+            albumDetails = addAlbumUiState.albumDetails.copy(album = addAlbumUiState.albumDetails.album.copy(name = title)),
+            isEntryValid = validateInput(addAlbumUiState.albumDetails)
         )
     }
 
     fun updateAlbumDescriptionUiState(description: String) {
-        allAlbumUiState = AddAlbumUiState(
-            albumDetails = allAlbumUiState.albumDetails.copy(album = allAlbumUiState.albumDetails.album.copy(description = description)),
-            isEntryValid = validateInput(allAlbumUiState.albumDetails)
+        addAlbumUiState = AlbumUiState(
+            albumDetails = addAlbumUiState.albumDetails.copy(album = addAlbumUiState.albumDetails.album.copy(description = description)),
+            isEntryValid = validateInput(addAlbumUiState.albumDetails)
         )
     }
 
     suspend fun saveItem() {
         if (validateInput()) {
-            albumsRepository.insertAlbum(allAlbumUiState.albumDetails.album)
-            allAlbumUiState.albumDetails.photos.forEach {
+            albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
+            addAlbumUiState.albumDetails.photos.forEach {
                 albumsRepository.insertPhoto(it)
             }
         }
     }
 
-    private fun validateInput(uiState: AlbumWithImages = allAlbumUiState.albumDetails): Boolean {
+    private fun validateInput(uiState: AlbumWithImages = addAlbumUiState.albumDetails): Boolean {
         return with(uiState) {
             album.name.isNotBlank() && album.description.isNotBlank()
         }
     }
 }
 
-data class AddAlbumUiState(
+data class AlbumUiState(
     val albumDetails: AlbumWithImages = AlbumWithImages(),
     val isEntryValid: Boolean = false
 )
