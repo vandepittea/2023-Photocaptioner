@@ -1,7 +1,5 @@
 package com.example.photocaptioner.ui.screens
 
-import AppContainer
-import PhotoCaptionerApplication
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.photocaptioner.PhotoCaptionerApplication
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.data.UnsplashRepository
