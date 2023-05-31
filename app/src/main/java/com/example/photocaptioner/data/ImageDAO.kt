@@ -16,5 +16,8 @@ interface ImageDAO {
     suspend fun update(image: Image)
 
     @Query("SELECT * FROM images WHERE albumId = :albumId")
-    fun getImages(albumId: Long): Flow<List<Image>>
+    fun getImagesOfAlbum(albumId: Long): Flow<List<Image>>
+
+    @Query("SELECT * FROM images WHERE id = :imageId")
+    fun getImage(imageId: Long): Flow<Image>
 }
