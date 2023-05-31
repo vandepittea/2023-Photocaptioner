@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.photocaptioner.PhotoCaptionerScreen
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.MapsPhoto
