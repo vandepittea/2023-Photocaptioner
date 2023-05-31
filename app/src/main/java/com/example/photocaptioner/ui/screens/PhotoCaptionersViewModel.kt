@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.photocaptioner.PhotoCaptionerApplication
+import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.data.Datasource
+import com.example.photocaptioner.data.database.ImagesRepository
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.data.UnsplashRepository
 import com.example.photocaptioner.model.Album
@@ -20,7 +22,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class PhotoCaptionersViewModel(private val unsplashRepository: UnsplashRepository) : ViewModel() {
+class PhotoCaptionersViewModel(
+    private val unsplashRepository: UnsplashRepository,
+    private val albumsRepository: AlbumsRepository,
+    private val imagesRepository: ImagesRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
         PhotoCaptionerUiState(
@@ -166,7 +172,13 @@ class PhotoCaptionersViewModel(private val unsplashRepository: UnsplashRepositor
             initializer {
                 val application = (this[APPLICATION_KEY] as PhotoCaptionerApplication)
                 val unsplashRepository = application.container.provideUnsplashRepository()
-                PhotoCaptionersViewModel(unsplashRepository = unsplashRepository)
+                val albumsRepository = application.container.provideAlbumsRepository()
+                val imagesRepository = application.container.provideImagesRepository()
+                PhotoCaptionersViewModel(
+                    unsplashRepository = unsplashRepository,
+                    albumsRepository = albumsRepository,
+                    imagesRepository = imagesRepository
+                )
             }
         }
     }

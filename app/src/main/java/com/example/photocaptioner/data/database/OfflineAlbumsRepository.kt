@@ -1,4 +1,4 @@
-package com.example.photocaptioner.data
+package com.example.photocaptioner.data.database
 
 import kotlinx.coroutines.flow.Flow
 
@@ -7,8 +7,8 @@ class OfflineAlbumsRepository(private val albumDAO: AlbumDAO) : AlbumsRepository
 
     override fun getAlbumWithImages(albumId: Long): Flow<AlbumWithImages> = albumDAO.getAlbum(albumId)
 
-    override suspend fun insert(album: Album) = albumDAO.insert(album)
+    override suspend fun insert(album: AlbumDB) = albumDAO.insert(album)
 
-    override suspend fun update(album: Album) = albumDAO.update(album)
+    override suspend fun update(album: AlbumDB) = albumDAO.update(album)
 
 }

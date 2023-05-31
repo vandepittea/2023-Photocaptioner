@@ -5,8 +5,10 @@ import com.example.photocaptioner.R
 import java.time.LocalDate
 
 data class Album(
-    @StringRes val name: Int,
-    @StringRes val description: Int,
+    @StringRes
+    val name: Int,
+    @StringRes
+    val description: Int,
     val lastChanged: LocalDate,
     val photos: List<Photo>
 ) {

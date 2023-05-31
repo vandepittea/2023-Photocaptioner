@@ -1,6 +1,6 @@
 package com.example.photocaptioner
 
-import AppContainer
+import com.example.photocaptioner.data.database.AppContainer
 import android.app.Application
 
 class PhotoCaptionerApplication : Application() {

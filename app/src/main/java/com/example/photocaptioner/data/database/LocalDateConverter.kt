@@ -1,4 +1,4 @@
-package com.example.photocaptioner.data
+package com.example.photocaptioner.data.database
 
 import androidx.room.TypeConverter
 import java.time.LocalDate

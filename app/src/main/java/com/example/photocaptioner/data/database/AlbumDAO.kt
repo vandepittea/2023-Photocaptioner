@@ -1,4 +1,4 @@
-package com.example.photocaptioner.data
+package com.example.photocaptioner.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AlbumDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(album: Album)
+    suspend fun insert(album: AlbumDB)
 
     @Update
-    suspend fun update(album: Album)
+    suspend fun update(album: AlbumDB)
 
     @Transaction
     @Query("SELECT * FROM albums")
