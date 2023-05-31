@@ -16,9 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
+import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.screens.home.HomeViewModel
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -105,8 +104,8 @@ fun RecentEdits(
     )
 
     ImageWithDescription(
-        image = recentlyEdited.photos.first(),
-        description = recentlyEdited.album.description,
+        photo = if (recentlyEdited.photos.isNotEmpty()) recentlyEdited.photos.first() else null,
+        description = recentlyEdited.album.name,
         onClick = onRecentlyEditedClick
     )
 }

@@ -99,7 +99,7 @@ fun AlbumList(
     ) {
         items(albumList) { albumWithImages ->
             ImageWithDescription(
-                image = albumWithImages.photos[0],
+                photo = albumWithImages.photos[0],
                 description = albumWithImages.album.name,
                 onClick = { onAlbumClick(albumWithImages.album.id) }
             )

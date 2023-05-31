@@ -2,7 +2,6 @@ package com.example.photocaptioner.ui
 
 import androidx.compose.ui.Alignment
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,7 +26,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
-import java.time.LocalDate
 
 @Composable
 fun Button(
@@ -101,7 +99,7 @@ fun ButtonWithIcon(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescription(
-    image: Photo,
+    photo: Photo?,
     description: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -115,17 +113,19 @@ fun ImageWithDescription(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(context = LocalContext.current)
-                    .data(image.filePath)
-                    .build(),
-                contentDescription = image.description,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
+            if (photo != null) {
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(photo.filePath)
+                        .build(),
+                    contentDescription = photo.description,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             Text(
                 text = description,

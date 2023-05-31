@@ -28,8 +28,10 @@ class AddAlbumViewModel(private val albumsRepository: AlbumsRepository) : ViewMo
     suspend fun saveItem() {
         if (validateInput()) {
             albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
-            addAlbumUiState.albumDetails.photos.forEach {
-                albumsRepository.insertPhoto(it)
+            if (addAlbumUiState.albumDetails.photos.isNotEmpty()) {
+                addAlbumUiState.albumDetails.photos.forEach {
+                    albumsRepository.insertPhoto(it)
+                }
             }
         }
     }
