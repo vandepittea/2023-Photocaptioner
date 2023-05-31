@@ -67,7 +67,7 @@ class PhotoCaptionersViewModel(private val unsplashRepository: UnsplashRepositor
     fun searchImages(query: String) {
         viewModelScope.launch {
             try {
-                val images = unsplashRepository.searchImages(query).await()
+                val images = unsplashRepository.searchImages(query)
                 _uiState.update {
                     it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, MapsPhoto(imageUrl)) })
                 }
