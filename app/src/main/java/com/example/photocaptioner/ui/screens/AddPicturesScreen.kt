@@ -16,8 +16,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
@@ -96,8 +99,10 @@ fun PicturesList(
                         checked = image.first,
                         onCheckedChange = { onCheckChange(index) }
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.album1_picture1),
+                    AsyncImage(
+                        model = ImageRequest.Builder(context = LocalContext.current)
+                            .data(image.second.url)
+                            .build(),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
