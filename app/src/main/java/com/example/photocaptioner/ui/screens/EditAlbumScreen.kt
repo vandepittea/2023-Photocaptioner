@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.ui.screens.album.AlbumTextFields
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable

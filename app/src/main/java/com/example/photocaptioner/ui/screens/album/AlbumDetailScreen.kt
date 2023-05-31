@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.album
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,28 +9,31 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
-import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.AlternatingColumn
+import com.example.photocaptioner.ui.AppViewModelProvider
 
 @Composable
 fun AlbumDetailScreen(
-    album: Album,
-    onDownloadClick: () -> Unit,
     onEditClick: () -> Unit,
     onAddClick: () -> Unit,
-    onShareClick: () -> Unit,
     onPhotoClick: (Photo) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AlbumDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val albumUiState by viewModel.albumDetailUiState.collectAsState()
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -42,8 +45,8 @@ fun AlbumDetailScreen(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             AlbumDetails(
-                album = album,
-                onDownloadClick = onDownloadClick,
+                albumWithImages = albumUiState.albumDetails,
+                onDownloadClick = { viewModel.downloadAlbum() },
                 onEditClick = onEditClick,
                 onPhotoClick = onPhotoClick,
             )
@@ -57,7 +60,7 @@ fun AlbumDetailScreen(
         ) {
             AlbumFooter(
                 onAddClick = onAddClick,
-                onShareClick = onShareClick,
+                onShareClick = { viewModel.shareAlbum() },
             )
         }
     }
@@ -65,27 +68,27 @@ fun AlbumDetailScreen(
 
 @Composable
 fun AlbumDetails(
-    album: Album,
+    albumWithImages: AlbumWithImages,
     onDownloadClick: () -> Unit,
     onEditClick: () -> Unit,
     onPhotoClick: (Photo) -> Unit
 ) {
     AlbumHeader(
-        name = stringResource(id = album.name),
+        name = albumWithImages.album.name,
         onDownloadClick = onDownloadClick,
         onEditClick = onEditClick,
     )
 
     DescriptionRow(
-        description = stringResource(id = album.description),
+        description = albumWithImages.album.description
     )
 
     TimeRow(
-        lastChanged = "${album.lastChanged}",
+        lastChanged = "${albumWithImages.album.lastChanged}",
     )
 
     AlternatingColumn(
-        items = album.photos,
+        items = albumWithImages.photos,
         onPhotoClick = onPhotoClick,
     )
 }
@@ -232,6 +235,6 @@ fun AlbumFooter(
 @Composable
 fun AlbumDetailScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumDetailScreen(Datasource.defaultAlbum, {}, {}, {}, {}, {})
+        AlbumDetailScreen({}, {}, {})
     }
 }

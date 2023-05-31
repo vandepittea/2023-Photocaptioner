@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.album
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.photocaptioner.model.MapsPhoto
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -22,12 +21,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesViewModel
+import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.ButtonWithIcon
+import com.example.photocaptioner.ui.SearchBox
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 @Composable
 fun AddOnlinePicturesScreen(
-    onUploadButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddOnlinePicturesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -62,7 +62,7 @@ fun AddOnlinePicturesScreen(
                 .background(MaterialTheme.colors.background)
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
-            UploadButton(onClick = onUploadButtonClick) //TODO: veranderen wanneer we weten bij welk album te adden
+            UploadButton(onClick = { viewModel.addPhotosToAlbum() }) //TODO: veranderen wanneer we weten bij welk album te adden
         }
     }
 }
@@ -139,9 +139,7 @@ fun UploadButton(
 @Composable
 fun AddPicturesScreenPreview() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen(
-            onUploadButtonClick = {}
-        )
+        AddOnlinePicturesScreen()
     }
 }
 
@@ -149,9 +147,7 @@ fun AddPicturesScreenPreview() {
 @Composable
 fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen(
-            onUploadButtonClick = {}
-        )
+        AddOnlinePicturesScreen()
     }
 }
 
@@ -159,9 +155,7 @@ fun AddPicturesScreenPreviewWithPictures() {
 @Composable
 fun AddPicturesScreenPreviewWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen(
-            onUploadButtonClick = {}
-        )
+        AddOnlinePicturesScreen()
     }
 }
 
@@ -169,8 +163,6 @@ fun AddPicturesScreenPreviewWithExtendedView() {
 @Composable
 fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen(
-            onUploadButtonClick = {}
-        )
+        AddOnlinePicturesScreen()
     }
 }

@@ -1,7 +1,6 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.album
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,9 +21,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.screens.album.AddAlbumViewModel
+import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import kotlinx.coroutines.launch
@@ -259,7 +257,7 @@ fun NewAlbumFooter(
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Button(
+        com.example.photocaptioner.ui.Button(
             text = R.string.add_new_album,
             onClick = onAddNewAlbum
         )

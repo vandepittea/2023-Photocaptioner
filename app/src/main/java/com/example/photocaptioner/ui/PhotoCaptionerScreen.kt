@@ -25,6 +25,7 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
+import com.example.photocaptioner.ui.screens.ResponsiveHomeScreen
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 

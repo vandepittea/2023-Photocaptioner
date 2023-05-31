@@ -6,8 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.model.Album
-import com.example.photocaptioner.model.MapsPhoto
 import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
+import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 
 @Composable
 fun AlbumsAndAlbumDetailScreen(

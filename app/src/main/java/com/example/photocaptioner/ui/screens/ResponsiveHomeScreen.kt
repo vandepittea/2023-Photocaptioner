@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -26,6 +26,20 @@ import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.Datasource.navigationItemContentList
+import com.example.photocaptioner.ui.AlbumDetailAndAlbumEditScreen
+import com.example.photocaptioner.ui.AlbumDetailAndPhotoEditScreen
+import com.example.photocaptioner.ui.AlbumDetailAndPhotoSourceChooserScreen
+import com.example.photocaptioner.ui.AlbumsAndAlbumDetailScreen
+import com.example.photocaptioner.ui.screens.album.AlbumsScreen
+import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
+import com.example.photocaptioner.ui.EditAlbumScreen
+import com.example.photocaptioner.ui.EditPhotoScreen
+import com.example.photocaptioner.ui.HomeScreen
+import com.example.photocaptioner.ui.PhotoCaptionerScreen
+import com.example.photocaptioner.ui.StartUpScreen
+import com.example.photocaptioner.ui.screens.album.AddAlbumsScreen
+import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesScreen
+import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,13 +1,10 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.album
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -21,13 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.ui.screens.album.AlbumsViewModel
-import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
+import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.ButtonIcon
+import com.example.photocaptioner.ui.ImageWithDescription
 
 @Composable
 fun AlbumsScreen(

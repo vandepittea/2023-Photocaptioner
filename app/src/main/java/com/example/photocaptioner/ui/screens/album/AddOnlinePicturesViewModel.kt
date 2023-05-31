@@ -3,6 +3,7 @@ package com.example.photocaptioner.ui.screens.album
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.UnsplashRepository
+import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class AddOnlinePicturesViewModel(
+    private val albumsRepository: AlbumsRepository,
     private val unsplashRepository: UnsplashRepository
 ) : ViewModel() {
     val addOnlinePicturesUiState = MutableStateFlow(
@@ -59,10 +61,18 @@ class AddOnlinePicturesViewModel(
             )
         }
     }
+
+    fun addPhotosToAlbum() {
+        val newPhotos: List<Photo> = addOnlinePicturesUiState.value.searchedPhotos.filter { it.first }.map { it.second }
+        newPhotos.forEach {
+            viewModelScope.launch {
+                albumsRepository.insertPhoto(it)
+            }
+        }
+    }
 }
 
 data class AddOnlinePicturesUiState(
     val searchValue: String = "",
-    val searchedPhotos: List<Pair<Boolean, Photo>> = emptyList(),
-    val newPicturesList: List<Photo> = emptyList()
+    val searchedPhotos: List<Pair<Boolean, Photo>> = emptyList()
 )
