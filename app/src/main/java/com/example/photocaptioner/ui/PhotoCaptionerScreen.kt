@@ -77,7 +77,7 @@ fun PhotoCaptionerApp(
     val currentScreen = PhotoCaptionerScreen.valueOf(
         backStackEntry.value?.destination?.route ?: PhotoCaptionerScreen.Start.name
     )
-    val viewModel: PhotoCaptionersViewModel = viewModel()
+    val viewModel: PhotoCaptionersViewModel = viewModel(factory = PhotoCaptionersViewModel.Factory)
     val uiState by viewModel.uiState.collectAsState()
 
     when (windowSize) {
