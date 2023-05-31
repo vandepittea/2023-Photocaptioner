@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui.screens.album
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.UnsplashRepository
@@ -11,9 +12,12 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class AddOnlinePicturesViewModel(
+    private val savedStateHandle: SavedStateHandle,
     private val albumsRepository: AlbumsRepository,
     private val unsplashRepository: UnsplashRepository
 ) : ViewModel() {
+    private val albumId: Long = checkNotNull(savedStateHandle[AddOnlinePicturesDestination.albumIdArg])
+
     val addOnlinePicturesUiState = MutableStateFlow(
             AddOnlinePicturesUiState()
     )
@@ -38,7 +42,7 @@ class AddOnlinePicturesViewModel(
                         "",
                         LocalDate.now(),
                         imageUrl,
-                        0 //TODO: albumid juist id meegeven
+                        albumId
                     )) })
                 }
             } catch (e: Exception) {
@@ -64,9 +68,13 @@ class AddOnlinePicturesViewModel(
 
     fun addPhotosToAlbum() {
         val newPhotos: List<Photo> = addOnlinePicturesUiState.value.searchedPhotos.filter { it.first }.map { it.second }
-        newPhotos.forEach {
+        if (albumId == (-1).toLong()) {
+            savedStateHandle["newPhotos"] = newPhotos
+        } else {
             viewModelScope.launch {
-                albumsRepository.insertPhoto(it)
+                newPhotos.forEach {
+                    albumsRepository.insertPhoto(it)
+                }
             }
         }
     }

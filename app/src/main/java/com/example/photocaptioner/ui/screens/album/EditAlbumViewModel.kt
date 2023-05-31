@@ -3,6 +3,7 @@ package com.example.photocaptioner.ui.screens.album
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
@@ -16,9 +17,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class EditAlbumViewModel(
+    savedStateHandle: SavedStateHandle,
     private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
-    private val albumId: Long = 0 //TODO: manier om albumId te krijgen vinden (navigation arguments van vb oef??)
+    private val albumId: Long = checkNotNull(savedStateHandle[EditAlbumDestination.albumIdArg])
 
     var editAlbumUiState by mutableStateOf(AlbumUiState())
         private set

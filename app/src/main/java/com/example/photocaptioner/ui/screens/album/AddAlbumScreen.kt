@@ -33,6 +33,8 @@ import kotlinx.coroutines.launch
 object AddAlbumDestination : NavigationDestination {
     override val route = "add_albums"
     override val titleRes = R.string.add_album
+    const val albumIdArg = "albumId"
+    val routeWithArgs = "$route/{$albumIdArg}"
 }
 
 @Composable

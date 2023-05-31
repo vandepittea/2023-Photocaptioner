@@ -36,6 +36,7 @@ object AppViewModelProvider {
         }
         initializer {
             AddOnlinePicturesViewModel(
+                this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository(),
                 PhotoCaptionerApplicationHolder.instance.container.provideUnsplashRepository()
             )
@@ -48,6 +49,7 @@ object AppViewModelProvider {
         }
         initializer {
             EditAlbumViewModel(
+                this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }

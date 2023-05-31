@@ -16,7 +16,7 @@ class AlbumDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val albumsRepository: AlbumsRepository
 ) : ViewModel(){
-    private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg]) //TODO: manier om albumId te krijgen vinden (navigation arguments van vb oef??)
+    private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg])
 
     val albumDetailUiState: StateFlow<AlbumDetailUiState> =
         albumsRepository.getAlbum(albumId)

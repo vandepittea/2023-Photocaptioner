@@ -43,18 +43,9 @@ class PhotoCaptionersViewModel() : ViewModel() {
             )
         }
     }
-
-    fun setCurrentAlbumId(albumId: Long) {
-        _uiState.update {
-            it.copy(
-                currentAlbumId = albumId
-            )
-        }
-    }
 }
 
 data class PhotoCaptionerUiState(
     val currentMenuItem: MenuItemType = MenuItemType.Home,
-    val canNavigateBack: Boolean = false,
-    val currentAlbumId: Long = 0
+    val canNavigateBack: Boolean = false
 )
