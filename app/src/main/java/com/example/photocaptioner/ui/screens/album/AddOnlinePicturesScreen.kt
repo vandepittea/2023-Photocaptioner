@@ -30,12 +30,11 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 object AddOnlinePicturesDestination : NavigationDestination {
     override val route = "add_online_pictures"
     override val titleRes = R.string.upload_pictures
-    const val albumIdArg = "albumId"
-    val routeWithArgs = "$route/{$albumIdArg}"
 }
 
 @Composable
 fun AddOnlinePicturesScreen(
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddOnlinePicturesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -70,7 +69,10 @@ fun AddOnlinePicturesScreen(
                 .background(MaterialTheme.colors.background)
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
-            UploadButton(onClick = { viewModel.addPhotosToAlbum() }) //TODO: veranderen wanneer we weten bij welk album te adden
+            UploadButton(onClick = {
+                viewModel.addPhotosToAlbum()
+                navigateBack()
+            }) //TODO: veranderen wanneer we weten bij welk album te adden
         }
     }
 }

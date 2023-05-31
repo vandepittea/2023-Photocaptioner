@@ -236,10 +236,7 @@ private fun InAppNavigation(
             }
         }
 
-        composable(
-            route = AddOnlinePicturesDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
-        ) {
+        composable(route = AddOnlinePicturesDestination.route) {
             AddOnlinePicturesScreen()
         }
 
