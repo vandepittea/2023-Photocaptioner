@@ -31,7 +31,8 @@ import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
-import com.example.photocaptioner.ui.screens.album.EditPhotoDestination
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
+import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 
@@ -136,7 +137,7 @@ fun PhotoCaptionerApp(
                     viewModel.canNavigateBack(true)
                 },
                 onAddPictureClick = {
-                    navController.navigate(ChoosePicturesDestination.route)
+                    navController.navigate("${ChoosePicturesDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
                 onPhotoClick = {
@@ -146,7 +147,7 @@ fun PhotoCaptionerApp(
                 onChooseCamera = {},
                 onChooseGallery = {},
                 onChooseMaps = {
-                    navController.navigate(AddOnlinePicturesDestination.route)
+                    navController.navigate("${AddOnlinePicturesDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
                 modifier = modifier,

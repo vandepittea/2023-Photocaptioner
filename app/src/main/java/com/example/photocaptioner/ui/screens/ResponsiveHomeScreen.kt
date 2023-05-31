@@ -29,12 +29,9 @@ import com.example.photocaptioner.ui.AlbumDetailAndAlbumEditScreen
 import com.example.photocaptioner.ui.AlbumDetailAndPhotoEditScreen
 import com.example.photocaptioner.ui.AlbumDetailAndPhotoSourceChooserScreen
 import com.example.photocaptioner.ui.AlbumsAndAlbumDetailScreen
-import com.example.photocaptioner.ui.ChoosePicturesDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
-import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.HomeDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
-import com.example.photocaptioner.ui.screens.album.EditPhotoScreen
 import com.example.photocaptioner.ui.HomeScreen
 import com.example.photocaptioner.ui.StartUpDestination
 import com.example.photocaptioner.ui.StartUpScreen
@@ -46,7 +43,10 @@ import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
-import com.example.photocaptioner.ui.screens.album.EditPhotoDestination
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
+import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
+import com.example.photocaptioner.ui.screens.pictures.EditPhotoScreen
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +66,7 @@ fun ResponsiveHomeScreen(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
@@ -164,7 +164,7 @@ private fun InAppNavigation(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
@@ -217,7 +217,10 @@ private fun InAppNavigation(
             }
         }
 
-        composable(route = ChoosePicturesDestination.route) {
+        composable(
+            route = ChoosePicturesDestination.routeWithArgs,
+            arguments = listOf(navArgument(ChoosePicturesDestination.albumIdArg) { type = NavType.LongType })
+        ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoSourceChooserScreen(
                     onEditClick = onEditClick,

@@ -24,8 +24,8 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.TopBar
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 import kotlinx.coroutines.launch
@@ -41,7 +41,7 @@ object AddAlbumDestination : NavigationDestination {
 fun AddAlbumScreen(
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     navigateBack: () -> Unit,
     contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier,
@@ -93,7 +93,7 @@ fun AddAlbumInnerScreenListOnly(
     newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel
 ) {
@@ -118,7 +118,7 @@ fun AddAlbumInnerScreenListAndDetails(
     newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel
 ) {
@@ -163,7 +163,7 @@ fun AddAlbumPhoto(
     newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(

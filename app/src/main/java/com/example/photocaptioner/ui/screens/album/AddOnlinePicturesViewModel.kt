@@ -54,9 +54,9 @@ class AddOnlinePicturesViewModel(
     fun selectImage(photoIndex: Int) {
         val photos: List<Pair<Boolean, Photo>> = addOnlinePicturesUiState.value.searchedPhotos.mapIndexed { index, it ->
             if (index == photoIndex) {
-                Pair(true, it.second)
+                Pair(!it.first, it.second)
             } else {
-                Pair(false, it.second)
+                Pair(it.first, it.second)
             }
         }
         addOnlinePicturesUiState.update {

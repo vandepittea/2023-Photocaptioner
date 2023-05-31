@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui.screens.album
+package com.example.photocaptioner.ui.screens.pictures
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,10 +16,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.Button
+import com.example.photocaptioner.ui.screens.album.EditPhotoViewModel
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch

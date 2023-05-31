@@ -8,7 +8,8 @@ import androidx.compose.ui.unit.dp
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
-import com.example.photocaptioner.ui.screens.album.EditPhotoScreen
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
+import com.example.photocaptioner.ui.screens.pictures.EditPhotoScreen
 
 @Composable
 fun AlbumsAndAlbumDetailScreen(
@@ -94,7 +95,7 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
+    onChooseMaps: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(

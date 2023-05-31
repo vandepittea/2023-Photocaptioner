@@ -16,6 +16,7 @@ import com.example.photocaptioner.ui.screens.album.AlbumDetailViewModel
 import com.example.photocaptioner.ui.screens.album.AlbumsViewModel
 import com.example.photocaptioner.ui.screens.album.EditAlbumViewModel
 import com.example.photocaptioner.ui.screens.home.HomeViewModel
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -51,6 +52,11 @@ object AppViewModelProvider {
             EditAlbumViewModel(
                 this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
+            )
+        }
+        initializer {
+            ChoosePicturesSourceViewModel(
+                this.createSavedStateHandle()
             )
         }
     }

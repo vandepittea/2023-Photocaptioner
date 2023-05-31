@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.pictures
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,23 +10,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
-import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.ImageOptions
+import com.example.photocaptioner.ui.TopBar
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 object ChoosePicturesDestination : NavigationDestination {
     override val route = "choose_pictures"
     override val titleRes = R.string.choose_picture_source
+    const val albumIdArg = "albumId"
+    val routeWithArgs = "$route/{$albumIdArg}"
 }
 
 @Composable
 fun ChoosePicturesSourceScreen(
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
-    onChooseMaps: () -> Unit,
-    modifier: Modifier = Modifier
+    onChooseMaps: (Long) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: ChoosePicturesSourceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
     Box(
         modifier
             .fillMaxSize()
@@ -38,7 +45,7 @@ fun ChoosePicturesSourceScreen(
             ImageOptions(
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,
-                onChooseMaps = onChooseMaps
+                onChooseMaps = { onChooseMaps(viewModel.albumId) }
             )
         }
     }
