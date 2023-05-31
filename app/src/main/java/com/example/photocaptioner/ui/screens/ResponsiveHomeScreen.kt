@@ -237,7 +237,9 @@ private fun InAppNavigation(
         }
 
         composable(route = AddOnlinePicturesDestination.route) {
-            AddOnlinePicturesScreen()
+            AddOnlinePicturesScreen(
+                navigateBack = navigateBack
+            )
         }
 
         composable(route = AddAlbumDestination.route) {

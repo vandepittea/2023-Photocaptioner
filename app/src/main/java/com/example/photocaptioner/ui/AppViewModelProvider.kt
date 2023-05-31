@@ -3,6 +3,7 @@ package com.example.photocaptioner.ui
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.initializer
@@ -41,6 +42,7 @@ object AppViewModelProvider {
         }
         initializer {
             AlbumDetailViewModel(
+                this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
