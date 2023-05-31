@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AddAlbumsScreen(
-    newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
     onChooseMaps: () -> Unit,
@@ -272,7 +271,6 @@ fun NewAlbumFooter(
 fun AddAlbumsScreenPreviewWithoutPhotos() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
-            emptyList(),
             {},
             {},
             {},
@@ -287,7 +285,6 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
-            Datasource.defaultAlbum.photos,
             {},
             {},
             {},
@@ -302,7 +299,6 @@ fun AddAlbumsScreenPreviewWithPhotos() {
 fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
-            emptyList(),
             {},
             {},
             {},
@@ -316,7 +312,6 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
 fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumsScreen(
-            Datasource.defaultAlbum.photos,
             {},
             {},
             {},
