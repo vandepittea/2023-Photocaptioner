@@ -1,9 +1,17 @@
 package com.example.photocaptioner.ui.screens
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.photocaptioner.PhotoCaptionerApplication
 import com.example.photocaptioner.data.Datasource
 import com.example.photocaptioner.data.MenuItemType
+import com.example.photocaptioner.data.UnsplashRepository
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.MapsPhoto
 import com.example.photocaptioner.model.Photo
@@ -11,18 +19,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class PhotoCaptionersViewModel : ViewModel() {
+class PhotoCaptionersViewModel(private val unsplashRepository: UnsplashRepository) : ViewModel() {
+
     private val _uiState = MutableStateFlow(
         PhotoCaptionerUiState(
             albumList = Datasource.getAlbums(),
-            searchedPhotos = listOf(
-                Pair(false, MapsPhoto("https://picsum.photos/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/seed/picsum/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/237/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/238/200/300")),
-                Pair(false, MapsPhoto("https://picsum.photos/id/239/200/300"))
-            )
+            searchedPhotos = emptyList()
         )
     )
     val uiState: StateFlow<PhotoCaptionerUiState> = _uiState.asStateFlow()
@@ -57,6 +61,19 @@ class PhotoCaptionersViewModel : ViewModel() {
             it.copy(
                 searchValue = newSearchValue
             )
+        }
+    }
+
+    fun searchImages(query: String) {
+        viewModelScope.launch {
+            try {
+                val images = unsplashRepository.searchImages(query)
+                _uiState.update {
+                    it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, MapsPhoto(imageUrl)) })
+                }
+            } catch (e: Exception) {
+                // Handle error
+            }
         }
     }
 
@@ -142,6 +159,16 @@ class PhotoCaptionersViewModel : ViewModel() {
                 selectedPhoto = photo
                 //TODO: change selected photo description when working with database
             )
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as PhotoCaptionerApplication)
+                val unsplashRepository = application.container.provideUnsplashRepository()
+                PhotoCaptionersViewModel(unsplashRepository = unsplashRepository)
+            }
         }
     }
 }

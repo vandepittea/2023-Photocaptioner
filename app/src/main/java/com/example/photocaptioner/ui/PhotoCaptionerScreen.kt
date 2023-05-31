@@ -77,7 +77,7 @@ fun PhotoCaptionerApp(
     val currentScreen = PhotoCaptionerScreen.valueOf(
         backStackEntry.value?.destination?.route ?: PhotoCaptionerScreen.Start.name
     )
-    val viewModel: PhotoCaptionersViewModel = viewModel()
+    val viewModel: PhotoCaptionersViewModel = viewModel(factory = PhotoCaptionersViewModel.Factory)
     val uiState by viewModel.uiState.collectAsState()
 
     when (windowSize) {
@@ -204,6 +204,9 @@ fun PhotoCaptionerApp(
                 searchedPhotos = uiState.searchedPhotos,
                 onSearchChanged = {
                     viewModel.updateSearchValue(it)
+                    if(it.isNotEmpty()){
+                        viewModel.searchImages(it)
+                    }
                 },
                 onImageSelected = {
                     viewModel.selectImage(it)
