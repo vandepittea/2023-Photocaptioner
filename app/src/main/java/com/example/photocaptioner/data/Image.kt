@@ -11,5 +11,6 @@ data class Image(
     val name: String,
     val description: String,
     val createdAt: LocalDate,
+    val filePath: String,
     val albumId: Long
 )
