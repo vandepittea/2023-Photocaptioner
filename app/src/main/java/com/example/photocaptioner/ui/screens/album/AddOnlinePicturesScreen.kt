@@ -149,7 +149,7 @@ fun UploadButton(
 @Composable
 fun AddPicturesScreenPreview() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen()
+        AddOnlinePicturesScreen({})
     }
 }
 
@@ -157,7 +157,7 @@ fun AddPicturesScreenPreview() {
 @Composable
 fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen()
+        AddOnlinePicturesScreen({})
     }
 }
 
@@ -165,7 +165,7 @@ fun AddPicturesScreenPreviewWithPictures() {
 @Composable
 fun AddPicturesScreenPreviewWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen()
+        AddOnlinePicturesScreen({})
     }
 }
 
@@ -173,6 +173,6 @@ fun AddPicturesScreenPreviewWithExtendedView() {
 @Composable
 fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen()
+        AddOnlinePicturesScreen({})
     }
 }
