@@ -1,5 +1,6 @@
 package com.example.photocaptioner.ui.screens.album
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -48,10 +49,12 @@ fun AlbumsScreen(
             onAddClick = onAddClick
         )
 
-        AlbumList(
-            albumList = albumsUiState.albums,
-            onAlbumClick = onAlbumClick
-        )
+        if (albumsUiState.albums.isNotEmpty()) {
+            AlbumList(
+                albumList = albumsUiState.albums,
+                onAlbumClick = onAlbumClick
+            )
+        }
     }
 }
 
@@ -99,7 +102,7 @@ fun AlbumList(
     ) {
         items(albumList) { albumWithImages ->
             ImageWithDescription(
-                photo = albumWithImages.photos[0],
+                photo = if (albumWithImages.photos.isNotEmpty()) albumWithImages.photos[0] else null,
                 description = albumWithImages.album.name,
                 onClick = { onAlbumClick(albumWithImages.album.id) }
             )
