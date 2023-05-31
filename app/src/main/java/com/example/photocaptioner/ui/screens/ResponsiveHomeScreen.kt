@@ -272,7 +272,7 @@ private fun InAppNavigation(
 
         composable(PhotoCaptionerScreen.Photo.name) {
             val lifecycleOwner = LocalLifecycleOwner.current
-            CameraPage(lifecycleOwner)
+            CameraPage()
         }
 
         composable(PhotoCaptionerScreen.Albums.name) {
