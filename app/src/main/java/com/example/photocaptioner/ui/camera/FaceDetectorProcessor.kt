@@ -26,17 +26,17 @@ class FaceDetectorProcessor {
         detector = FaceDetection.getClient(faceDetectorOptions)
     }
 
-    fun stop() {
-        detector.close()
-    }
-
     @SuppressLint("UnsafeExperimentalUsageError", "UnsafeOptInUsageError")
     fun processImageProxy(image: ImageProxy, onDetectionFinished: (List<Face>) -> Unit) {
+        // Process the image using the face detector
         detector.process(InputImage.fromMediaImage(image.image!!, image.imageInfo.rotationDegrees))
-            .addOnSuccessListener(executor) { results: List<Face> -> onDetectionFinished(results) }
-            .addOnFailureListener(executor) { e: Exception ->
-                Log.e("Camera", "Error detecting face", e)
+            .addOnSuccessListener(executor) { results: List<Face> ->
+                // Pass the detected faces to the callback function
+                onDetectionFinished(results)
             }
-            .addOnCompleteListener { image.close() }
+            .addOnCompleteListener {
+                // Close the image proxy after processing is complete
+                image.close()
+            }
     }
 }

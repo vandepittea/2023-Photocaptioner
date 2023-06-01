@@ -17,6 +17,7 @@
     <string name="upload" translatable="false">Upload</string>
     <string name="back_button">Back</string>
     <string name="save">Save</string>
+    <string name="cameraswitch">Cameraswitch</string>
 
     //titles
     <string name="recently_edited" translatable="false">Recently Edited</string>
