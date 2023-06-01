@@ -1,14 +1,8 @@
 package com.example.photocaptioner.ui
 
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.photocaptioner.PhotoCaptionerApplication
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.ui.screens.album.AddAlbumViewModel
 import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesViewModel

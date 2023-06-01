@@ -248,7 +248,10 @@ arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type =
             )
         }
 
-        composable(route = AddAlbumDestination.route) {
+        composable(
+            route = AddAlbumDestination.routeWithArgs,
+            arguments = listOf(navArgument(AddAlbumDestination.albumIdArg) { type = NavType.LongType })
+        ) {
             AddAlbumScreen(
                 onChooseCamera = onChooseCamera,
                 onChooseGallery = onChooseGallery,

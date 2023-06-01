@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class AddOnlinePicturesViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val albumsRepository: AlbumsRepository,
     private val unsplashRepository: UnsplashRepository
 ) : ViewModel() {
@@ -68,13 +68,9 @@ class AddOnlinePicturesViewModel(
 
     fun addPhotosToAlbum() {
         val newPhotos: List<Photo> = addOnlinePicturesUiState.value.searchedPhotos.filter { it.first }.map { it.second }
-        if (albumId == (-1).toLong()) {
-            savedStateHandle["newPhotos"] = newPhotos
-        } else {
-            viewModelScope.launch {
-                newPhotos.forEach {
-                    albumsRepository.insertPhoto(it)
-                }
+        viewModelScope.launch {
+            newPhotos.forEach {
+                albumsRepository.insertPhoto(it)
             }
         }
     }

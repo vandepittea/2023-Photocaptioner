@@ -3,13 +3,36 @@ package com.example.photocaptioner.ui.screens.album
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
+import com.example.photocaptioner.model.Photo
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 
-class AddAlbumViewModel(private val albumsRepository: AlbumsRepository) : ViewModel() {
+class AddAlbumViewModel(
+    private val albumsRepository: AlbumsRepository
+) : ViewModel() {
     var addAlbumUiState by mutableStateOf(AlbumUiState())
         private set
+
+    init {
+        viewModelScope.launch {
+            albumsRepository.getPhotosWithoutAlbum().collect {
+                addAlbumUiState = AlbumUiState(
+                    albumDetails = AlbumWithImages(
+                        album = addAlbumUiState.albumDetails.album,
+                        photos = it
+                    )
+                )
+            }
+        }
+    }
 
     fun updateAlbumTitleUiState(title: String) {
         addAlbumUiState = AlbumUiState(
@@ -27,12 +50,8 @@ class AddAlbumViewModel(private val albumsRepository: AlbumsRepository) : ViewMo
 
     suspend fun saveItem() {
         if (validateInput()) {
-            albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
-            if (addAlbumUiState.albumDetails.photos.isNotEmpty()) {
-                addAlbumUiState.albumDetails.photos.forEach {
-                    albumsRepository.insertPhoto(it)
-                }
-            }
+            val albumId = albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
+            albumsRepository.updatePhotosWithoutAlbum(albumId)
         }
     }
 

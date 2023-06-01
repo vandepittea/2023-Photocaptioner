@@ -125,7 +125,7 @@ fun PhotoCaptionerApp(
                     viewModel.canNavigateBack(true)
                 },
                 onAddAlbumClick = {
-                    navController.navigate(AddAlbumDestination.route)
+                    navController.navigate("${AddAlbumDestination.route}/${-1}")
                     viewModel.canNavigateBack(true)
                 },
                 onAlbumClick = {

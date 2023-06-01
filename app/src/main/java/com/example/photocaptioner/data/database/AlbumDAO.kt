@@ -26,10 +26,13 @@ interface AlbumDAO {
     fun getLatestAlbum(): Flow<AlbumWithImages>
 
     @Query("SELECT * FROM photos WHERE id = :id")
-    fun getImage(id: Long): Flow<Photo>
+    fun getPhoto(id: Long): Flow<Photo>
+
+    @Query("SELECT * FROM photos WHERE albumId = -1")
+    fun getPhotosWithoutAlbum(): Flow<List<Photo>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAlbum(album: Album)
+    suspend fun insertAlbum(album: Album): Long
 
     @Update
     suspend fun updateAlbum(album: Album)
@@ -39,4 +42,7 @@ interface AlbumDAO {
 
     @Update
     suspend fun updatePhoto(image: Photo)
+
+    @Query("UPDATE photos SET albumId = :albumId WHERE albumId = -1")
+    suspend fun updatePhotosWithoutAlbum(albumId: Long)
 }
