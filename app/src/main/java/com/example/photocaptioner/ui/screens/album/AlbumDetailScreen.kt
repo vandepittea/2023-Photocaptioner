@@ -99,7 +99,7 @@ fun AlbumDetails(
 
     AlternatingColumn(
         items = albumWithImages.photos,
-        onPhotoClick = { onPhotoClick(albumWithImages.album.id) },
+        onPhotoClick = onPhotoClick,
     )
 }
 

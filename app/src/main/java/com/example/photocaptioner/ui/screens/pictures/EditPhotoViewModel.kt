@@ -1,20 +1,22 @@
-package com.example.photocaptioner.ui.screens.album
+package com.example.photocaptioner.ui.screens.pictures
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
-import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class EditPhotoViewModel(
+    savedStateHandle: SavedStateHandle,
     private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
-    private val photoId: Long = 0 //TODO: manier om photoId te krijgen vinden (navigation arguments van vb oef??)
+    private val photoId: Long = checkNotNull(savedStateHandle[EditPhotoDestination.photoIdArg])
 
     var editPhotoUiState by mutableStateOf(EditPhotoUiState())
         private set

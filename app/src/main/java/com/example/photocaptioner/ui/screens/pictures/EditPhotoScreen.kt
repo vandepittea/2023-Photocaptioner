@@ -18,7 +18,6 @@ import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.Button
-import com.example.photocaptioner.ui.screens.album.EditPhotoViewModel
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
