@@ -4,7 +4,9 @@ import FaceDetectorProcessor
 import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageProxy
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.ui.unit.Constraints
@@ -14,6 +16,9 @@ import com.example.photocaptioner.model.SourceInfo
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.face.Face
+import java.util.concurrent.Executor
+
+lateinit var imageCapture: ImageCapture
 
 public fun ListenableFuture<ProcessCameraProvider>.configureCamera(
     previewView: PreviewView,
@@ -25,11 +30,16 @@ public fun ListenableFuture<ProcessCameraProvider>.configureCamera(
 ): ListenableFuture<ProcessCameraProvider> {
     val cameraSelector = CameraSelector.Builder().requireLensFacing(cameraLens).build()
 
-    val preview = androidx.camera.core.Preview.Builder()
+    val preview = Preview.Builder()
         .build()
         .apply {
             setSurfaceProvider(previewView.surfaceProvider)
         }
+
+    imageCapture = ImageCapture.Builder()
+        .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+        .setFlashMode(ImageCapture.FLASH_MODE_AUTO)
+        .build()
 
     // Create an analysis use case for processing image frames
     val analysis = createAnalysisUseCase(cameraLens, setSourceInfo, onFacesDetected)
@@ -40,7 +50,7 @@ public fun ListenableFuture<ProcessCameraProvider>.configureCamera(
             unbindAll()
 
             // Bind the preview and analysis use cases to the lifecycle and camera selector
-            bindToLifecycle(lifecycleOwner, cameraSelector, preview)
+            bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCapture)
             bindToLifecycle(lifecycleOwner, cameraSelector, analysis)
         }
     }, ContextCompat.getMainExecutor(context))

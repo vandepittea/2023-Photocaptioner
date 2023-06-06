@@ -1,3 +1,4 @@
+import android.util.Log
 import android.view.ViewGroup
 import androidx.compose.runtime.*
 import androidx.camera.core.CameraSelector
@@ -27,12 +28,16 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.model.SourceInfo
+import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.camera.PreviewScaleType
 import com.example.photocaptioner.ui.camera.calculateScale
 import com.example.photocaptioner.ui.camera.configureCamera
+import com.example.photocaptioner.ui.camera.imageCapture
 import com.example.photocaptioner.ui.camera.switchLens
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
+import com.example.photocaptioner.ui.screens.pictures.CameraPageViewModel
 
 object CameraPageDestination : NavigationDestination {
     override val route = "Camera"
@@ -42,18 +47,28 @@ object CameraPageDestination : NavigationDestination {
 }
 
 @Composable
-fun CameraPage() {
+fun CameraPage(
+    navigateBack: () -> Unit,
+    viewModel: CameraPageViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val lens = remember { mutableStateOf(CameraSelector.LENS_FACING_FRONT) }
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize()) {
         CameraPreview(cameraLens = lens.value)
-        Controls(onLensChange = { lens.value = switchLens(lens.value) })
+        Controls(
+            onLensChange = { lens.value = switchLens(lens.value) },
+            onTakePicture = {
+                viewModel.savePicture(context, imageCapture, navigateBack)
+            }
+        )
     }
 }
 
 @Composable
 fun CameraPreview(
-    cameraLens: Int
+    cameraLens: Int,
+
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -120,13 +135,22 @@ private fun CameraPreview(previewView: PreviewView) {
 
 @Composable
 fun Controls(
+    onLensChange: () -> Unit,
+    onTakePicture: () -> Unit
+) {
+    LensChange(onLensChange = onLensChange)
+    TakePicture(onTakePicture = onTakePicture)
+}
+
+@Composable
+fun LensChange(
     onLensChange: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 24.dp),
-        contentAlignment = Alignment.BottomCenter,
+            .padding(24.dp),
+        contentAlignment = Alignment.TopStart,
     ) {
         Button(
             onClick = onLensChange,
@@ -135,6 +159,30 @@ fun Controls(
             Image(
                 painter = painterResource(id = R.drawable.baseline_cameraswitch_24),
                 contentDescription = stringResource(R.string.cameraswitch),
+                modifier = Modifier
+                    .height(50.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun TakePicture(
+    onTakePicture: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        contentAlignment = Alignment.BottomCenter,
+    ) {
+        Button(
+            onClick = onTakePicture,
+            modifier = Modifier.wrapContentSize()
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.baseline_camera_alt_24),
+                contentDescription = stringResource(R.string.take_picture),
                 modifier = Modifier
                     .height(50.dp)
             )

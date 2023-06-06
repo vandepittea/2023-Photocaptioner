@@ -3,6 +3,7 @@ package com.example.photocaptioner
 import com.example.photocaptioner.data.AppContainer
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
+import java.io.File
 
 class PhotoCaptionerApplication : Application() {
     lateinit var container: AppContainer

@@ -2,6 +2,8 @@ package com.example.photocaptioner.ui.screens
 
 import CameraPage
 import CameraPageDestination
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -54,6 +56,7 @@ import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
 import com.example.photocaptioner.ui.screens.pictures.EditPhotoScreen
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResponsiveHomeScreen(
@@ -158,6 +161,7 @@ fun ResponsiveHomeScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 private fun InAppNavigation(
     navController: NavHostController,
@@ -200,7 +204,9 @@ private fun InAppNavigation(
             arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
         ) {
             val lifecycleOwner = LocalLifecycleOwner.current
-            CameraPage()
+            CameraPage(
+                navigateBack = navigateBack
+            )
         }
 
         composable(route = AlbumsDestination.route) {
@@ -255,7 +261,7 @@ private fun InAppNavigation(
 
         composable(
             route = AddOnlinePicturesDestination.routeWithArgs,
-arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
         ) {
             AddOnlinePicturesScreen(
                 navigateBack = navigateBack
