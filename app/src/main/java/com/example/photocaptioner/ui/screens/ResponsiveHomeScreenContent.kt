@@ -94,8 +94,8 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -110,8 +110,8 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
         )
         ChoosePicturesSourceScreen(
             onChooseCamera = onChooseCamera,
-            onChooseGallery = onChooseGallery,
             onChooseMaps = onChooseMaps,
+            navigateBack = navigateBack,
             modifier = Modifier.weight(1f)
         )
     }

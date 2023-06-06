@@ -47,7 +47,8 @@ object AppViewModelProvider {
         }
         initializer {
             ChoosePicturesSourceViewModel(
-                this.createSavedStateHandle()
+                this.createSavedStateHandle(),
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
         initializer {

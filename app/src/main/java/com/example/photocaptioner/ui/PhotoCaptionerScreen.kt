@@ -142,7 +142,6 @@ fun PhotoCaptionerApp(
                     viewModel.canNavigateBack(true)
                 },
                 onChooseCamera = {},
-                onChooseGallery = {},
                 onChooseMaps = {
                     navController.navigate("${AddOnlinePicturesDestination.route}/${it}")
                     viewModel.canNavigateBack(true)

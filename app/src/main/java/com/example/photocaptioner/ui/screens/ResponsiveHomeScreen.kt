@@ -65,7 +65,6 @@ fun ResponsiveHomeScreen(
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -108,7 +107,6 @@ fun ResponsiveHomeScreen(
                     onAddPictureClick = onAddPictureClick,
                     onPhotoClick = onPhotoClick,
                     onChooseCamera = onChooseCamera,
-                    onChooseGallery = onChooseGallery,
                     onChooseMaps = onChooseMaps,
                     navigateBack = navigateBack,
                     contentType = contentType,
@@ -130,7 +128,6 @@ fun ResponsiveHomeScreen(
                 onAddPictureClick = onAddPictureClick,
                 onPhotoClick = onPhotoClick,
                 onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
                 navigateBack = navigateBack,
                 contentType = contentType,
@@ -163,7 +160,6 @@ private fun InAppNavigation(
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -227,14 +223,14 @@ private fun InAppNavigation(
                     onAddPictureClick = onAddPictureClick,
                     onPhotoClick = onPhotoClick,
                     onChooseCamera = onChooseCamera,
-                    onChooseGallery = onChooseGallery,
-                    onChooseMaps = onChooseMaps
+                    onChooseMaps = onChooseMaps,
+                    navigateBack = navigateBack
                 )
             } else {
                 ChoosePicturesSourceScreen(
                     onChooseCamera = onChooseCamera,
-                    onChooseGallery = onChooseGallery,
-                    onChooseMaps = onChooseMaps
+                    onChooseMaps = onChooseMaps,
+                    navigateBack = navigateBack
                 )
             }
         }
@@ -254,7 +250,6 @@ arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type =
         ) {
             AddAlbumScreen(
                 onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
                 navigateBack = navigateBack,
                 contentType = contentType

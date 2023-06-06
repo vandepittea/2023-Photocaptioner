@@ -43,7 +43,6 @@ object AddAlbumDestination : NavigationDestination {
 @Composable
 fun AddAlbumScreen(
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateBack: () -> Unit,
     contentType: PhotoCaptionerContentType,
@@ -62,16 +61,16 @@ fun AddAlbumScreen(
             AddAlbumInnerScreenListOnly(
                 newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
+                navigateBack = navigateBack,
                 viewModel = viewModel,
             )
         } else {
             AddAlbumInnerScreenListAndDetails(
                 newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
                 onChooseMaps = onChooseMaps,
+                navigateBack = navigateBack,
                 viewModel = viewModel,
             )
         }
@@ -95,8 +94,8 @@ fun AddAlbumScreen(
 fun AddAlbumInnerScreenListOnly(
     newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel
 ) {
@@ -110,8 +109,8 @@ fun AddAlbumInnerScreenListOnly(
         AddAlbumPhoto(
             newPhotos = newPhotos,
             onChooseCamera = onChooseCamera,
-            onChooseGallery = onChooseGallery,
-            onChooseMaps = onChooseMaps
+            onChooseMaps = onChooseMaps,
+            navigateBack = navigateBack
         )
     }
 }
@@ -120,8 +119,8 @@ fun AddAlbumInnerScreenListOnly(
 fun AddAlbumInnerScreenListAndDetails(
     newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel
 ) {
@@ -136,8 +135,8 @@ fun AddAlbumInnerScreenListAndDetails(
         AddAlbumPhoto(
             newPhotos = newPhotos,
             onChooseCamera = onChooseCamera,
-            onChooseGallery = onChooseGallery,
             onChooseMaps = onChooseMaps,
+            navigateBack = navigateBack,
             modifier = Modifier.weight(1f)
         )
     }
@@ -165,8 +164,8 @@ fun AddAlbumInformation(
 fun AddAlbumPhoto(
     newPhotos: List<Photo>,
     onChooseCamera: () -> Unit,
-    onChooseGallery: () -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -175,8 +174,8 @@ fun AddAlbumPhoto(
         if (newPhotos.isEmpty()) {
             ChoosePicturesSourceScreen(
                 onChooseCamera = onChooseCamera,
-                onChooseGallery = onChooseGallery,
-                onChooseMaps = onChooseMaps
+                onChooseMaps = onChooseMaps,
+                navigateBack = navigateBack
             )
         } else {
             Text(
@@ -292,7 +291,6 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
             {},
             {},
             {},
-            {},
             PhotoCaptionerContentType.LIST_ONLY
         )
     }
@@ -303,7 +301,6 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
         AddAlbumScreen(
-            {},
             {},
             {},
             {},
@@ -320,7 +317,6 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
             {},
             {},
             {},
-            {},
             PhotoCaptionerContentType.LIST_AND_DETAIL)
     }
 }
@@ -330,7 +326,6 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
 fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumScreen(
-            {},
             {},
             {},
             {},
