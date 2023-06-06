@@ -3,27 +3,31 @@ package com.example.photocaptioner.ui
 import androidx.compose.ui.Alignment
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.photocaptioner.R
-import java.time.LocalDate
+import com.example.photocaptioner.model.Photo
 
 @Composable
 fun Button(
@@ -97,8 +101,8 @@ fun ButtonWithIcon(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescription(
-    image: Int,
-    description: Int?,
+    photo: Photo?,
+    description: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -111,23 +115,25 @@ fun ImageWithDescription(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(id = image),
-                contentDescription = if (description != null) stringResource(id = description) else null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
-
-            if (description != null) {
-                Text(
-                    text = stringResource(id = description),
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+            if (photo != null) {
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(photo.filePath)
+                        .build(),
+                    contentDescription = photo.description,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
                 )
             }
+
+            Text(
+                text = description,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+            )
         }
     }
 }
@@ -160,9 +166,7 @@ fun ImageFromUrl(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ImageWithDescriptionAndDate(
-    image: Int,
-    description: Int,
-    date: LocalDate,
+    photo: Photo,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -172,18 +176,20 @@ fun ImageWithDescriptionAndDate(
         modifier = modifier
     ) {
         Column {
-            Image(
-                painter = painterResource(id = image),
-                contentDescription = stringResource(id = description),
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(photo.filePath)
+                    .build(),
+                contentDescription = photo.description,
                 modifier = Modifier
-                    .height(240.dp)
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(8.dp)),
+                    .height(250.dp)
+                    .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
 
             Text(
-                text = stringResource(id = description),
+                text = photo.description,
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(top = 8.dp, bottom = 4.dp)
@@ -202,7 +208,7 @@ fun ImageWithDescriptionAndDate(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = "$date",
+                    text = "${photo.createdAt}",
                     style = MaterialTheme.typography.body2
                 )
             }
@@ -243,15 +249,9 @@ fun SearchBox(
             .padding(horizontal = 4.dp, vertical = 2.dp)
             .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
-        TextField(
+        OutlinedTextField(
             value = searchValue,
             onValueChange = onValueChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = colors.surface,
-                    shape = RoundedCornerShape(8.dp)
-                ),
             placeholder = {
                 Text(
                     text = "Search",
@@ -266,11 +266,9 @@ fun SearchBox(
                     tint = colors.onSurface.copy(alpha = 0.5f)
                 )
             },
-            textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
             )
         )
     }

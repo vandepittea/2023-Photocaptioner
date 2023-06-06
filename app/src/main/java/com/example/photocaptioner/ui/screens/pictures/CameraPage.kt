@@ -32,6 +32,14 @@ import com.example.photocaptioner.ui.camera.PreviewScaleType
 import com.example.photocaptioner.ui.camera.calculateScale
 import com.example.photocaptioner.ui.camera.configureCamera
 import com.example.photocaptioner.ui.camera.switchLens
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
+
+object CameraPageDestination : NavigationDestination {
+    override val route = "Camera"
+    override val titleRes = R.string.photo
+    const val albumIdArg = "albumId"
+    val routeWithArgs = "$route/{$albumIdArg}"
+}
 
 @Composable
 fun CameraPage() {
