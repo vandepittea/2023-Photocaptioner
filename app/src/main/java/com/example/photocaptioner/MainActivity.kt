@@ -2,10 +2,12 @@ package com.example.photocaptioner
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -18,12 +20,15 @@ import androidx.core.content.ContextCompat
 
 class MainActivity : ComponentActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (permissionGranted(Manifest.permission.CAMERA)) {
+        if (permissionGranted(Manifest.permission.CAMERA) && permissionGranted(Manifest.permission.READ_MEDIA_IMAGES)) {
             initView()
-        } else {
+        } else if (!permissionGranted(Manifest.permission.CAMERA)){
             requestPermission(Manifest.permission.CAMERA)
+        } else if (!permissionGranted(Manifest.permission.READ_MEDIA_IMAGES)) {
+            requestPermission(Manifest.permission.READ_MEDIA_IMAGES)
         }
     }
 
