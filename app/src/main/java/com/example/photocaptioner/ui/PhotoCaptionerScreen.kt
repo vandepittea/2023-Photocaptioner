@@ -1,6 +1,8 @@
 package com.example.photocaptioner.ui
 
 import CameraPageDestination
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,6 +61,7 @@ fun PhotoCaptionerAppTopBar(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoCaptionerApp(
@@ -120,7 +123,7 @@ fun PhotoCaptionerApp(
                     navController.navigate(HomeDestination.route)
                 },
                 onTakePictureClick = {
-                    navController.navigate("${CameraPageDestination.route}/${-1}")
+                    navController.navigate("${CameraPageDestination.route}/${-2}")
                     viewModel.canNavigateBack(true)
                 },
                 onGoToAlbumsClick = {
@@ -161,8 +164,8 @@ fun PhotoCaptionerApp(
                     navController.navigate("${AlbumDetailDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
-                navigateBack = {
-                    navController.navigateUp()
+                navigateBack = { route, include ->
+                    navController.popBackStack(route, include)
                 }
             )
         }

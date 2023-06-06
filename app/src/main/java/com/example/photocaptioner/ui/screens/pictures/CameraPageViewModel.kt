@@ -13,6 +13,8 @@ import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.PhotoCaptionerApp
+import com.example.photocaptioner.ui.screens.album.AddAlbumDestination
+import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
 import kotlinx.coroutines.launch
 import java.io.File
@@ -32,7 +34,7 @@ class CameraPageViewModel(
     fun savePicture(
         context: Context,
         imageCapture: ImageCapture,
-        navigateBack: () -> Unit
+        navigateBack: (route: String, include: Boolean) -> Unit
     ) {
         val fileNameFormat = "yyyy-MM-dd-HH-mm-ss-SSS"
 
@@ -59,7 +61,13 @@ class CameraPageViewModel(
                     )
                     viewModelScope.launch {
                         albumsRepository.insertPhoto(newPhoto)
-                        navigateBack()
+                        if (albumId == -1L) {
+                            navigateBack(AddAlbumDestination.routeWithArgs, false)
+                        } else if (albumId == -2L) {
+
+                        } else {
+                            navigateBack(AlbumDetailDestination.routeWithArgs, false)
+                        }
                     }
                 }
             }

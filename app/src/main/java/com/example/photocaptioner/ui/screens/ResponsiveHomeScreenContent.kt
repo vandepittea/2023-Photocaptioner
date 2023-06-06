@@ -43,7 +43,7 @@ fun AlbumDetailAndAlbumEditScreen(
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -68,7 +68,7 @@ fun AlbumDetailAndPhotoEditScreen(
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -95,7 +95,7 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(

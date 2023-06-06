@@ -74,7 +74,7 @@ fun ResponsiveHomeScreen(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit,
@@ -175,7 +175,7 @@ private fun InAppNavigation(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit

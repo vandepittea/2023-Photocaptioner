@@ -36,7 +36,7 @@ object AddOnlinePicturesDestination : NavigationDestination {
 
 @Composable
 fun AddOnlinePicturesScreen(
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddOnlinePicturesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -73,7 +73,7 @@ fun AddOnlinePicturesScreen(
         ) {
             UploadButton(onClick = {
                 viewModel.addPhotosToAlbum()
-                navigateBack()
+                navigateBack(AddOnlinePicturesDestination.routeWithArgs, true)
             }) //TODO: veranderen wanneer we weten bij welk album te adden
         }
     }
@@ -151,7 +151,7 @@ fun UploadButton(
 @Composable
 fun AddPicturesScreenPreview() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({})
+        AddOnlinePicturesScreen({route, include ->})
     }
 }
 
@@ -159,7 +159,7 @@ fun AddPicturesScreenPreview() {
 @Composable
 fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({})
+        AddOnlinePicturesScreen({route, include ->})
     }
 }
 
@@ -167,7 +167,7 @@ fun AddPicturesScreenPreviewWithPictures() {
 @Composable
 fun AddPicturesScreenPreviewWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({})
+        AddOnlinePicturesScreen({route, include ->})
     }
 }
 
@@ -175,6 +175,6 @@ fun AddPicturesScreenPreviewWithExtendedView() {
 @Composable
 fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({})
+        AddOnlinePicturesScreen({route, include ->})
     }
 }

@@ -44,5 +44,8 @@ interface AlbumDAO {
     suspend fun updatePhoto(image: Photo)
 
     @Query("UPDATE photos SET albumId = :albumId WHERE albumId = -1")
-    suspend fun updatePhotosWithoutAlbum(albumId: Long)
+    fun updatePhotosWithoutAlbum(albumId: Long)
+
+    @Query("DELETE FROM photos WHERE id = -1")
+    fun deletePhotosWithoutAlbum()
 }

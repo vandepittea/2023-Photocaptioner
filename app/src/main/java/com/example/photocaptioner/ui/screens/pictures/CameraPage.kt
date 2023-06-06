@@ -48,7 +48,7 @@ object CameraPageDestination : NavigationDestination {
 
 @Composable
 fun CameraPage(
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     viewModel: CameraPageViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val lens = remember { mutableStateOf(CameraSelector.LENS_FACING_FRONT) }
