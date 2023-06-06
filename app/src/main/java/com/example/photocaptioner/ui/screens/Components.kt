@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -247,15 +250,9 @@ fun SearchBox(
             .padding(horizontal = 4.dp, vertical = 2.dp)
             .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
-        TextField(
+        OutlinedTextField(
             value = searchValue,
             onValueChange = onValueChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = colors.surface,
-                    shape = RoundedCornerShape(8.dp)
-                ),
             placeholder = {
                 Text(
                     text = "Search",
@@ -270,11 +267,9 @@ fun SearchBox(
                     tint = colors.onSurface.copy(alpha = 0.5f)
                 )
             },
-            textStyle = MaterialTheme.typography.body1.copy(fontSize = 16.sp),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
             )
         )
     }
