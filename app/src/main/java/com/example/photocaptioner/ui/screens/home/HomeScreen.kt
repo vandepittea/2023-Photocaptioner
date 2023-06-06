@@ -6,25 +6,36 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.Datasource
-import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.AlbumWithImages
+import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.screens.home.HomeViewModel
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+
+object HomeDestination : NavigationDestination {
+    override val route = "home"
+    override val titleRes = R.string.app_name
+}
 
 @Composable
 fun HomeScreen(
     onTakePictureClick: () -> Unit,
     onAlbumsClick: () -> Unit,
-    recentlyEdited: Album,
-    onRecentlyEditedClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onRecentlyEditedClick: (Long) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val homeUiState by viewModel.homeUiState.collectAsState()
     BackHandler(
         onBack = {}
     )
@@ -51,10 +62,12 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecentEdits(
-                recentlyEdited = recentlyEdited,
-                onRecentlyEditedClick = onRecentlyEditedClick
-            )
+            if (homeUiState.recentlyEditedAlbum != null) {
+                RecentEdits(
+                    recentlyEdited = homeUiState.recentlyEditedAlbum!!,
+                    onRecentlyEditedClick = { onRecentlyEditedClick(homeUiState.recentlyEditedAlbum!!.album.id) }
+                )
+            }
         }
     }
 }
@@ -81,7 +94,7 @@ fun Buttons(
 
 @Composable
 fun RecentEdits(
-    recentlyEdited: Album,
+    recentlyEdited: AlbumWithImages,
     onRecentlyEditedClick: () -> Unit
 ) {
     Text(
@@ -91,8 +104,8 @@ fun RecentEdits(
     )
 
     ImageWithDescription(
-        image = recentlyEdited.photos.first().image,
-        description = recentlyEdited.description,
+        photo = if (recentlyEdited.photos.isNotEmpty()) recentlyEdited.photos.first() else null,
+        description = recentlyEdited.album.name,
         onClick = onRecentlyEditedClick
     )
 }
@@ -101,7 +114,7 @@ fun RecentEdits(
 @Composable
 fun HomeScreenPreview(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultAlbum, {})
+        HomeScreen({}, {}, {})
     }
 }
 
@@ -109,6 +122,6 @@ fun HomeScreenPreview(){
 @Composable
 fun HomeScreenPreviewListAndDetail(){
     PhotoCaptionerTheme {
-        HomeScreen({}, {}, Datasource.defaultAlbum, {})
+        HomeScreen({}, {}, {})
     }
 }

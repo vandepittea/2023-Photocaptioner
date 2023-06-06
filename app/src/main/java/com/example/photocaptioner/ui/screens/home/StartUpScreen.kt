@@ -16,7 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import com.example.photocaptioner.R
+import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
+
+object StartUpDestination : NavigationDestination {
+    override val route = "start_up"
+    override val titleRes = R.string.app_name
+}
 
 @Composable
 fun StartUpScreen(
