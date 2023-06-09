@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +43,9 @@ fun AlbumDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: AlbumDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val albumUiState by viewModel.albumDetailUiState.collectAsState()
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -70,7 +73,7 @@ fun AlbumDetailScreen(
             AlbumFooter(
                 album = albumUiState.albumDetails.album,
                 onAddClick = onAddClick,
-                onShareClick = { viewModel.shareAlbum() },
+                onShareClick = { viewModel.shareAlbum(context) },
             )
         }
     }
