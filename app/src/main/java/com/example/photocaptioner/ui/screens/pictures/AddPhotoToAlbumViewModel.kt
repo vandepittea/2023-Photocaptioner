@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
+import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
@@ -30,14 +31,19 @@ class AddPhotoToAlbumViewModel(
         viewModelScope.launch {
             addPhotoToAlbumUiState = AddPhotoToAlbumUiState(
                 photo = albumsRepository.getPhoto(photoId).first(),
-                availableAlbums = albumsRepository.getAlbums().first()
+                availableAlbums = albumsRepository.getAlbums().first(),
+                selectedAlbum = albumsRepository.getAlbums().first().first()
             )
         }
     }
 
-    suspend fun addPhotoToAlbum(albumId: Long) {
+    fun selectAlbum(album: AlbumWithImages) {
+        addPhotoToAlbumUiState = addPhotoToAlbumUiState.copy(selectedAlbum = album)
+    }
+
+    suspend fun addPhotoToAlbum() {
         addPhotoToAlbumUiState = addPhotoToAlbumUiState.copy(
-            photo = addPhotoToAlbumUiState.photo.copy(albumId = albumId)
+            photo = addPhotoToAlbumUiState.photo.copy(albumId = addPhotoToAlbumUiState.selectedAlbum.album.id)
         )
         albumsRepository.updatePhoto(addPhotoToAlbumUiState.photo)
     }
@@ -46,4 +52,5 @@ class AddPhotoToAlbumViewModel(
 data class AddPhotoToAlbumUiState(
     val photo: Photo = Photo(),
     val availableAlbums: List<AlbumWithImages> = emptyList(),
+    val selectedAlbum: AlbumWithImages = AlbumWithImages()
 )

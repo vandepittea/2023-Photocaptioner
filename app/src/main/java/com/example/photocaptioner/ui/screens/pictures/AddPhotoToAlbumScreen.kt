@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,7 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.AlbumSelectBox
 import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.Button
 import com.example.photocaptioner.ui.HomeDestination
 import com.example.photocaptioner.ui.ImageWithDescriptionAndDate
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
@@ -54,8 +56,20 @@ fun AddPhotoToAlbumScreen(
             AlbumSelectBox(
                 albums = viewModel.addPhotoToAlbumUiState.availableAlbums,
                 onAlbumSelected = {
+                    viewModel.selectAlbum(it)
+                }
+            )
+        }
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
+        ) {
+            AddPhotoToAlbumFooter(
+                onAddPhoto = {
                     coroutineScope.launch {
-                        viewModel.addPhotoToAlbum(it)
+                        viewModel.addPhotoToAlbum()
                         navigateBack(HomeDestination.route, false)
                     }
                 }
@@ -64,7 +78,19 @@ fun AddPhotoToAlbumScreen(
     }
 }
 
-
+@Composable
+fun AddPhotoToAlbumFooter(
+    onAddPhoto: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        text = R.string.add_photo_to_album,
+        onClick = onAddPhoto,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    )
+}
 
 @Preview
 @Composable

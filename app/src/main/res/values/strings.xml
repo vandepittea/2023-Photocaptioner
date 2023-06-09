@@ -69,6 +69,6 @@
     <string name="album4_picture1_description" translatable="false">Ljubljana Slovenia</string>
     <string name="album5_picture1_description" translatable="false">School project</string>
     <string name="photo_description">Photo Description</string>
-    <string name="add_photo_to_album">Add photo to album</string>
+    <string name="add_photo_to_album">Add photo</string>
     <string name="no_albums_found">No albums found</string>
 </resources>

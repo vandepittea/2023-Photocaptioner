@@ -33,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
 
@@ -335,13 +336,16 @@ fun ImageOptions(
 @Composable
 fun AlbumSelectBox(
     albums: List<AlbumWithImages>,
-    onAlbumSelected: (Long) -> Unit,
+    onAlbumSelected: (AlbumWithImages) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (albums.isEmpty()) {
         Text(
             text = stringResource(R.string.no_albums_found),
             style = MaterialTheme.typography.body1,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(12.dp)
         )
         return
     }
@@ -352,30 +356,27 @@ fun AlbumSelectBox(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 4.dp, vertical = 2.dp)
             .padding(horizontal = 12.dp, vertical = 12.dp)
+            .clickable { expanded = true }
+            .background(colors.primary)
     ) {
         Text(
             text = selectedAlbum.album.name,
             style = MaterialTheme.typography.body1,
-            modifier = Modifier
-                .clickable { expanded = true }
-                .padding(16.dp)
+            modifier = Modifier.padding(16.dp)
         )
 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(colors.background)
+            modifier = Modifier.fillMaxWidth()
         ) {
             albums.forEach { album ->
                 DropdownMenuItem(
                     onClick = {
                         selectedAlbum = album
                         expanded = false
-                        onAlbumSelected(album.album.id)
+                        onAlbumSelected(album)
                     }
                 ) {
                     Text(
