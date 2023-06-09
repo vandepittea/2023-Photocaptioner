@@ -75,7 +75,8 @@ fun StartUpScreen(
                 val permissions = arrayOf(
                     android.Manifest.permission.CAMERA,
                     android.Manifest.permission.READ_MEDIA_IMAGES,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.INTERNET
                 )
 
                 if (!permissions.all {
