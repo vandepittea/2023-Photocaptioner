@@ -4,6 +4,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.worker.KEY_ALBUM_ID
+import com.example.photocaptioner.worker.OUTPUT_DIRECTORY
 import com.example.photocaptioner.worker.OUTPUT_FILE_NAME
 import com.example.photocaptioner.worker.showDownloadCompleteNotification
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +34,7 @@ class DownloadWorker(
             return@withContext Result.failure()
         }
 
-        val outputDirectory = getOutputDirectory()
+        val outputDirectory = OUTPUT_DIRECTORY
         val zipFile = File(outputDirectory, OUTPUT_FILE_NAME)
 
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zipOutputStream ->
@@ -92,9 +93,5 @@ class DownloadWorker(
                 outputStream.toByteArray()
             }
         }
-    }
-
-    private fun getOutputDirectory(): File {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     }
 }

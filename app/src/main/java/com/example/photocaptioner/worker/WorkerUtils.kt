@@ -5,16 +5,21 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.photocaptioner.MainActivity
 import com.example.photocaptioner.R
 
 fun showDownloadCompleteNotification(context: Context) {
     createNotificationChannel(context)
 
-    val intent = Intent(context, MainActivity::class.java)
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.type = "*/*"
+    val downloadsFolderUri = Uri.parse("content://com.android.externalstorage.documents/document/primary%3ADownload")
+    intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, downloadsFolderUri)
+
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
     val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
