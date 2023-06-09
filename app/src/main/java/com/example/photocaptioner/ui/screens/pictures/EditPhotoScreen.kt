@@ -34,7 +34,7 @@ object EditPhotoDestination : NavigationDestination {
 
 @Composable
 fun EditPhotoScreen(
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: EditPhotoViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -83,7 +83,7 @@ fun EditPhotoScreen(
                 onClick = {
                     coroutineScope.launch {
                         viewModel.saveItem()
-                        navigateBack()
+                        navigateBack(EditPhotoDestination.routeWithArgs, true)
                     }
                 }
             )
@@ -95,6 +95,6 @@ fun EditPhotoScreen(
 @Composable
 fun EditPhotoScreenPreview() {
     PhotoCaptionerTheme {
-        EditPhotoScreen({})
+        EditPhotoScreen({route, include ->})
     }
 }

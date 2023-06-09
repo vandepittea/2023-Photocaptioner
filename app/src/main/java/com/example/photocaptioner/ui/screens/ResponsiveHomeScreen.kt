@@ -1,5 +1,9 @@
 package com.example.photocaptioner.ui.screens
 
+import CameraPage
+import CameraPageDestination
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,8 +13,11 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -49,13 +56,14 @@ import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
 import com.example.photocaptioner.ui.screens.pictures.EditPhotoScreen
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResponsiveHomeScreen(
     navigationType: PhotoCaptionerNavigationType,
     navController: NavHostController,
     currentMenuItem: MenuItemType,
-    onMenuItemPress: (MenuItemType) -> Unit,
+    onMenuItemPress: (NavigationItemContent) -> Unit,
     onStartUpClick: () -> Unit,
     onTakePictureClick: () -> Unit,
     onGoToAlbumsClick: () -> Unit,
@@ -64,9 +72,9 @@ fun ResponsiveHomeScreen(
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit,
@@ -132,22 +140,28 @@ fun ResponsiveHomeScreen(
                 navigateBack = navigateBack,
                 contentType = contentType,
                 onRecentlyEditedClick = onRecentlyEditedClick,
-                modifier = modifier
+                modifier = modifier.weight(1f)
             )
 
-            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION) {
-                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                BottomNavigationBar(
-                    currentTab = currentMenuItem,
-                    onTabPressed = onMenuItemPress,
-                    navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier.testTag(bottomNavigationContentDescription)
-                )
+            Box(){
+                this@Row.AnimatedVisibility(
+                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
+                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                    BottomNavigationBar(
+                        currentTab = currentMenuItem,
+                        onTabPressed = onMenuItemPress,
+                        navigationItemContentList = navigationItemContentList,
+                        modifier = Modifier.testTag(bottomNavigationContentDescription)
+                    )
+                }
             }
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 private fun InAppNavigation(
     navController: NavHostController,
@@ -159,9 +173,9 @@ private fun InAppNavigation(
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (Long) -> Unit,
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit
@@ -182,6 +196,16 @@ private fun InAppNavigation(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
                 onRecentlyEditedClick = onRecentlyEditedClick
+            )
+        }
+
+        composable(
+            route = CameraPageDestination.routeWithArgs,
+            arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
+        ) {
+            val lifecycleOwner = LocalLifecycleOwner.current
+            CameraPage(
+                navigateBack = navigateBack
             )
         }
 
@@ -237,7 +261,7 @@ private fun InAppNavigation(
 
         composable(
             route = AddOnlinePicturesDestination.routeWithArgs,
-arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
         ) {
             AddOnlinePicturesScreen(
                 navigateBack = navigateBack
@@ -297,7 +321,7 @@ arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type =
 @Composable
 private fun NavigationRail(
     currentTab: MenuItemType,
-    onTabPressed: ((MenuItemType) -> Unit),
+    onTabPressed: ((NavigationItemContent) -> Unit),
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier
 ) {
@@ -305,7 +329,7 @@ private fun NavigationRail(
         for (navItem in navigationItemContentList) {
             NavigationRailItem(
                 selected = currentTab == navItem.menuItemType,
-                onClick = { onTabPressed(navItem.menuItemType) },
+                onClick = { onTabPressed(navItem) },
                 icon = {
                     Icon(
                         painter = painterResource(id = navItem.icon),
@@ -320,7 +344,7 @@ private fun NavigationRail(
 @Composable
 private fun BottomNavigationBar(
     currentTab: MenuItemType,
-    onTabPressed: ((MenuItemType) -> Unit),
+    onTabPressed: ((NavigationItemContent) -> Unit),
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier
 ) {
@@ -328,7 +352,7 @@ private fun BottomNavigationBar(
         for (navItem in navigationItemContentList) {
             NavigationBarItem(
                 selected = currentTab == navItem.menuItemType,
-                onClick = { onTabPressed(navItem.menuItemType) },
+                onClick = { onTabPressed(navItem) },
                 icon = {
                     Icon(
                         painter = painterResource(id = navItem.icon),
@@ -344,7 +368,7 @@ private fun BottomNavigationBar(
 @Composable
 private fun NavigationDrawerContent(
     selectedDestination: MenuItemType,
-    onTabPressed: ((MenuItemType) -> Unit),
+    onTabPressed: ((NavigationItemContent) -> Unit),
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier
 ) {
@@ -373,7 +397,7 @@ private fun NavigationDrawerContent(
                 colors = NavigationDrawerItemDefaults.colors(
                     unselectedContainerColor = Color.Transparent
                 ),
-                onClick = { onTabPressed(navItem.menuItemType) }
+                onClick = { onTabPressed(navItem) }
             )
         }
     }

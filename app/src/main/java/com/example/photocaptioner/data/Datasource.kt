@@ -1,11 +1,14 @@
 package com.example.photocaptioner.data
 
+import CameraPageDestination
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.database.PhotoDB
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.NavigationItemContent
 import com.example.photocaptioner.model.Photo
+import com.example.photocaptioner.ui.HomeDestination
+import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import java.time.LocalDate
 
 object Datasource {
@@ -58,16 +61,19 @@ object Datasource {
 
     val navigationItemContentList = listOf(
         NavigationItemContent(
+            route = HomeDestination.route,
             menuItemType = MenuItemType.Home,
             icon = R.drawable.baseline_home_24,
             text = R.string.home_menu
         ),
         NavigationItemContent(
+            route = "${CameraPageDestination.route}/${-1}",
             menuItemType = MenuItemType.Photo,
             icon = R.drawable.baseline_camera_alt_24,
             text = R.string.camera_menu
         ),
         NavigationItemContent(
+            route = AlbumsDestination.route,
             menuItemType = MenuItemType.Albums,
             icon = R.drawable.baseline_photo_album_24,
             text = R.string.album_menu

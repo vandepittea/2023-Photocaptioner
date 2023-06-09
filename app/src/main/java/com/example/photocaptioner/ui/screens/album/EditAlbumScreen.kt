@@ -30,7 +30,7 @@ object EditAlbumDestination : NavigationDestination {
 
 @Composable
 fun EditAlbumScreen(
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: EditAlbumViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -55,7 +55,7 @@ fun EditAlbumScreen(
                 onClick = {
                     coroutineScope.launch {
                         viewModel.saveItem()
-                        navigateBack()
+                        navigateBack(EditAlbumDestination.routeWithArgs, true)
                     }
                 }
             )
@@ -67,6 +67,6 @@ fun EditAlbumScreen(
 @Composable
 fun EditAlbumScreenPreview() {
     PhotoCaptionerTheme {
-        EditAlbumScreen({})
+        EditAlbumScreen({route, include ->})
     }
 }

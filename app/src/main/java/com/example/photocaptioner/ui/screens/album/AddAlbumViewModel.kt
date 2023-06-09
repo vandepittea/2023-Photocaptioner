@@ -3,16 +3,11 @@ package com.example.photocaptioner.ui.screens.album
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.model.Photo
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.forEach
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class AddAlbumViewModel(
@@ -50,8 +45,16 @@ class AddAlbumViewModel(
 
     suspend fun saveItem() {
         if (validateInput()) {
-            val albumId = albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
-            albumsRepository.updatePhotosWithoutAlbum(albumId)
+            run {
+                val albumId = albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
+                albumsRepository.updatePhotosWithoutAlbum(albumId)
+            }
+        }
+    }
+
+    suspend fun deletePhotosWithoutAlbum() {
+        run {
+            albumsRepository.deletePhotosWithoutAlbum()
         }
     }
 

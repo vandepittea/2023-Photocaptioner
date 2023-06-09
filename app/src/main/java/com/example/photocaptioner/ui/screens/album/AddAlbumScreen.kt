@@ -1,6 +1,7 @@
 package com.example.photocaptioner.ui.screens.album
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,9 +43,9 @@ object AddAlbumDestination : NavigationDestination {
 
 @Composable
 fun AddAlbumScreen(
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -83,7 +84,7 @@ fun AddAlbumScreen(
             NewAlbumFooter(onAddNewAlbum = {
                 coroutineScope.launch {
                     viewModel.saveItem()
-                    navigateBack()
+                    navigateBack(AddAlbumDestination.routeWithArgs, true)
                 }
             })
         }
@@ -93,9 +94,9 @@ fun AddAlbumScreen(
 @Composable
 fun AddAlbumInnerScreenListOnly(
     newPhotos: List<Photo>,
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel
 ) {
@@ -118,9 +119,9 @@ fun AddAlbumInnerScreenListOnly(
 @Composable
 fun AddAlbumInnerScreenListAndDetails(
     newPhotos: List<Photo>,
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddAlbumViewModel
 ) {
@@ -163,9 +164,9 @@ fun AddAlbumInformation(
 @Composable
 fun AddAlbumPhoto(
     newPhotos: List<Photo>,
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -290,7 +291,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
         AddAlbumScreen(
             {},
             {},
-            {},
+            {route, include ->},
             PhotoCaptionerContentType.LIST_ONLY
         )
     }
@@ -303,7 +304,7 @@ fun AddAlbumsScreenPreviewWithPhotos() {
         AddAlbumScreen(
             {},
             {},
-            {},
+            {route, include ->},
             PhotoCaptionerContentType.LIST_ONLY
         )
     }
@@ -316,7 +317,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
         AddAlbumScreen(
             {},
             {},
-            {},
+            {route, include ->},
             PhotoCaptionerContentType.LIST_AND_DETAIL)
     }
 }
@@ -328,7 +329,7 @@ fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
         AddAlbumScreen(
             {},
             {},
-            {},
+            {route, include ->},
             PhotoCaptionerContentType.LIST_AND_DETAIL
         )
     }

@@ -32,9 +32,9 @@ object ChoosePicturesDestination : NavigationDestination {
 
 @Composable
 fun ChoosePicturesSourceScreen(
-    onChooseCamera: () -> Unit,
+    onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
-    navigateBack: () -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChoosePicturesSourceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -42,7 +42,7 @@ fun ChoosePicturesSourceScreen(
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
         coroutineScope.launch {
             viewModel.onGalleryResult(it)
-            navigateBack()
+            navigateBack(ChoosePicturesDestination.routeWithArgs, true)
         }
     }
     Box(
@@ -54,7 +54,7 @@ fun ChoosePicturesSourceScreen(
         Column {
             TopBar(title = R.string.choose_picture_source)
             ImageOptions(
-                onChooseCamera = onChooseCamera,
+                onChooseCamera = { onChooseCamera(viewModel.albumId)},
                 onChooseGallery = {
                     galleryLauncher.launch("image/*")
                 },
@@ -71,7 +71,7 @@ fun ChoosePicturesSourceScreenPreview() {
         ChoosePicturesSourceScreen(
             onChooseCamera = {},
             onChooseMaps = {},
-            navigateBack = {}
+            navigateBack = {route, include -> }
         )
     }
 }

@@ -6,6 +6,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.ui.screens.album.*
 import com.example.photocaptioner.ui.screens.home.HomeViewModel
+import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumViewModel
+import com.example.photocaptioner.ui.screens.pictures.CameraPageViewModel
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceViewModel
 import com.example.photocaptioner.ui.screens.pictures.EditPhotoViewModel
 
@@ -54,6 +56,17 @@ object AppViewModelProvider {
         initializer {
             EditPhotoViewModel(
                 this.createSavedStateHandle(),
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
+            )
+        }
+        initializer {
+            CameraPageViewModel(
+                this.createSavedStateHandle(),
+                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
+            )
+        }
+        initializer {
+            AddPhotoToAlbumViewModel(
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }

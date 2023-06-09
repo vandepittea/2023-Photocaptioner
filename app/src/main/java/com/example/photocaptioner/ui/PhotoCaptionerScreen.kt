@@ -1,5 +1,9 @@
 package com.example.photocaptioner.ui
 
+import CameraPageDestination
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.MenuItemType
+import com.example.photocaptioner.model.NavigationItemContent
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.screens.ResponsiveHomeScreen
@@ -56,6 +61,7 @@ fun PhotoCaptionerAppTopBar(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoCaptionerApp(
@@ -109,14 +115,17 @@ fun PhotoCaptionerApp(
                 navigationType = navigationType,
                 navController = navController,
                 currentMenuItem = uiState.currentMenuItem,
-                onMenuItemPress = { menuItemType: MenuItemType ->
-                    viewModel.updateCurrentMenuItem(menuItemType = menuItemType)
-                    navController.navigate(menuItemType.name)
+                onMenuItemPress = { navigationItem: NavigationItemContent ->
+                    viewModel.updateCurrentMenuItem(menuItemType = navigationItem.menuItemType)
+                    navController.navigate(navigationItem.route)
                 },
                 onStartUpClick = {
                     navController.navigate(HomeDestination.route)
                 },
-                onTakePictureClick = {},
+                onTakePictureClick = {
+                    navController.navigate("${CameraPageDestination.route}/${-2}")
+                    viewModel.canNavigateBack(true)
+                },
                 onGoToAlbumsClick = {
                     navController.navigate(AlbumsDestination.route)
                     viewModel.canNavigateBack(true)
@@ -141,7 +150,10 @@ fun PhotoCaptionerApp(
                     navController.navigate("${EditPhotoDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
-                onChooseCamera = {},
+                onChooseCamera = {
+                    navController.navigate("${CameraPageDestination.route}/${it}")
+                    viewModel.canNavigateBack(true)
+                },
                 onChooseMaps = {
                     navController.navigate("${AddOnlinePicturesDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
@@ -152,8 +164,8 @@ fun PhotoCaptionerApp(
                     navController.navigate("${AlbumDetailDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
-                navigateBack = {
-                    navController.navigateUp()
+                navigateBack = { route, include ->
+                    navController.popBackStack(route, include)
                 }
             )
         }
