@@ -31,8 +31,7 @@ class AddPhotoToAlbumViewModel(
         viewModelScope.launch {
             addPhotoToAlbumUiState = AddPhotoToAlbumUiState(
                 photo = albumsRepository.getPhoto(photoId).first(),
-                availableAlbums = albumsRepository.getAlbums().first(),
-                selectedAlbum = albumsRepository.getAlbums().first().first()
+                availableAlbums = albumsRepository.getAlbums().first()
             )
         }
     }
@@ -52,5 +51,5 @@ class AddPhotoToAlbumViewModel(
 data class AddPhotoToAlbumUiState(
     val photo: Photo = Photo(),
     val availableAlbums: List<AlbumWithImages> = emptyList(),
-    val selectedAlbum: AlbumWithImages = AlbumWithImages()
+    val selectedAlbum: AlbumWithImages = AlbumWithImages(album = Album(name = "Choose an album"))
 )

@@ -58,7 +58,7 @@ class CameraPageViewModel(
                         val newPhoto: Photo = Photo(
                         albumId = albumId,
                         filePath = outputFileResults.savedUri.toString(),
-                        createdAt = LocalDate.now(),
+                        createdAt = LocalDateTime.now(),
                     )
                     viewModelScope.launch {
                         val newPhotoId = albumsRepository.insertPhoto(newPhoto)

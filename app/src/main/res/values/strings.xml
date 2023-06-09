@@ -71,4 +71,5 @@
     <string name="photo_description">Photo Description</string>
     <string name="add_photo_to_album">Add photo</string>
     <string name="no_albums_found">No albums found</string>
+    <string name="new_album">New Album</string>
 </resources>

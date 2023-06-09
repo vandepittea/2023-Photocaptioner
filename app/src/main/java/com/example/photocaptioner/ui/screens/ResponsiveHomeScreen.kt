@@ -327,7 +327,8 @@ private fun InAppNavigation(
             arguments = listOf(navArgument(AddPhotoToAlbumDestination.photoIdArg) { type = NavType.LongType })
         ) {
             AddPhotoToAlbumScreen(
-                navigateBack = navigateBack
+                navigateBack = navigateBack,
+                onNewAlbum = onAddAlbumClick
             )
         }
     }

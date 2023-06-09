@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -37,6 +38,7 @@ object AddPhotoToAlbumDestination : NavigationDestination {
 @Composable
 fun AddPhotoToAlbumScreen(
     navigateBack: (route: String, include: Boolean) -> Unit,
+    onNewAlbum: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddPhotoToAlbumViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -72,7 +74,8 @@ fun AddPhotoToAlbumScreen(
                         viewModel.addPhotoToAlbum()
                         navigateBack(HomeDestination.route, false)
                     }
-                }
+                },
+                onNewAlbum = onNewAlbum
             )
         }
     }
@@ -81,8 +84,16 @@ fun AddPhotoToAlbumScreen(
 @Composable
 fun AddPhotoToAlbumFooter(
     onAddPhoto: () -> Unit,
+    onNewAlbum: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    Button(
+        text = R.string.new_album,
+        onClick = onNewAlbum,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    )
     Button(
         text = R.string.add_photo_to_album,
         onClick = onAddPhoto,
@@ -96,6 +107,6 @@ fun AddPhotoToAlbumFooter(
 @Composable
 fun AddPhotoToAlbumScreenPreview() {
     PhotoCaptionerTheme() {
-        AddPhotoToAlbumScreen({ _, _ ->})
+        AddPhotoToAlbumScreen({ _, _ ->}, {})
     }
 }
