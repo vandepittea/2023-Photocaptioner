@@ -67,6 +67,7 @@ object AppViewModelProvider {
         }
         initializer {
             AddPhotoToAlbumViewModel(
+                this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }

@@ -57,7 +57,6 @@ fun AddAlbumScreen(
             .background(MaterialTheme.colors.background)
             .padding(16.dp)
     ) {
-        Log.d("ContentType", contentType.toString())
         if (contentType == PhotoCaptionerContentType.LIST_ONLY) {
             AddAlbumInnerScreenListOnly(
                 newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
