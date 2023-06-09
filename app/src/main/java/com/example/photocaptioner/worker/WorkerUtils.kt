@@ -28,7 +28,7 @@ fun showDownloadCompleteNotification(context: Context) {
     val customLogoBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.camera)
 
     val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-        .setSmallIcon(R.drawable.album1_picture1)
+        .setSmallIcon(R.drawable.camera)
         .setLargeIcon(customLogoBitmap)
         .setContentTitle("Download Complete")
         .setContentText("Album download is complete")
@@ -44,7 +44,7 @@ fun showDownloadCompleteNotification(context: Context) {
 private fun createNotificationChannel(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val name = "Download Notifications"
-        val descriptionText = "Shows notifications for download progress"
+        val descriptionText = "Shows notifications"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText
