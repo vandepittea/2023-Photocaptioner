@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui.screens.album
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -24,8 +23,6 @@ class AlbumDetailViewModel(
     private val albumsRepository: AlbumsRepository,
     private val workManagerDownloadRepository: WorkManagerDownloadRepository
 ) : ViewModel(){
-    private val albumsRepository: AlbumsRepository
-) : ViewModel() {
     private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg])
 
     val albumDetailUiState: StateFlow<AlbumDetailUiState> =
@@ -61,7 +58,6 @@ class AlbumDetailViewModel(
         } else {
             // Handle the case where the image copy failed
         }
-
     }
 
     private fun copyImageToPublicLocation(sourceFilePath: String): String? {
