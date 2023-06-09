@@ -3,6 +3,8 @@ package com.example.photocaptioner.data
 import DownloadWorker
 import android.content.Context
 import androidx.work.*
+import com.example.photocaptioner.worker.KEY_ALBUM_ID
+import com.example.photocaptioner.worker.WORK_TAG
 
 class WorkManagerDownloadRepository(private val context: Context) {
 
@@ -20,10 +22,5 @@ class WorkManagerDownloadRepository(private val context: Context) {
 
         WorkManager.getInstance(context)
             .enqueueUniqueWork(WORK_TAG, ExistingWorkPolicy.KEEP, downloadWorkRequest)
-    }
-
-    companion object {
-        private const val WORK_TAG = "download_album"
-        const val KEY_ALBUM_ID = "album_id"
     }
 }

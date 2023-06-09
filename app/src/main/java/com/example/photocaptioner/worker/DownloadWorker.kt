@@ -3,6 +3,8 @@ import android.os.Environment
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
+import com.example.photocaptioner.worker.KEY_ALBUM_ID
+import com.example.photocaptioner.worker.OUTPUT_FILE_NAME
 import com.example.photocaptioner.worker.showDownloadCompleteNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -93,10 +95,5 @@ class DownloadWorker(
 
     private fun getOutputDirectory(context: Context): File {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-    }
-
-    companion object {
-        const val KEY_ALBUM_ID = "album_id"
-        private const val OUTPUT_FILE_NAME = "album_images.zip"
     }
 }
