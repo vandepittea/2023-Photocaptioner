@@ -5,24 +5,31 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.photocaptioner.R
 
 fun showDownloadCompleteNotification(context: Context) {
     createNotificationChannel(context)
 
     val intent = Intent(Intent.ACTION_GET_CONTENT)
     intent.type = "*/*"
-    val downloadsFolderUri = Uri.parse("content://com.android.externalstorage")
-    intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, downloadsFolderUri)
+    val folderUri = Uri.parse("content://com.android.externalstorage.documents/document/primary%3ADownload")
+    intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, folderUri)
 
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
+    val customLogoBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.camera)
+
     val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-        .setSmallIcon(context.applicationInfo.icon)
+        .setSmallIcon(R.drawable.album1_picture1)
+        .setLargeIcon(customLogoBitmap)
         .setContentTitle("Download Complete")
         .setContentText("Album download is complete")
         .setContentIntent(pendingIntent)
