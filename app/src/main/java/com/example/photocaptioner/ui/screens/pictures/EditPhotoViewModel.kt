@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -30,7 +29,7 @@ class EditPhotoViewModel(
         }
     }
 
-    fun updateAlbumDescriptionUiState(description: String) {
+    fun updatePhotoDescriptionUiState(description: String) {
         editPhotoUiState = EditPhotoUiState(
             photoDetails = editPhotoUiState.photoDetails.copy(description = description),
             isEntryValid = validateInput(editPhotoUiState.photoDetails)

@@ -60,7 +60,7 @@ fun EditPhotoScreen(
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = viewModel.editPhotoUiState.photoDetails.description,
-                onValueChange = { viewModel.updateAlbumDescriptionUiState(it) },
+                onValueChange = { viewModel.updatePhotoDescriptionUiState(it) },
                 label = {
                     Text(
                         text = stringResource(R.string.photo_description),
