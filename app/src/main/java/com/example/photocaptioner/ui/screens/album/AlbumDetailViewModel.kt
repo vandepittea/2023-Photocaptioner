@@ -5,13 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.provider.MediaStore
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.photocaptioner.data.WorkManagerDownloadRepository
 import com.example.photocaptioner.data.database.AlbumsRepository
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +21,9 @@ import java.io.*
 
 class AlbumDetailViewModel(
     savedStateHandle: SavedStateHandle,
+    private val albumsRepository: AlbumsRepository,
+    private val workManagerDownloadRepository: WorkManagerDownloadRepository
+) : ViewModel(){
     private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
     private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg])
@@ -38,8 +39,12 @@ class AlbumDetailViewModel(
                 initialValue = AlbumDetailUiState()
             )
 
-    fun downloadAlbum() {
-        /**/
+    fun downloadAlbum(uri: Uri?) {
+        if (uri.toString().startsWith("content")) {
+            viewModelScope.launch {
+                workManagerDownloadRepository.downloadAlbum(albumId, uri)
+            }
+        }
     }
 
     fun shareAlbum(context: Context) {
