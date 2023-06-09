@@ -38,7 +38,7 @@ interface AlbumDAO {
     suspend fun updateAlbum(album: Album)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertPhoto(image: Photo)
+    suspend fun insertPhoto(image: Photo): Long
 
     @Update
     suspend fun updatePhoto(image: Photo)

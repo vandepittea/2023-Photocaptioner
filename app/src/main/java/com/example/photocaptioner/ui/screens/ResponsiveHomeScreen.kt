@@ -13,7 +13,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,6 +49,8 @@ import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
+import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumDestination
+import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumScreen
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
@@ -78,6 +79,7 @@ fun ResponsiveHomeScreen(
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit,
+    onTakePictureFromHome: (photoId: Long) -> Unit,
 ) {
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
@@ -116,10 +118,11 @@ fun ResponsiveHomeScreen(
                     onPhotoClick = onPhotoClick,
                     onChooseCamera = onChooseCamera,
                     onChooseMaps = onChooseMaps,
+                    onTakePictureFromHome = onTakePictureFromHome,
                     navigateBack = navigateBack,
+                    modifier = modifier,
                     contentType = contentType,
                     onRecentlyEditedClick = onRecentlyEditedClick,
-                    modifier = modifier
                 )
             }
         }
@@ -137,10 +140,11 @@ fun ResponsiveHomeScreen(
                 onPhotoClick = onPhotoClick,
                 onChooseCamera = onChooseCamera,
                 onChooseMaps = onChooseMaps,
+                onTakePictureFromHome = onTakePictureFromHome,
                 navigateBack = navigateBack,
+                modifier = modifier.weight(1f),
                 contentType = contentType,
                 onRecentlyEditedClick = onRecentlyEditedClick,
-                modifier = modifier.weight(1f)
             )
 
             Box(){
@@ -178,7 +182,8 @@ private fun InAppNavigation(
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
-    onRecentlyEditedClick: (Long) -> Unit
+    onRecentlyEditedClick: (Long) -> Unit,
+    onTakePictureFromHome: (photoId: Long) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -205,6 +210,7 @@ private fun InAppNavigation(
         ) {
             val lifecycleOwner = LocalLifecycleOwner.current
             CameraPage(
+                onTakePictureFromHome = onTakePictureFromHome,
                 navigateBack = navigateBack
             )
         }
@@ -314,6 +320,15 @@ private fun InAppNavigation(
                     navigateBack = navigateBack
                 )
             }
+        }
+
+        composable(
+            route = AddPhotoToAlbumDestination.routeWithArgs,
+            arguments = listOf(navArgument(AddPhotoToAlbumDestination.photoIdArg) { type = NavType.LongType })
+        ) {
+            AddPhotoToAlbumScreen(
+                navigateBack = navigateBack
+            )
         }
     }
 }

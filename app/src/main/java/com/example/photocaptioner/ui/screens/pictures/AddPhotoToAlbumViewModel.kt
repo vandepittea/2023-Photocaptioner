@@ -28,17 +28,17 @@ class AddPhotoToAlbumViewModel(
 
     init {
         viewModelScope.launch {
-            val photo: Photo = albumsRepository.getPhoto(photoId).first()
-            val availableAlbums: List<AlbumWithImages> = albumsRepository.getAlbums().first()
             addPhotoToAlbumUiState = AddPhotoToAlbumUiState(
-                photo = photo,
-                availableAlbums = availableAlbums
+                photo = albumsRepository.getPhoto(photoId).first(),
+                availableAlbums = albumsRepository.getAlbums().first()
             )
         }
     }
 
     suspend fun addPhotoToAlbum(albumId: Long) {
-        addPhotoToAlbumUiState.photo.copy(albumId = albumId)
+        addPhotoToAlbumUiState = addPhotoToAlbumUiState.copy(
+            photo = addPhotoToAlbumUiState.photo.copy(albumId = albumId)
+        )
         albumsRepository.updatePhoto(addPhotoToAlbumUiState.photo)
     }
 }

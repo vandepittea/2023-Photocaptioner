@@ -48,6 +48,7 @@ object CameraPageDestination : NavigationDestination {
 
 @Composable
 fun CameraPage(
+    onTakePictureFromHome: (photoId: Long) -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     viewModel: CameraPageViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -59,7 +60,7 @@ fun CameraPage(
         Controls(
             onLensChange = { lens.value = switchLens(lens.value) },
             onTakePicture = {
-                viewModel.savePicture(context, imageCapture, navigateBack)
+                viewModel.savePicture(context, imageCapture, onTakePictureFromHome, navigateBack)
             }
         )
     }

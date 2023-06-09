@@ -3,7 +3,6 @@ package com.example.photocaptioner.ui
 import CameraPageDestination
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.MenuItemType
 import com.example.photocaptioner.model.NavigationItemContent
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
@@ -33,6 +31,7 @@ import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
+import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumDestination
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
 import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
@@ -158,14 +157,18 @@ fun PhotoCaptionerApp(
                     navController.navigate("${AddOnlinePicturesDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
+                navigateBack = { route, include ->
+                    navController.popBackStack(route, include)
+                },
                 modifier = modifier,
                 contentType = contentType,
                 onRecentlyEditedClick = {
                     navController.navigate("${AlbumDetailDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
                 },
-                navigateBack = { route, include ->
-                    navController.popBackStack(route, include)
+                onTakePictureFromHome = {
+                    navController.navigate("${AddPhotoToAlbumDestination.route}/${it}")
+                    viewModel.canNavigateBack(true)
                 }
             )
         }

@@ -338,6 +338,14 @@ fun AlbumSelectBox(
     onAlbumSelected: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    if (albums.isEmpty()) {
+        Text(
+            text = stringResource(R.string.no_albums_found),
+            style = MaterialTheme.typography.body1,
+        )
+        return
+    }
+
     var expanded by remember { mutableStateOf(false) }
     var selectedAlbum by remember { mutableStateOf(albums.first()) }
 

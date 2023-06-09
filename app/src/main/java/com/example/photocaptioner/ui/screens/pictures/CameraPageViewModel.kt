@@ -34,6 +34,7 @@ class CameraPageViewModel(
     fun savePicture(
         context: Context,
         imageCapture: ImageCapture,
+        onTakePictureFromHome: (photoId: Long) -> Unit,
         navigateBack: (route: String, include: Boolean) -> Unit
     ) {
         val fileNameFormat = "yyyy-MM-dd-HH-mm-ss-SSS"
@@ -60,11 +61,11 @@ class CameraPageViewModel(
                         createdAt = LocalDate.now(),
                     )
                     viewModelScope.launch {
-                        albumsRepository.insertPhoto(newPhoto)
+                        val newPhotoId = albumsRepository.insertPhoto(newPhoto)
                         if (albumId == -1L) {
                             navigateBack(AddAlbumDestination.routeWithArgs, false)
                         } else if (albumId == -2L) {
-
+                            onTakePictureFromHome(newPhotoId)
                         } else {
                             navigateBack(AlbumDetailDestination.routeWithArgs, false)
                         }
