@@ -16,7 +16,7 @@ fun showDownloadCompleteNotification(context: Context) {
 
     val intent = Intent(Intent.ACTION_GET_CONTENT)
     intent.type = "*/*"
-    val downloadsFolderUri = Uri.parse("content://com.android.externalstorage.documents/document/primary%3ADownload")
+    val downloadsFolderUri = Uri.parse("content://com.android.externalstorage")
     intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, downloadsFolderUri)
 
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
