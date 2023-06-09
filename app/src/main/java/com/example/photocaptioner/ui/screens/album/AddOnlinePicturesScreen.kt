@@ -25,6 +25,7 @@ import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.ButtonWithIcon
 import com.example.photocaptioner.ui.SearchBox
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
+import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 object AddOnlinePicturesDestination : NavigationDestination {
@@ -73,8 +74,8 @@ fun AddOnlinePicturesScreen(
         ) {
             UploadButton(onClick = {
                 viewModel.addPhotosToAlbum()
-                navigateBack(AddOnlinePicturesDestination.routeWithArgs, true)
-            }) //TODO: veranderen wanneer we weten bij welk album te adden
+                navigateBack(ChoosePicturesDestination.routeWithArgs, true)
+            })
         }
     }
 }

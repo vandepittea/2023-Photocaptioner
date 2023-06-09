@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,7 +63,7 @@ fun EditPhotoScreen(
                 onValueChange = { viewModel.updateAlbumDescriptionUiState(it) },
                 label = {
                     Text(
-                        text = viewModel.editPhotoUiState.photoDetails.description,
+                        text = stringResource(R.string.photo_description),
                         style = MaterialTheme.typography.body1
                     )
                 },
