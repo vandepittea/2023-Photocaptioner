@@ -55,7 +55,7 @@ class AddAlbumViewModel(
     }
 
     suspend fun deletePhotosWithoutAlbum() {
-        run {
+        withContext(Dispatchers.IO) {
             albumsRepository.deletePhotosWithoutAlbum()
         }
     }
