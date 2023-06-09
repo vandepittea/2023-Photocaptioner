@@ -33,7 +33,7 @@ class DownloadWorker(
             return@withContext Result.failure()
         }
 
-        val outputDirectory = getOutputDirectory(applicationContext)
+        val outputDirectory = getOutputDirectory()
         val zipFile = File(outputDirectory, OUTPUT_FILE_NAME)
 
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zipOutputStream ->
@@ -54,21 +54,21 @@ class DownloadWorker(
         val albumsRepository = PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
 
         var images: List<ByteArray>
-
         runBlocking {
             images = albumsRepository.getAlbum(albumId).first().photos.map{
                 convertImageToByteArray(it.filePath)
             }
         }
-
         return images
     }
 
     private fun convertImageToByteArray(imagePath: String): ByteArray {
         val file = File(imagePath)
+
         if (file.exists()) {
             // Local image file
             val inputStream = FileInputStream(file)
+
             return inputStream.use { input ->
                 val outputStream = ByteArrayOutputStream()
                 val buffer = ByteArray(1024)
@@ -81,6 +81,7 @@ class DownloadWorker(
         } else {
             // Online image URL
             val url = URL(imagePath)
+
             return url.openStream().use { input ->
                 val outputStream = ByteArrayOutputStream()
                 val buffer = ByteArray(1024)
@@ -93,7 +94,7 @@ class DownloadWorker(
         }
     }
 
-    private fun getOutputDirectory(context: Context): File {
+    private fun getOutputDirectory(): File {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     }
 }
