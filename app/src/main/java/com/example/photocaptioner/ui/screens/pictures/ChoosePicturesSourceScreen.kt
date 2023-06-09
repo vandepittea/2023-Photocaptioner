@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
@@ -38,10 +39,11 @@ fun ChoosePicturesSourceScreen(
     modifier: Modifier = Modifier,
     viewModel: ChoosePicturesSourceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
         coroutineScope.launch {
-            viewModel.onGalleryResult(it)
+            viewModel.onGalleryResult(context, it)
             navigateBack(ChoosePicturesDestination.routeWithArgs, true)
         }
     }

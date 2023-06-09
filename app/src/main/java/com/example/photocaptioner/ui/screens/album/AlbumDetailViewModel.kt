@@ -1,5 +1,7 @@
 package com.example.photocaptioner.ui.screens.album
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,9 +34,11 @@ class AlbumDetailViewModel(
                 initialValue = AlbumDetailUiState()
             )
 
-    fun downloadAlbum() {
-        viewModelScope.launch {
-            workManagerDownloadRepository.downloadAlbum(albumId)
+    fun downloadAlbum(uri: Uri?) {
+        if (uri.toString().startsWith("content")) {
+            viewModelScope.launch {
+                workManagerDownloadRepository.downloadAlbum(albumId, uri)
+            }
         }
     }
 

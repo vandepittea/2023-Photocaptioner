@@ -1,5 +1,7 @@
 package com.example.photocaptioner.ui.screens.album
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -43,6 +45,9 @@ fun AlbumDetailScreen(
     viewModel: AlbumDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val albumUiState by viewModel.albumDetailUiState.collectAsState()
+    val openDocumentTreeLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+        viewModel.downloadAlbum(it)
+    }
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -55,7 +60,9 @@ fun AlbumDetailScreen(
         ) {
             AlbumDetails(
                 albumWithImages = albumUiState.albumDetails,
-                onDownloadClick = { viewModel.downloadAlbum() },
+                onDownloadClick = {
+                    openDocumentTreeLauncher.launch(null)
+                },
                 onEditClick = onEditClick,
                 onPhotoClick = onPhotoClick,
             )
