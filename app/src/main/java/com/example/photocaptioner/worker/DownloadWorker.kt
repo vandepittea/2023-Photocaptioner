@@ -13,6 +13,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.*
 import java.net.URL
+import java.time.LocalDateTime
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -20,22 +21,24 @@ class DownloadWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
+    private val albumsRepository = PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val albumId = inputData.getLong(KEY_ALBUM_ID, -1)
+        val album = albumsRepository.getAlbum(albumId).first()
 
         if (albumId == -1L) {
             return@withContext Result.failure()
         }
 
-        val albumImages = fetchAlbumImages(albumId)
+        val albumImages = album.photos.map { convertImageToByteArray(it.filePath) }
 
         if (albumImages.isEmpty()) {
             return@withContext Result.failure()
         }
 
         val outputDirectory = OUTPUT_DIRECTORY
-        val zipFile = File(outputDirectory, OUTPUT_FILE_NAME)
+        val zipFile = File(outputDirectory, album.album.name + LocalDateTime.now() + ".zip")
 
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zipOutputStream ->
             albumImages.forEachIndexed { index, imageByteArray ->
@@ -49,18 +52,6 @@ class DownloadWorker(
         showDownloadCompleteNotification(applicationContext)
 
         return@withContext Result.success()
-    }
-
-    private fun fetchAlbumImages(albumId: Long): List<ByteArray> {
-        val albumsRepository = PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
-
-        var images: List<ByteArray>
-        runBlocking {
-            images = albumsRepository.getAlbum(albumId).first().photos.map{
-                convertImageToByteArray(it.filePath)
-            }
-        }
-        return images
     }
 
     private fun convertImageToByteArray(imagePath: String): ByteArray {
