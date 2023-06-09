@@ -10,7 +10,6 @@ import android.os.Build
 import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.photocaptioner.R
 
 fun showDownloadCompleteNotification(context: Context) {
     createNotificationChannel(context)
@@ -23,7 +22,7 @@ fun showDownloadCompleteNotification(context: Context) {
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
     val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-        .setSmallIcon(R.drawable.baseline_download_24)
+        .setSmallIcon(context.applicationInfo.icon)
         .setContentTitle("Download Complete")
         .setContentText("Album download is complete")
         .setContentIntent(pendingIntent)
