@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.content.ContextCompat
 import com.example.photocaptioner.R
+import com.example.photocaptioner.ui.screens.home.AnimatedLogo
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
@@ -68,13 +69,7 @@ fun StartUpScreen(
                 .padding(horizontal = 32.dp)
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.camera),
-            contentDescription = null,
-            modifier = Modifier
-                .height(300.dp)
-                .aspectRatio(1f)
-        )
+        AnimatedLogo()
 
         Button(
             text = R.string.get_started,
