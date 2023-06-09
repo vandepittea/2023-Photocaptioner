@@ -88,8 +88,4 @@ class DownloadWorker(
             }
         }
     }
-
-    private fun getOutputDirectory(context: Context): File {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-    }
 }
