@@ -28,6 +28,7 @@ import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.TopBar
 import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.HomeDestination
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -57,7 +58,6 @@ fun AddAlbumScreen(
             .background(MaterialTheme.colors.background)
             .padding(16.dp)
     ) {
-        Log.d("ContentType", contentType.toString())
         if (contentType == PhotoCaptionerContentType.LIST_ONLY) {
             AddAlbumInnerScreenListOnly(
                 newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
@@ -84,7 +84,7 @@ fun AddAlbumScreen(
             NewAlbumFooter(onAddNewAlbum = {
                 coroutineScope.launch {
                     viewModel.saveItem()
-                    navigateBack(AddAlbumDestination.routeWithArgs, true)
+                    navigateBack(HomeDestination.route, false)
                 }
             })
         }

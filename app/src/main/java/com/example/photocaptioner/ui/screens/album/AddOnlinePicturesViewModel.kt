@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class AddOnlinePicturesViewModel(
     savedStateHandle: SavedStateHandle,
@@ -39,8 +40,7 @@ class AddOnlinePicturesViewModel(
                     it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, Photo(
                         0,
                         "",
-                        "",
-                        LocalDate.now(),
+                        LocalDateTime.now(),
                         imageUrl,
                         albumId
                     )) })

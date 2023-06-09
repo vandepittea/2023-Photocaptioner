@@ -8,8 +8,8 @@ import androidx.room.TypeConverters
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.Photo
 
-@Database(entities = [Photo::class, Album::class], version = 4, exportSchema = false)
-@TypeConverters(LocalDateConverter::class)
+@Database(entities = [Photo::class, Album::class], version = 6, exportSchema = false)
+@TypeConverters(LocalDateTimeConverter::class)
 abstract class PhotoCaptionerDatabase : RoomDatabase() {
     abstract fun albumDao(): AlbumDAO
 

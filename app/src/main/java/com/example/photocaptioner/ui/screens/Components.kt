@@ -3,6 +3,8 @@ package com.example.photocaptioner.ui
 import androidx.compose.ui.Alignment
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
@@ -14,6 +16,10 @@ import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,6 +33,8 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
+import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
 
 @Composable
@@ -322,5 +330,61 @@ fun ImageOptions(
             text = R.string.maps,
             onClick = onChooseMaps
         )
+    }
+}
+
+@Composable
+fun AlbumSelectBox(
+    albums: List<AlbumWithImages>,
+    onAlbumSelected: (AlbumWithImages) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (albums.isEmpty()) {
+        Text(
+            text = stringResource(R.string.no_albums_found),
+            style = MaterialTheme.typography.body1,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        )
+        return
+    }
+
+    var expanded by remember { mutableStateOf(false) }
+    var selectedAlbum by remember { mutableStateOf(albums.first()) }
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 12.dp)
+            .clickable { expanded = true }
+            .background(colors.primary)
+    ) {
+        Text(
+            text = selectedAlbum.album.name,
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier.padding(16.dp)
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            albums.forEach { album ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedAlbum = album
+                        expanded = false
+                        onAlbumSelected(album)
+                    }
+                ) {
+                    Text(
+                        text = album.album.name,
+                        style = MaterialTheme.typography.body1
+                    )
+                }
+            }
+        }
     }
 }

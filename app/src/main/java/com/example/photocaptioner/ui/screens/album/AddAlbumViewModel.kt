@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddAlbumViewModel(
     private val albumsRepository: AlbumsRepository
@@ -45,7 +47,7 @@ class AddAlbumViewModel(
 
     suspend fun saveItem() {
         if (validateInput()) {
-            run {
+            withContext(Dispatchers.IO) {
                 val albumId = albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
                 albumsRepository.updatePhotosWithoutAlbum(albumId)
             }
@@ -53,7 +55,7 @@ class AddAlbumViewModel(
     }
 
     suspend fun deletePhotosWithoutAlbum() {
-        run {
+        withContext(Dispatchers.IO) {
             albumsRepository.deletePhotosWithoutAlbum()
         }
     }

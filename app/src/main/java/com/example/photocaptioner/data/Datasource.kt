@@ -10,6 +10,7 @@ import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.HomeDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 object Datasource {
     val defaultAlbum = getAlbums()[0]
@@ -22,12 +23,12 @@ object Datasource {
                     0,
                     "R.string.album1_title",
                     "R.string.album1_description",
-                    LocalDate.of(2022, 4, 13)
+                    LocalDateTime.of(2022, 4, 13, 12, 0, 0)
                 ),
                 listOf(
-                    Photo(0, "R.drawable.album1_picture1", "R.string.album1_picture1_description",LocalDate.of(2022, 4, 14), "", 0),
-                    Photo(1, "R.drawable.album1_picture1", "R.string.album1_picture1_description",LocalDate.of(2022, 4, 14), "", 0),
-                    Photo(2, "R.drawable.album1_picture1", "R.string.album1_picture1_description",LocalDate.of(2022, 4, 14), "", 0)
+                    Photo(0,"R.string.album1_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 0),
+                    Photo(1, "R.string.album1_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 0),
+                    Photo(2, "R.string.album1_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 0)
                 )
             ),
             AlbumWithImages(
@@ -35,12 +36,12 @@ object Datasource {
                     1,
                     "R.string.album2_title",
                     "R.string.album2_description",
-                    LocalDate.of(2022, 4, 13)
+                    LocalDateTime.of(2022, 4, 14, 12, 0, 0)
                 ),
                 listOf(
-                    Photo(3, "R.drawable.album2_picture1", "R.string.album2_picture1_description",LocalDate.of(2022, 4, 14), "", 1),
-                    Photo(4, "R.drawable.album2_picture1", "R.string.album2_picture1_description",LocalDate.of(2022, 4, 14), "", 1),
-                    Photo(5, "R.drawable.album2_picture1", "R.string.album2_picture1_description",LocalDate.of(2022, 4, 14), "", 1)
+                    Photo(3, "R.string.album2_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 1),
+                    Photo(4, "R.string.album2_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 1),
+                    Photo(5, "R.string.album2_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 1)
                 )
             ),
             AlbumWithImages(
@@ -48,12 +49,12 @@ object Datasource {
                     2,
                     "R.string.album3_title",
                     "R.string.album3_description",
-                    LocalDate.of(2022, 4, 13)
+                    LocalDateTime.of(2022, 4, 14, 12, 0, 0)
                 ),
                 listOf(
-                    Photo(6, "R.drawable.album3_picture1", "R.string.album3_picture1_description",LocalDate.of(2022, 4, 14), "", 2),
-                    Photo(7, "R.drawable.album3_picture1", "R.string.album3_picture1_description",LocalDate.of(2022, 4, 14), "", 2),
-                    Photo(8, "R.drawable.album3_picture1", "R.string.album3_picture1_description",LocalDate.of(2022, 4, 14), "", 2)
+                    Photo(6, "R.string.album3_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 2),
+                    Photo(7, "R.string.album3_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 2),
+                    Photo(8, "R.string.album3_picture1_description",LocalDateTime.of(2022, 4, 14, 12, 0, 0), "", 2)
                 )
             )
         )

@@ -13,7 +13,7 @@ interface AlbumsRepository {
     fun getPhotosWithoutAlbum(): Flow<List<Photo>>
     suspend fun insertAlbum(album: Album): Long
     suspend fun updateAlbum(album: Album)
-    suspend fun insertPhoto(photo: Photo)
+    suspend fun insertPhoto(photo: Photo): Long
     suspend fun updatePhoto(photo: Photo)
     fun updatePhotosWithoutAlbum(albumId: Long)
     fun deletePhotosWithoutAlbum()
