@@ -1,8 +1,8 @@
 import android.content.Context
+import android.os.Environment
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
-import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.worker.showDownloadCompleteNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -31,7 +31,7 @@ class DownloadWorker(
             return@withContext Result.failure()
         }
 
-        val outputDirectory = applicationContext.cacheDir
+        val outputDirectory = getOutputDirectory(applicationContext)
         val zipFile = File(outputDirectory, OUTPUT_FILE_NAME)
 
         ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use { zipOutputStream ->
@@ -89,6 +89,10 @@ class DownloadWorker(
                 outputStream.toByteArray()
             }
         }
+    }
+
+    private fun getOutputDirectory(context: Context): File {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     }
 
     companion object {
