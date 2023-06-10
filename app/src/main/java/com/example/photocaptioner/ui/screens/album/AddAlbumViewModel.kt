@@ -34,15 +34,13 @@ class AddAlbumViewModel(
     fun updateAlbumTitleUiState(title: String) {
         addAlbumUiState = AlbumUiState(
             albumDetails = addAlbumUiState.albumDetails.copy(album = addAlbumUiState.albumDetails.album.copy(name = title)),
-            isEntryValid = validateInput(addAlbumUiState.albumDetails)
-        )
+            isEntryValid = validateInput(addAlbumUiState.albumDetails))
     }
 
     fun updateAlbumDescriptionUiState(description: String) {
         addAlbumUiState = AlbumUiState(
             albumDetails = addAlbumUiState.albumDetails.copy(album = addAlbumUiState.albumDetails.album.copy(description = description)),
-            isEntryValid = validateInput(addAlbumUiState.albumDetails)
-        )
+            isEntryValid = validateInput(addAlbumUiState.albumDetails))
     }
 
     suspend fun saveItem(navigateToAlbums: () -> Unit) {
