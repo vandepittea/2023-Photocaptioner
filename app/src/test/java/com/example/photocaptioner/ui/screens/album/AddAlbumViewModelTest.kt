@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -66,20 +67,63 @@ class AddAlbumViewModelTest {
         }
     }
 
-    /*@Test
-    fun `saveItem does not insert album and update photos without album if input is invalid`() = runBlocking {
-        val album = Album(name = "", description = "")
-        viewModel.addAlbumUiState = viewModel.addAlbumUiState.copy(
-            albumDetails = viewModel.addAlbumUiState.albumDetails.copy(album = album),
-            isEntryValid = false
-        )
+    @Test
+    fun saveItemWithInvalidTitle() {
+        var photosWithoutAlbum: List<Long>
 
-        viewModel.saveItem { }
+        viewModel.updateAlbumTitleUiState("")
+        viewModel.updateAlbumDescriptionUiState("Updated Description")
 
-        val savedAlbum = albumsRepository.getAlbums().first()
-        assertEquals(null, savedAlbum)
+        runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
-        val photos = albumsRepository.getPhotosWithoutAlbum().first()
-        assertEquals(0, photos.size)
-    }*/
+        runBlocking { viewModel.saveItem { } }
+
+        photosWithoutAlbum.forEach {
+            run {
+                var photo: Photo
+                runBlocking { photo = albumsRepository.getPhoto(it).first() }
+                assertEquals(-1, photo.albumId)
+            }
+        }
+    }
+
+    @Test
+    fun saveItemWithInvalidDescription() {
+        var photosWithoutAlbum: List<Long>
+
+        viewModel.updateAlbumTitleUiState("Updated Title")
+        viewModel.updateAlbumDescriptionUiState("")
+
+        runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
+
+        runBlocking { viewModel.saveItem { } }
+
+        photosWithoutAlbum.forEach {
+            run {
+                var photo: Photo
+                runBlocking { photo = albumsRepository.getPhoto(it).first() }
+                assertEquals(-1, photo.albumId)
+            }
+        }
+    }
+
+    @Test
+    fun saveItemWithInvalidTitleAndDescription() {
+        var photosWithoutAlbum: List<Long>
+
+        viewModel.updateAlbumTitleUiState("")
+        viewModel.updateAlbumDescriptionUiState("")
+
+        runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
+
+        runBlocking { viewModel.saveItem { } }
+
+        photosWithoutAlbum.forEach {
+            run {
+                var photo: Photo
+                runBlocking { photo = albumsRepository.getPhoto(it).first() }
+                assertEquals(-1, photo.albumId)
+            }
+        }
+    }
 }

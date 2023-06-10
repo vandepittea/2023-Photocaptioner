@@ -55,12 +55,6 @@ class AddAlbumViewModel(
         }
     }
 
-    suspend fun deletePhotosWithoutAlbum() {
-        withContext(Dispatchers.IO) {
-            albumsRepository.deletePhotosWithoutAlbum()
-        }
-    }
-
     private fun validateInput(uiState: AlbumWithImages = addAlbumUiState.albumDetails): Boolean {
         return with(uiState) {
             album.name.isNotBlank() && album.description.isNotBlank()

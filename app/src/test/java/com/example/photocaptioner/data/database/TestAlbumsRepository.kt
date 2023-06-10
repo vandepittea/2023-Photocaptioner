@@ -240,8 +240,4 @@ class TestAlbumsRepository : AlbumsRepository {
     override fun updatePhotosWithoutAlbum(albumId: Long) {
         photos.filter { it.albumId < 0 }.forEach { it.albumId = albumId }
     }
-
-    override fun deletePhotosWithoutAlbum() {
-        // We don't actually need this for the fake repository
-    }
 }
