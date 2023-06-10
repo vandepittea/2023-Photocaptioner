@@ -18,14 +18,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.TestOnly
 
 class AddPhotoToAlbumViewModel(
     savedStateHandle: SavedStateHandle,
     private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
     private val photoId: Long = checkNotNull(savedStateHandle[AddPhotoToAlbumDestination.photoIdArg])
+    @set:TestOnly
     var addPhotoToAlbumUiState by mutableStateOf(AddPhotoToAlbumUiState())
-        private set
+        internal set
 
     init {
         viewModelScope.launch {
