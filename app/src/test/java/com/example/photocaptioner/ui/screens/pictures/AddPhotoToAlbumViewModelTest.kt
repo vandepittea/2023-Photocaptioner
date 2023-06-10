@@ -33,7 +33,7 @@ class AddPhotoToAlbumViewModelTest {
 
     @Test
     fun selectAlbum() {
-        var album = AlbumWithImages()
+        var album: AlbumWithImages
 
         runBlocking { album = albumsRepository.getAlbums().first().first() }
 
@@ -45,16 +45,14 @@ class AddPhotoToAlbumViewModelTest {
 
     @Test
     fun addPhotoToAlbum() = runBlocking {
-        val album = AlbumWithImages(album = Album(id = 2L))
-        val photo = Photo(id = 1L, albumId = 0L)
-        viewModel.addPhotoToAlbumUiState = AddPhotoToAlbumUiState(
-            photo = photo,
-            availableAlbums = listOf(album),
-            selectedAlbum = album
-        )
+        var album: AlbumWithImages
 
+        runBlocking { album = albumsRepository.getAlbum(2).first() }
+
+        viewModel.selectAlbum(album)
         viewModel.addPhotoToAlbum()
 
         assertEquals(album.album.id, viewModel.addPhotoToAlbumUiState.photo.albumId)
+        assertEquals(viewModel.addPhotoToAlbumUiState.photo.albumId, albumsRepository.getPhoto(1L).first().albumId)
     }
 }
