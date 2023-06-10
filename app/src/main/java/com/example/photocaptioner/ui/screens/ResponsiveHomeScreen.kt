@@ -81,28 +81,33 @@ fun ResponsiveHomeScreen(
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit,
     onTakePictureFromHome: (photoId: Long) -> Unit,
+    bottomBarVisible: Boolean
 ) {
     Row(modifier = modifier.fillMaxSize()) {
-        AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
-            val navigationRailContentDescription = stringResource(R.string.navigation_rail)
-            NavigationRail(
-                currentTab = currentMenuItem,
-                onTabPressed = onMenuItemPress,
-                navigationItemContentList = navigationItemContentList,
-                modifier = Modifier.testTag(navigationRailContentDescription)
-            )
+        if (bottomBarVisible) {
+            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
+                val navigationRailContentDescription = stringResource(R.string.navigation_rail)
+                NavigationRail(
+                    currentTab = currentMenuItem,
+                    onTabPressed = onMenuItemPress,
+                    navigationItemContentList = navigationItemContentList,
+                    modifier = Modifier.testTag(navigationRailContentDescription)
+                )
+            }
         }
 
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.PERMANENT_NAVIGATION_DRAWER) {
             val navigationDrawerContentDescription = stringResource(R.string.navigation_drawer)
             PermanentNavigationDrawer(
                 drawerContent = {
-                    PermanentDrawerSheet(Modifier.width(240.dp)) {
-                        NavigationDrawerContent(
-                            selectedDestination = currentMenuItem,
-                            onTabPressed = onMenuItemPress,
-                            navigationItemContentList = navigationItemContentList
-                        )
+                    if (bottomBarVisible) {
+                        PermanentDrawerSheet(Modifier.width(240.dp)) {
+                            NavigationDrawerContent(
+                                selectedDestination = currentMenuItem,
+                                onTabPressed = onMenuItemPress,
+                                navigationItemContentList = navigationItemContentList
+                            )
+                        }
                     }
                 },
                 modifier = Modifier.testTag(navigationDrawerContentDescription)
@@ -150,18 +155,20 @@ fun ResponsiveHomeScreen(
                 onRecentlyEditedClick = onRecentlyEditedClick,
             )
 
-            Box(){
-                this@Row.AnimatedVisibility(
-                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                ) {
-                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                    BottomNavigationBar(
-                        currentTab = currentMenuItem,
-                        onTabPressed = onMenuItemPress,
-                        navigationItemContentList = navigationItemContentList,
-                        modifier = Modifier.testTag(bottomNavigationContentDescription)
-                    )
+            if (bottomBarVisible) {
+                Box {
+                    this@Row.AnimatedVisibility(
+                        visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
+                        modifier = Modifier.align(Alignment.BottomCenter)
+                    ) {
+                        val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                        BottomNavigationBar(
+                            currentTab = currentMenuItem,
+                            onTabPressed = onMenuItemPress,
+                            navigationItemContentList = navigationItemContentList,
+                            modifier = Modifier.testTag(bottomNavigationContentDescription)
+                        )
+                    }
                 }
             }
         }
@@ -204,7 +211,8 @@ private fun InAppNavigation(
         }
 
         composable(
-            route = HomeDestination.route
+            route = HomeDestination.routeWithArgs,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
         ) {
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,

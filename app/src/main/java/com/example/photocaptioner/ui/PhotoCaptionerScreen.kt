@@ -132,7 +132,8 @@ fun PhotoCaptionerApp(
                     viewModel.updateTopBarTitle(title = navigationItem.title)
                 },
                 onStartUpClick = {
-                    navController.navigate(HomeDestination.route)
+                    navController.navigate("${HomeDestination.route}/${"Home"}")
+                    viewModel.updateBottomBarVisibility(true)
                 },
                 onTakePictureClick = {
                     navController.navigate("${CameraPageDestination.route}/${-2}/${"Take Picture"}")
@@ -199,7 +200,8 @@ fun PhotoCaptionerApp(
                     navController.navigate(AlbumsDestination.route)
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Albums")
-                }
+                },
+                bottomBarVisible = viewModel.uiState.collectAsState().value.bottomBarVisible
             )
         }
     }

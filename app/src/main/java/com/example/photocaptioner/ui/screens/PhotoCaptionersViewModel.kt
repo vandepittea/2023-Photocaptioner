@@ -51,10 +51,19 @@ class PhotoCaptionersViewModel() : ViewModel() {
             )
         }
     }
+
+    fun updateBottomBarVisibility(visible: Boolean) {
+        _uiState.update {
+            it.copy(
+                bottomBarVisible = visible
+            )
+        }
+    }
 }
 
 data class PhotoCaptionerUiState(
     val currentMenuItem: MenuItemType = MenuItemType.Home,
     val canNavigateBack: Boolean = false,
-    val topBarTitle: String = ""
+    val topBarTitle: String = "",
+    val bottomBarVisible: Boolean = false
 )
