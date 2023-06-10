@@ -78,7 +78,7 @@ class AlbumDetailViewModel(
     }
 
     private fun convertPhotoToFile(context: Context, photo: Photo, albumName: String): File? {
-        val uri = Uri.fromFile(File(photo.filePath))
+        val uri = Uri.parse(photo.filePath)
         val inputStream = context.contentResolver.openInputStream(uri)
         val tempDir = context.cacheDir
         val fileName = "photocaptioner-album-$albumName.jpg"
