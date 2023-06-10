@@ -2,6 +2,7 @@ package com.example.photocaptioner.ui
 
 import CameraPageDestination
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,14 +42,15 @@ import com.example.photocaptioner.ui.utils.PhotoCaptionerNavigationType
 @Composable
 fun PhotoCaptionerAppTopBar(
     canNavigateBack: Boolean,
+    title: String,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    TopAppBar(
-        title = { Text("Needs to change") },
-        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
+    if (canNavigateBack) {
+        TopAppBar(
+            title = { Text(title) },
+            modifier = modifier,
+            navigationIcon = {
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
@@ -56,8 +58,8 @@ fun PhotoCaptionerAppTopBar(
                     )
                 }
             }
-        }
-    )
+        )
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -99,8 +101,18 @@ fun PhotoCaptionerApp(
         topBar = {
             PhotoCaptionerAppTopBar(
                 canNavigateBack = uiState.canNavigateBack,
+                title = uiState.topBarTitle,
                 navigateUp = {
+                    Log.d("PhotoCaptionerApp", "PhotoCaptionerApp: ${navController.currentDestination?.route}")
+                    Log.d("PhotoCaptionerApp", "HomeDestination: ${HomeDestination.route}")
+                    Log.d("PhotoCaptionerApp", "AlbumsDestination: ${StartUpDestination.route}")
                     navController.navigateUp()
+                    Log.d("PhotoCaptionerApp", "PhotoCaptionerApp: ${navController.currentBackStackEntry?.arguments?.getString("title")}")
+                    viewModel.updateTopBarTitle(navController.currentBackStackEntry?.arguments?.getString("title") ?: "")
+                    viewModel.canNavigateBack(
+                        navController.currentDestination?.route != HomeDestination.route &&
+                        navController.currentDestination?.route != StartUpDestination.route
+                    )
                 }
             )
         }
@@ -115,47 +127,57 @@ fun PhotoCaptionerApp(
                 navController = navController,
                 currentMenuItem = uiState.currentMenuItem,
                 onMenuItemPress = { navigationItem: NavigationItemContent ->
+                    navController.navigate("${navigationItem.route}/${navigationItem.title}")
                     viewModel.updateCurrentMenuItem(menuItemType = navigationItem.menuItemType)
-                    navController.navigate(navigationItem.route)
+                    viewModel.updateTopBarTitle(title = navigationItem.title)
                 },
                 onStartUpClick = {
                     navController.navigate(HomeDestination.route)
                 },
                 onTakePictureClick = {
-                    navController.navigate("${CameraPageDestination.route}/${-2}")
+                    navController.navigate("${CameraPageDestination.route}/${-2}/${"Take Picture"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Take Picture")
                 },
                 onGoToAlbumsClick = {
-                    navController.navigate(AlbumsDestination.route)
+                    navController.navigate("${AlbumsDestination.route}/Albums")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Albums")
                 },
                 onAddAlbumClick = {
-                    navController.navigate("${AddAlbumDestination.route}/${-1}")
+                    navController.navigate("${AddAlbumDestination.route}/${-1}/${"Add Album"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Add Album")
                 },
                 onAlbumClick = {
-                    navController.navigate("${AlbumDetailDestination.route}/${it}")
+                    navController.navigate("${AlbumDetailDestination.route}/${it}/${"Album Detail"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Album Detail")
                 },
                 onEditClick = {
-                    navController.navigate("${EditAlbumDestination.route}/${it}")
+                    navController.navigate("${EditAlbumDestination.route}/${it}/${"Edit Album"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Edit Album")
                 },
                 onAddPictureClick = {
-                    navController.navigate("${ChoosePicturesDestination.route}/${it}")
+                    navController.navigate("${ChoosePicturesDestination.route}/${it}/${"Choose Pictures"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Choose Pictures")
                 },
                 onPhotoClick = {
-                    navController.navigate("${EditPhotoDestination.route}/${it}")
+                    navController.navigate("${EditPhotoDestination.route}/${it}/${"Edit Photo"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Edit Photo")
                 },
                 onChooseCamera = {
-                    navController.navigate("${CameraPageDestination.route}/${it}")
+                    navController.navigate("${CameraPageDestination.route}/${it}/${"Take Picture"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Take Picture")
                 },
                 onChooseMaps = {
-                    navController.navigate("${AddOnlinePicturesDestination.route}/${it}")
+                    navController.navigate("${AddOnlinePicturesDestination.route}/${it}/${"Add Online Pictures"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Add Online Pictures")
                 },
                 navigateBack = { route, include ->
                     navController.popBackStack(route, include)
@@ -163,17 +185,20 @@ fun PhotoCaptionerApp(
                 modifier = modifier,
                 contentType = contentType,
                 onRecentlyEditedClick = {
-                    navController.navigate("${AlbumDetailDestination.route}/${it}")
+                    navController.navigate("${AlbumDetailDestination.route}/${it}/${"Album Detail"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Album Detail")
                 },
                 onTakePictureFromHome = {
-                    navController.navigate("${AddPhotoToAlbumDestination.route}/${it}")
+                    navController.navigate("${AddPhotoToAlbumDestination.route}/${it}/${"Add Photo"}")
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Add Photo")
                 },
                 navigateToAlbums = {
                     navController.popBackStack(HomeDestination.route, false)
                     navController.navigate(AlbumsDestination.route)
                     viewModel.canNavigateBack(true)
+                    viewModel.updateTopBarTitle("Albums")
                 }
             )
         }

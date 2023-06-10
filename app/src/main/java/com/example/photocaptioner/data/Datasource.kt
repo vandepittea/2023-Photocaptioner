@@ -65,19 +65,22 @@ object Datasource {
             route = HomeDestination.route,
             menuItemType = MenuItemType.Home,
             icon = R.drawable.baseline_home_24,
-            text = R.string.home_menu
+            text = R.string.home_menu,
+            title = "Home"
         ),
         NavigationItemContent(
             route = "${CameraPageDestination.route}/${-1}",
             menuItemType = MenuItemType.Photo,
             icon = R.drawable.baseline_camera_alt_24,
-            text = R.string.camera_menu
+            text = R.string.camera_menu,
+            title = "Camera"
         ),
         NavigationItemContent(
             route = AlbumsDestination.route,
             menuItemType = MenuItemType.Albums,
             icon = R.drawable.baseline_photo_album_24,
-            text = R.string.album_menu
+            text = R.string.album_menu,
+            title = "Albums"
         )
     )
 }

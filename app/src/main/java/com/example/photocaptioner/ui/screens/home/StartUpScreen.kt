@@ -29,6 +29,7 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 object StartUpDestination : NavigationDestination {
     override val route = "start_up"
     override val titleRes = R.string.app_name
+    override val routeWithArgs = route
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)

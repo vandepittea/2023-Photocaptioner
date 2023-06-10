@@ -43,9 +43,18 @@ class PhotoCaptionersViewModel() : ViewModel() {
             )
         }
     }
+
+    fun updateTopBarTitle(title: String) {
+        _uiState.update {
+            it.copy(
+                topBarTitle = title
+            )
+        }
+    }
 }
 
 data class PhotoCaptionerUiState(
     val currentMenuItem: MenuItemType = MenuItemType.Home,
-    val canNavigateBack: Boolean = false
+    val canNavigateBack: Boolean = false,
+    val topBarTitle: String = ""
 )

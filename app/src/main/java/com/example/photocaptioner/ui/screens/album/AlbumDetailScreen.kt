@@ -34,7 +34,7 @@ object AlbumDetailDestination : NavigationDestination {
     override val route = "album_detail"
     override val titleRes = R.string.album_title
     const val albumIdArg = "albumId"
-    val routeWithArgs = "$route/{$albumIdArg}"
+    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
 }
 
 @Composable

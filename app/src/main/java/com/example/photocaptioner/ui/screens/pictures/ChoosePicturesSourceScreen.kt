@@ -28,7 +28,7 @@ object ChoosePicturesDestination : NavigationDestination {
     override val route = "choose_pictures"
     override val titleRes = R.string.choose_picture_source
     const val albumIdArg = "albumId"
-    val routeWithArgs = "$route/{$albumIdArg}"
+    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
 }
 
 @Composable

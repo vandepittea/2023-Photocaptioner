@@ -194,13 +194,18 @@ private fun InAppNavigation(
         startDestination = StartUpDestination.route,
         modifier = modifier
     ) {
-        composable(route = StartUpDestination.route) {
+        composable(
+            route = StartUpDestination.routeWithArgs,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
+        ) {
             StartUpScreen(
                 onButtonClick = onStartUpClick
             )
         }
 
-        composable(route = HomeDestination.route) {
+        composable(
+            route = HomeDestination.route
+        ) {
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
@@ -210,7 +215,10 @@ private fun InAppNavigation(
 
         composable(
             route = CameraPageDestination.routeWithArgs,
-            arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             val lifecycleOwner = LocalLifecycleOwner.current
             CameraPage(
@@ -219,7 +227,10 @@ private fun InAppNavigation(
             )
         }
 
-        composable(route = AlbumsDestination.route) {
+        composable(
+            route = AlbumsDestination.routeWithArgs,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
+        ) {
             AlbumsScreen(
                 onAddClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick
@@ -228,7 +239,10 @@ private fun InAppNavigation(
 
         composable(
             route = AlbumDetailDestination.routeWithArgs,
-            arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumsAndAlbumDetailScreen(
@@ -249,7 +263,10 @@ private fun InAppNavigation(
 
         composable(
             route = ChoosePicturesDestination.routeWithArgs,
-            arguments = listOf(navArgument(ChoosePicturesDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(ChoosePicturesDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoSourceChooserScreen(
@@ -271,7 +288,10 @@ private fun InAppNavigation(
 
         composable(
             route = AddOnlinePicturesDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             AddOnlinePicturesScreen(
                 navigateBack = navigateBack
@@ -280,7 +300,10 @@ private fun InAppNavigation(
 
         composable(
             route = AddAlbumDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddAlbumDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AddAlbumDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             AddAlbumScreen(
                 onChooseCamera = onChooseCamera,
@@ -293,7 +316,10 @@ private fun InAppNavigation(
 
         composable(
             route = EditAlbumDestination.routeWithArgs,
-            arguments = listOf(navArgument(EditAlbumDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(EditAlbumDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndAlbumEditScreen(
@@ -311,7 +337,10 @@ private fun InAppNavigation(
 
         composable(
             route = EditPhotoDestination.routeWithArgs,
-            arguments = listOf(navArgument(EditPhotoDestination.photoIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(EditPhotoDestination.photoIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoEditScreen(
@@ -329,7 +358,10 @@ private fun InAppNavigation(
 
         composable(
             route = AddPhotoToAlbumDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddPhotoToAlbumDestination.photoIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AddPhotoToAlbumDestination.photoIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             AddPhotoToAlbumScreen(
                 navigateBack = navigateBack,
