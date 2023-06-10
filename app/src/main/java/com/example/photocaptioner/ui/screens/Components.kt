@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import coil.compose.AsyncImage
@@ -260,18 +261,19 @@ fun SearchBox(
         OutlinedTextField(
             value = searchValue,
             onValueChange = onValueChange,
+            textStyle = MaterialTheme.typography.body1.copy(color = colors.onBackground),
             placeholder = {
                 Text(
                     text = "Search",
                     style = MaterialTheme.typography.body1,
-                    color = colors.onSurface.copy(alpha = 0.5f)
+                    color = colors.onBackground
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Search,
                     contentDescription = stringResource(R.string.search_icon),
-                    tint = colors.onSurface.copy(alpha = 0.5f)
+                    tint = colors.onBackground
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -295,6 +297,7 @@ fun TopBar(
     ) {
         Text(
             text = stringResource(id = title),
+            color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.subtitle1
         )
     }

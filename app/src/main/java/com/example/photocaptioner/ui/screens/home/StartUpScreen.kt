@@ -60,6 +60,7 @@ fun StartUpScreen(
         }
         Text(
             text = stringResource(R.string.app_name),
+            color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.h1,
             textAlign = TextAlign.Center,
             modifier = Modifier

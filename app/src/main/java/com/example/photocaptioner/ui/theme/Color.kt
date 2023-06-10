@@ -11,6 +11,6 @@ val LightGreyLightVersion = Color(0xFFF5F5F5)
 
 
 //dark theme
-val DarkBlue = Color(0xFF1A237E)
+val DarkBlue = Color(0xFF505FF1)
 val Black = Color(0xFF212121)
 val LightGreyDarkVersion = Color(0xFF424242)
