@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +47,7 @@ object AddAlbumDestination : NavigationDestination {
 fun AddAlbumScreen(
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateToAlbums: () -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier,
@@ -83,8 +85,7 @@ fun AddAlbumScreen(
         ) {
             NewAlbumFooter(onAddNewAlbum = {
                 coroutineScope.launch {
-                    viewModel.saveItem()
-                    navigateBack(HomeDestination.route, false)
+                    viewModel.saveItem(navigateToAlbums)
                 }
             })
         }
@@ -155,8 +156,9 @@ fun AddAlbumInformation(
         AlbumTextFields(
             title = viewModel.addAlbumUiState.albumDetails.album.name,
             description = viewModel.addAlbumUiState.albumDetails.album.description,
+            validEntry = viewModel.addAlbumUiState.isEntryValid,
             onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
-            onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) }
+            onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) },
         )
     }
 }
@@ -181,6 +183,7 @@ fun AddAlbumPhoto(
         } else {
             Text(
                 text = stringResource(id = R.string.added_pictures),
+                color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.subtitle2,
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -195,41 +198,70 @@ fun AddAlbumPhoto(
 fun AlbumTextFields(
     title: String,
     description: String,
+    validEntry: Boolean,
     onAlbumTitleChange: (String) -> Unit,
     onAlbumDescriptionChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
+            .fillMaxWidth()
     ) {
         OutlinedTextField(
             value = title,
             onValueChange = { onAlbumTitleChange(it) },
+            textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
             label = {
                 Text(
                     text = stringResource(id = R.string.album_title),
+                    color = MaterialTheme.colors.onBackground,
                     style = MaterialTheme.typography.body1
                 )
+                if (!validEntry && title.isBlank()) {
+                    Text(
+                        text = stringResource(id = R.string.no_album_title),
+                        style = MaterialTheme.typography.body1
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.album_title),
+                        style = MaterialTheme.typography.body1
+                    )
+                }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
-            )
+            ),
+            isError = !validEntry && title.isBlank(),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = description,
             onValueChange = { onAlbumDescriptionChange(it) },
+            textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
             label = {
-                Text(
-                    text = stringResource(id = R.string.album_description),
-                    style = MaterialTheme.typography.body1
-                )
+                if (!validEntry && description.isBlank()) {
+                    Text(
+                        text = stringResource(id = R.string.no_album_description),
+                        color = MaterialTheme.colors.onBackground,
+                        style = MaterialTheme.typography.body1
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.album_description),
+                        color = MaterialTheme.colors.onBackground,
+                        style = MaterialTheme.typography.body1
+                    )
+                }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
-            )
+            ),
+            isError = !validEntry && description.isBlank(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -291,6 +323,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
         AddAlbumScreen(
             {},
             {},
+            {},
             {route, include ->},
             PhotoCaptionerContentType.LIST_ONLY
         )
@@ -302,6 +335,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
         AddAlbumScreen(
+            {},
             {},
             {},
             {route, include ->},
@@ -317,6 +351,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
         AddAlbumScreen(
             {},
             {},
+            {},
             {route, include ->},
             PhotoCaptionerContentType.LIST_AND_DETAIL)
     }
@@ -327,6 +362,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
 fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumScreen(
+            {},
             {},
             {},
             {route, include ->},

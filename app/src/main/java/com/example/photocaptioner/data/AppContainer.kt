@@ -7,6 +7,7 @@ import com.example.photocaptioner.data.database.PhotoCaptionerDatabase
 
 class AppContainer(private val context: Context) {
     private val unsplashRepository: UnsplashRepository = UnsplashRepository()
+    private val workManagerDownloadRepository: WorkManagerDownloadRepository = WorkManagerDownloadRepository(context)
     private val albumsRepository: AlbumsRepository by lazy {
         OfflineAlbumsRepository(
             PhotoCaptionerDatabase.getDatabase(context).albumDao()
@@ -19,5 +20,9 @@ class AppContainer(private val context: Context) {
 
     fun provideAlbumsRepository(): AlbumsRepository {
         return albumsRepository
+    }
+
+    fun provideWorkManagerDownloadRepository(): WorkManagerDownloadRepository {
+        return workManagerDownloadRepository
     }
 }

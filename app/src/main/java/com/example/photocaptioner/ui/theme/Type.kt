@@ -50,12 +50,6 @@ val Typography = Typography(
         fontSize = 20.sp,
         letterSpacing = 0.5.sp
     ),
-    caption = TextStyle(
-        fontFamily = NunitoSans,
-        fontWeight = FontWeight.Normal,
-        fontSize = 20.sp,
-        letterSpacing = 0.4.sp
-    ),
     button = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Bold,

@@ -1,5 +1,7 @@
 package com.example.photocaptioner.ui.screens.album
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -13,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +45,12 @@ fun AlbumDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: AlbumDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val albumUiState by viewModel.albumDetailUiState.collectAsState()
+    val openDocumentTreeLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+        viewModel.downloadAlbum(it)
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -55,7 +63,9 @@ fun AlbumDetailScreen(
         ) {
             AlbumDetails(
                 albumWithImages = albumUiState.albumDetails,
-                onDownloadClick = { viewModel.downloadAlbum() },
+                onDownloadClick = {
+                    openDocumentTreeLauncher.launch(null)
+                },
                 onEditClick = onEditClick,
                 onPhotoClick = onPhotoClick,
             )
@@ -70,7 +80,7 @@ fun AlbumDetailScreen(
             AlbumFooter(
                 album = albumUiState.albumDetails.album,
                 onAddClick = onAddClick,
-                onShareClick = { viewModel.shareAlbum() },
+                onShareClick = { viewModel.shareAlbum(context) },
             )
         }
     }

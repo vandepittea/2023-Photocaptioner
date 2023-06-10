@@ -99,6 +99,7 @@ fun RecentEdits(
 ) {
     Text(
         text = stringResource(id = R.string.recently_edited),
+        color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.subtitle1,
         modifier = Modifier.padding(vertical = 16.dp, horizontal = 32.dp)
     )

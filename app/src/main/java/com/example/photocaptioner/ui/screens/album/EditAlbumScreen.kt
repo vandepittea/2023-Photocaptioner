@@ -46,6 +46,7 @@ fun EditAlbumScreen(
             AlbumTextFields(
                 title = viewModel.editAlbumUiState.albumDetails.album.name,
                 description = viewModel.editAlbumUiState.albumDetails.album.description,
+                validEntry = viewModel.editAlbumUiState.isEntryValid,
                 onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
                 onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) }
             )
