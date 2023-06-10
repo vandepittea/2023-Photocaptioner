@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +25,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.Button
+import com.example.photocaptioner.ui.screens.Button
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
@@ -92,7 +91,7 @@ fun EditPhotoScreen(
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = viewModel.editPhotoUiState.photoDetails.description,
-                onValueChange = { viewModel.updateAlbumDescriptionUiState(it) },
+                onValueChange = { viewModel.updatePhotoDescriptionUiState(it) },
                 textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
                 label = {
                     Text(
@@ -131,6 +130,6 @@ fun EditPhotoScreen(
 @Composable
 fun EditPhotoScreenPreview() {
     PhotoCaptionerTheme {
-        EditPhotoScreen({route, include ->})
+        EditPhotoScreen({_, _ ->})
     }
 }

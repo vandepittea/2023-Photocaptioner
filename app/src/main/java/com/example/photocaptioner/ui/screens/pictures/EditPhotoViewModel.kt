@@ -25,7 +25,6 @@ class EditPhotoViewModel(
     private val photoId: Long = checkNotNull(savedStateHandle[EditPhotoDestination.photoIdArg])
 
     var editPhotoUiState by mutableStateOf(EditPhotoUiState())
-        private set
 
     init {
         viewModelScope.launch {
@@ -36,23 +35,16 @@ class EditPhotoViewModel(
         }
     }
 
-    fun updateAlbumDescriptionUiState(description: String) {
-        editPhotoUiState = EditPhotoUiState(
-            photoDetails = editPhotoUiState.photoDetails.copy(description = description),
-            isEntryValid = validateInput(editPhotoUiState.photoDetails)
+    fun updatePhotoDescriptionUiState(description: String) {
+        editPhotoUiState = editPhotoUiState.copy(
+            photoDetails = editPhotoUiState.photoDetails.copy(
+                description = description
+            )
         )
     }
 
-    private fun validateInput(uiState: Photo = editPhotoUiState.photoDetails): Boolean {
-        return with(uiState) {
-            description.isNotBlank()
-        }
-    }
-
     suspend fun saveItem() {
-        if (validateInput()) {
-            albumsRepository.updatePhoto(editPhotoUiState.photoDetails)
-        }
+        albumsRepository.updatePhoto(editPhotoUiState.photoDetails)
     }
 
     fun editPhoto(context: Context) {
@@ -100,6 +92,5 @@ class EditPhotoViewModel(
 }
 
 data class EditPhotoUiState(
-    val photoDetails: Photo = Photo(),
-    val isEntryValid: Boolean = false
+    val photoDetails: Photo = Photo()
 )

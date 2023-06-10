@@ -8,22 +8,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
-import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.ui.AlbumSelectBox
+import com.example.photocaptioner.ui.screens.AlbumSelectBox
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.Button
-import com.example.photocaptioner.ui.HomeDestination
-import com.example.photocaptioner.ui.ImageWithDescriptionAndDate
+import com.example.photocaptioner.ui.screens.Button
+import com.example.photocaptioner.ui.screens.home.HomeDestination
+import com.example.photocaptioner.ui.screens.ImageWithDescriptionAndDate
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
@@ -106,7 +102,7 @@ fun AddPhotoToAlbumFooter(
 @Preview
 @Composable
 fun AddPhotoToAlbumScreenPreview() {
-    PhotoCaptionerTheme() {
+    PhotoCaptionerTheme {
         AddPhotoToAlbumScreen({ _, _ ->}, {})
     }
 }

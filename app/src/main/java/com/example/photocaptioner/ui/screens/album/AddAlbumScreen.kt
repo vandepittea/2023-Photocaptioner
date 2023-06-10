@@ -1,7 +1,5 @@
 package com.example.photocaptioner.ui.screens.album
 
-import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +15,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,9 +24,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.TopBar
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.HomeDestination
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -308,7 +303,7 @@ fun NewAlbumFooter(
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        com.example.photocaptioner.ui.Button(
+        com.example.photocaptioner.ui.screens.Button(
             text = R.string.add_new_album,
             onClick = onAddNewAlbum
         )
@@ -323,7 +318,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
             {},
             {},
             {},
-            {route, include ->},
+            {_, _ ->},
             PhotoCaptionerContentType.LIST_ONLY
         )
     }
@@ -337,7 +332,7 @@ fun AddAlbumsScreenPreviewWithPhotos() {
             {},
             {},
             {},
-            {route, include ->},
+            {_, _ ->},
             PhotoCaptionerContentType.LIST_ONLY
         )
     }
@@ -351,7 +346,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
             {},
             {},
             {},
-            {route, include ->},
+            {_, _ ->},
             PhotoCaptionerContentType.LIST_AND_DETAIL)
     }
 }
@@ -364,7 +359,7 @@ fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
             {},
             {},
             {},
-            {route, include ->},
+            {_, _ ->},
             PhotoCaptionerContentType.LIST_AND_DETAIL
         )
     }

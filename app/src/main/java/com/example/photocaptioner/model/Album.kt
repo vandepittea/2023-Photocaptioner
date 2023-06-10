@@ -1,10 +1,7 @@
 package com.example.photocaptioner.model
 
-import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.photocaptioner.R
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity(tableName = "albums")

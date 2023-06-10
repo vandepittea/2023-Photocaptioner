@@ -14,12 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.ImageOptions
-import com.example.photocaptioner.ui.TopBar
+import com.example.photocaptioner.ui.screens.ImageOptions
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
@@ -28,7 +26,8 @@ object ChoosePicturesDestination : NavigationDestination {
     override val route = "choose_pictures"
     override val titleRes = R.string.choose_picture_source
     const val albumIdArg = "albumId"
-    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
+    const val backNavigationDestinationRouteArg = "backNavigationDestinationRoute"
+    override val routeWithArgs = "${route}/{${albumIdArg}}/{$backNavigationDestinationRouteArg}/{title}"
 }
 
 @Composable
@@ -72,7 +71,7 @@ fun ChoosePicturesSourceScreenPreview() {
         ChoosePicturesSourceScreen(
             onChooseCamera = {},
             onChooseMaps = {},
-            navigateBack = {route, include -> }
+            navigateBack = {_, _ -> }
         )
     }
 }

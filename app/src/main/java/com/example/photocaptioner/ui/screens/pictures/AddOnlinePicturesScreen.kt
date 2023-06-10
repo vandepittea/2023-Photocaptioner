@@ -1,5 +1,6 @@
-package com.example.photocaptioner.ui.screens.album
+package com.example.photocaptioner.ui.screens.pictures
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -22,21 +23,22 @@ import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.ButtonWithIcon
-import com.example.photocaptioner.ui.SearchBox
+import com.example.photocaptioner.ui.screens.ButtonWithIcon
+import com.example.photocaptioner.ui.screens.SearchBox
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
-import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
 object AddOnlinePicturesDestination : NavigationDestination {
     override val route = "add_online_pictures"
     override val titleRes = R.string.upload_pictures
     const val albumIdArg = "albumId"
-    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
+    const val backNavigationDestinationRouteArg = "backNavigationDestinationRoute"
+    override val routeWithArgs = "$route/{$albumIdArg}/{$backNavigationDestinationRouteArg}/{title}"
 }
 
 @Composable
 fun AddOnlinePicturesScreen(
+    backNavigationDestinationRoute: String,
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddOnlinePicturesViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -74,7 +76,7 @@ fun AddOnlinePicturesScreen(
         ) {
             UploadButton(onClick = {
                 viewModel.addPhotosToAlbum()
-                navigateBack(ChoosePicturesDestination.routeWithArgs, true)
+                navigateBack(backNavigationDestinationRoute, false)
             })
         }
     }
@@ -152,7 +154,10 @@ fun UploadButton(
 @Composable
 fun AddPicturesScreenPreview() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({route, include ->})
+        AddOnlinePicturesScreen(
+            "",
+            {_, _ ->}
+        )
     }
 }
 
@@ -160,7 +165,10 @@ fun AddPicturesScreenPreview() {
 @Composable
 fun AddPicturesScreenPreviewWithPictures() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({route, include ->})
+        AddOnlinePicturesScreen(
+            "",
+            {_, _ ->}
+        )
     }
 }
 
@@ -168,7 +176,10 @@ fun AddPicturesScreenPreviewWithPictures() {
 @Composable
 fun AddPicturesScreenPreviewWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({route, include ->})
+        AddOnlinePicturesScreen(
+            "",
+            {_, _ ->}
+        )
     }
 }
 
@@ -176,6 +187,9 @@ fun AddPicturesScreenPreviewWithExtendedView() {
 @Composable
 fun AddPicturesScreenPreviewWithPicturesWithExtendedView() {
     PhotoCaptionerTheme {
-        AddOnlinePicturesScreen({route, include ->})
+        AddOnlinePicturesScreen(
+            "",
+            {_, _ ->}
+        )
     }
 }

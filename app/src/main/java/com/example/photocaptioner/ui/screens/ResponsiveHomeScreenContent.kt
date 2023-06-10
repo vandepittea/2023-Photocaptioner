@@ -1,10 +1,11 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailScreen
 import com.example.photocaptioner.ui.screens.album.AlbumsScreen
 import com.example.photocaptioner.ui.screens.album.EditAlbumScreen
@@ -94,7 +95,7 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
     onAddPictureClick: (Long) -> Unit,
     onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
-    onChooseMaps: (Long) -> Unit,
+    onChooseMaps: (albumId: Long, navBackRout: String) -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -110,7 +111,7 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
         )
         ChoosePicturesSourceScreen(
             onChooseCamera = onChooseCamera,
-            onChooseMaps = onChooseMaps,
+            onChooseMaps = { onChooseMaps(it, AlbumDetailDestination.routeWithArgs) },
             navigateBack = navigateBack,
             modifier = Modifier.weight(1f)
         )

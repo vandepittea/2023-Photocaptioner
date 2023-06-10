@@ -38,7 +38,7 @@
     <string name="no_album_description" translatable="false">Please insert a description</string>
     <string name="choose_picture_source" translatable="false">Choose picture source</string>
     <string name="gallery" translatable="false">Gallery</string>
-    <string name="maps" translatable="false">Maps</string>
+    <string name="internet" translatable="false">Internet</string>
 
     //icons
     <string name="album_icon" translatable="false">Album Icon</string>

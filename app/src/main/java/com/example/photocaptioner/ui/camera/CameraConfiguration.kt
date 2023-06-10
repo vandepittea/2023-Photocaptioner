@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui.camera
 
-import FaceDetectorProcessor
 import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -16,11 +15,11 @@ import com.example.photocaptioner.model.SourceInfo
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.face.Face
-import java.util.concurrent.Executor
+import org.jetbrains.annotations.TestOnly
 
 lateinit var imageCapture: ImageCapture
 
-public fun ListenableFuture<ProcessCameraProvider>.configureCamera(
+fun ListenableFuture<ProcessCameraProvider>.configureCamera(
     previewView: PreviewView,
     lifecycleOwner: LifecycleOwner,
     cameraLens: Int,
@@ -58,7 +57,7 @@ public fun ListenableFuture<ProcessCameraProvider>.configureCamera(
     return this
 }
 
-public fun switchLens(lens: Int): Int {
+fun switchLens(lens: Int): Int {
     return if (lens == CameraSelector.LENS_FACING_FRONT) {
         CameraSelector.LENS_FACING_BACK
     } else {
@@ -100,7 +99,8 @@ private fun createAnalysisUseCase(
     return analysisUseCase
 }
 
-private fun obtainSourceInfo(lens: Int, imageProxy: ImageProxy): SourceInfo {
+@TestOnly
+internal fun obtainSourceInfo(lens: Int, imageProxy: ImageProxy): SourceInfo {
     // Determine if the image is flipped based on the lens facing
     val isImageFlipped = lens == CameraSelector.LENS_FACING_FRONT
 
@@ -119,7 +119,7 @@ private fun obtainSourceInfo(lens: Int, imageProxy: ImageProxy): SourceInfo {
     }
 }
 
-public fun calculateScale(
+fun calculateScale(
     constraints: Constraints,
     sourceInfo: SourceInfo,
     scaleType: PreviewScaleType
@@ -135,7 +135,7 @@ public fun calculateScale(
     }
 }
 
-public enum class PreviewScaleType {
+enum class PreviewScaleType {
     FIT_CENTER,
     CENTER_CROP
 }

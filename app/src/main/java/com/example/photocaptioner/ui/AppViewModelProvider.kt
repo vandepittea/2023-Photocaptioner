@@ -7,6 +7,7 @@ import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.screens.album.*
 import com.example.photocaptioner.ui.screens.home.HomeViewModel
+import com.example.photocaptioner.ui.screens.pictures.AddOnlinePicturesViewModel
 import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumViewModel
 import com.example.photocaptioner.ui.screens.pictures.CameraPageViewModel
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceViewModel

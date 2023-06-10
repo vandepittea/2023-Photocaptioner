@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,7 +15,6 @@ class AddAlbumViewModel(
     private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
     var addAlbumUiState by mutableStateOf(AlbumUiState())
-        private set
 
     init {
         viewModelScope.launch {
@@ -32,17 +30,15 @@ class AddAlbumViewModel(
     }
 
     fun updateAlbumTitleUiState(title: String) {
-        addAlbumUiState = AlbumUiState(
+        addAlbumUiState = addAlbumUiState.copy(
             albumDetails = addAlbumUiState.albumDetails.copy(album = addAlbumUiState.albumDetails.album.copy(name = title)),
-            isEntryValid = validateInput(addAlbumUiState.albumDetails)
-        )
+            isEntryValid = validateInput(addAlbumUiState.albumDetails))
     }
 
     fun updateAlbumDescriptionUiState(description: String) {
-        addAlbumUiState = AlbumUiState(
+        addAlbumUiState = addAlbumUiState.copy(
             albumDetails = addAlbumUiState.albumDetails.copy(album = addAlbumUiState.albumDetails.album.copy(description = description)),
-            isEntryValid = validateInput(addAlbumUiState.albumDetails)
-        )
+            isEntryValid = validateInput(addAlbumUiState.albumDetails))
     }
 
     suspend fun saveItem(navigateToAlbums: () -> Unit) {
@@ -54,12 +50,6 @@ class AddAlbumViewModel(
             navigateToAlbums()
         } else {
             addAlbumUiState = addAlbumUiState.copy(isEntryValid = false)
-        }
-    }
-
-    suspend fun deletePhotosWithoutAlbum() {
-        withContext(Dispatchers.IO) {
-            albumsRepository.deletePhotosWithoutAlbum()
         }
     }
 
