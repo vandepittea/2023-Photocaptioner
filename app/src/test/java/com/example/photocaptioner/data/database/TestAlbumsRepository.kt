@@ -239,15 +239,10 @@ class TestAlbumsRepository : AlbumsRepository {
     }
 
     override fun updatePhotosWithoutAlbum(albumId: Long) {
-        TODO("Not yet implemented")
+        // We don't actually need this for the fake repository
     }
 
-    /*override fun updatePhotosWithoutAlbum(albumId: Long) {
-        val photosToUpdate = photos.filter { it.albumId < 0 }
-        photos.removeAll {}
-    }*/
-
     override fun deletePhotosWithoutAlbum() {
-        photos.removeAll { it.albumId < 0 }
+        // We don't actually need this for the fake repository
     }
 }
