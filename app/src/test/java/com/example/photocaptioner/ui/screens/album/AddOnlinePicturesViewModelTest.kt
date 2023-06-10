@@ -106,9 +106,9 @@ class AddOnlinePicturesViewModelTest {
         viewModel.addPhotosToAlbum()
 
         selectedImages.forEach {
-            assertEquals(it.filePath, albumsRepository.getAlbum(1L).first().photos.find { photo ->
+            assertEquals(it.albumId, albumsRepository.getAlbum(1L).first().photos.find { photo ->
                 photo.filePath == it.filePath
-            }?.filePath)
+            }?.albumId)
         }
     }
 }
