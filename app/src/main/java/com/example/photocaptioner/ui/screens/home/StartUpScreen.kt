@@ -50,13 +50,7 @@ fun StartUpScreen(
         val context = LocalContext.current
         val launcherMultiplePermissions = rememberLauncherForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissionsMap ->
-            val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
-            if (areGranted) {
-                Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
-            }
+        ) {
         }
         Text(
             text = stringResource(R.string.app_name),
