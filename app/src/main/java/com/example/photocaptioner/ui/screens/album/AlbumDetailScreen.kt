@@ -224,6 +224,7 @@ fun AlbumFooter(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .height(56.dp)
             .padding(top = 10.dp, bottom = 10.dp),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
