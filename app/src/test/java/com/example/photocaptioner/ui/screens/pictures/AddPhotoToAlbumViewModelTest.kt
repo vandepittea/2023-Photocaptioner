@@ -1,16 +1,17 @@
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.createSavedStateHandle
 import com.example.photocaptioner.data.database.TestAlbumsRepository
+import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
+import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumDestination
+import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumUiState
 import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumViewModel
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -25,7 +26,7 @@ class AddPhotoToAlbumViewModelTest {
         albumsRepository = TestAlbumsRepository()
         Dispatchers.setMain(Dispatchers.Unconfined)
         val savedStateHandle = SavedStateHandle().apply {
-            set(AddPhotoToAlbumDestination.photoIdArg, 1L) // Set a valid photo ID here
+            set(AddPhotoToAlbumDestination.photoIdArg, 1L)
         }
         viewModel = AddPhotoToAlbumViewModel(savedStateHandle, albumsRepository)
     }
@@ -41,16 +42,19 @@ class AddPhotoToAlbumViewModelTest {
         assert(viewModel.addPhotoToAlbumUiState.selectedAlbum == album)
     }
 
-    /*@Test
-    fun addPhotoToAlbum() = testScope.runBlockingTest {
-        val album = albumsRepository.getAlbums().first().first()
-        val photo = albumsRepository.getPhoto(1).first()
-        viewModel.selectAlbum(album)
+
+    @Test
+    fun addPhotoToAlbum() = runBlocking {
+        val album = AlbumWithImages(album = Album(id = 2L))
+        val photo = Photo(id = 1L, albumId = 0L)
+        viewModel.addPhotoToAlbumUiState = AddPhotoToAlbumUiState(
+            photo = photo,
+            availableAlbums = listOf(album),
+            selectedAlbum = album
+        )
 
         viewModel.addPhotoToAlbum()
 
-        val updatedPhoto = albumsRepository.getPhoto(1).first()
-        assert(updatedPhoto.albumId == album.album.id)
-        assert(viewModel.addPhotoToAlbumUiState.photo == updatedPhoto)
-    }*/
+        assertEquals(album.album.id, viewModel.addPhotoToAlbumUiState.photo.albumId)
+    }
 }
