@@ -192,8 +192,8 @@ fun PhotoCaptionerApp(
                     viewModel.updateTopBarTitle("Add Photo")
                 },
                 navigateToAlbums = {
-                    navController.popBackStack(HomeDestination.route, false)
-                    navController.navigate(AlbumsDestination.route)
+                    navController.popBackStack(HomeDestination.routeWithArgs, false)
+                    navController.navigate("${AlbumsDestination.route}/Albums")
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Albums")
                 },
