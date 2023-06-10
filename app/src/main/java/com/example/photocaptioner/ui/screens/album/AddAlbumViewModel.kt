@@ -45,12 +45,15 @@ class AddAlbumViewModel(
         )
     }
 
-    suspend fun saveItem() {
+    suspend fun saveItem(navigateToAlbums: () -> Unit) {
         if (validateInput()) {
             withContext(Dispatchers.IO) {
                 val albumId = albumsRepository.insertAlbum(addAlbumUiState.albumDetails.album)
                 albumsRepository.updatePhotosWithoutAlbum(albumId)
             }
+            navigateToAlbums()
+        } else {
+            addAlbumUiState = addAlbumUiState.copy(isEntryValid = false)
         }
     }
 
@@ -69,5 +72,5 @@ class AddAlbumViewModel(
 
 data class AlbumUiState(
     val albumDetails: AlbumWithImages = AlbumWithImages(),
-    val isEntryValid: Boolean = false
+    val isEntryValid: Boolean = true
 )

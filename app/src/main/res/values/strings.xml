@@ -33,7 +33,9 @@
 
     //labels
     <string name="album_title" translatable="false">Album Title</string>
+    <string name="no_album_title" translatable="false">Please insert a title</string>
     <string name="album_description" translatable="false">Album Description</string>
+    <string name="no_album_description" translatable="false">Please insert a description</string>
     <string name="choose_picture_source" translatable="false">Choose picture source</string>
     <string name="gallery" translatable="false">Gallery</string>
     <string name="maps" translatable="false">Maps</string>

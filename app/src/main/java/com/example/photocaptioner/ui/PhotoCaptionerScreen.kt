@@ -169,6 +169,11 @@ fun PhotoCaptionerApp(
                 onTakePictureFromHome = {
                     navController.navigate("${AddPhotoToAlbumDestination.route}/${it}")
                     viewModel.canNavigateBack(true)
+                },
+                navigateToAlbums = {
+                    navController.popBackStack(HomeDestination.route, false)
+                    navController.navigate(AlbumsDestination.route)
+                    viewModel.canNavigateBack(true)
                 }
             )
         }

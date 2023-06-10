@@ -46,6 +46,7 @@ object AddAlbumDestination : NavigationDestination {
 fun AddAlbumScreen(
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateToAlbums: () -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier,
@@ -83,8 +84,7 @@ fun AddAlbumScreen(
         ) {
             NewAlbumFooter(onAddNewAlbum = {
                 coroutineScope.launch {
-                    viewModel.saveItem()
-                    navigateBack(HomeDestination.route, false)
+                    viewModel.saveItem(navigateToAlbums)
                 }
             })
         }
@@ -155,8 +155,9 @@ fun AddAlbumInformation(
         AlbumTextFields(
             title = viewModel.addAlbumUiState.albumDetails.album.name,
             description = viewModel.addAlbumUiState.albumDetails.album.description,
+            validEntry = viewModel.addAlbumUiState.isEntryValid,
             onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
-            onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) }
+            onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) },
         )
     }
 }
@@ -195,41 +196,61 @@ fun AddAlbumPhoto(
 fun AlbumTextFields(
     title: String,
     description: String,
+    validEntry: Boolean,
     onAlbumTitleChange: (String) -> Unit,
     onAlbumDescriptionChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
+            .fillMaxWidth()
     ) {
         OutlinedTextField(
             value = title,
             onValueChange = { onAlbumTitleChange(it) },
             label = {
-                Text(
-                    text = stringResource(id = R.string.album_title),
-                    style = MaterialTheme.typography.body1
-                )
+                if (!validEntry && title.isBlank()) {
+                    Text(
+                        text = stringResource(id = R.string.no_album_title),
+                        style = MaterialTheme.typography.body1
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.album_title),
+                        style = MaterialTheme.typography.body1
+                    )
+                }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
-            )
+            ),
+            isError = !validEntry && title.isBlank(),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = description,
             onValueChange = { onAlbumDescriptionChange(it) },
             label = {
-                Text(
-                    text = stringResource(id = R.string.album_description),
-                    style = MaterialTheme.typography.body1
-                )
+                if (!validEntry && description.isBlank()) {
+                    Text(
+                        text = stringResource(id = R.string.no_album_description),
+                        style = MaterialTheme.typography.body1
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.album_description),
+                        style = MaterialTheme.typography.body1
+                    )
+                }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
-            )
+            ),
+            isError = !validEntry && description.isBlank(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -291,6 +312,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
         AddAlbumScreen(
             {},
             {},
+            {},
             {route, include ->},
             PhotoCaptionerContentType.LIST_ONLY
         )
@@ -302,6 +324,7 @@ fun AddAlbumsScreenPreviewWithoutPhotos() {
 fun AddAlbumsScreenPreviewWithPhotos() {
     PhotoCaptionerTheme {
         AddAlbumScreen(
+            {},
             {},
             {},
             {route, include ->},
@@ -317,6 +340,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
         AddAlbumScreen(
             {},
             {},
+            {},
             {route, include ->},
             PhotoCaptionerContentType.LIST_AND_DETAIL)
     }
@@ -327,6 +351,7 @@ fun AddAlbumsScreenPreviewWithoutPhotosWithExpandedView() {
 fun AddAlbumsScreenPreviewWithPhotosWithExpandedView() {
     PhotoCaptionerTheme {
         AddAlbumScreen(
+            {},
             {},
             {},
             {route, include ->},

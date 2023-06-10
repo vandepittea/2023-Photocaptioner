@@ -75,6 +75,7 @@ fun ResponsiveHomeScreen(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateToAlbums: () -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
@@ -119,6 +120,7 @@ fun ResponsiveHomeScreen(
                     onChooseCamera = onChooseCamera,
                     onChooseMaps = onChooseMaps,
                     onTakePictureFromHome = onTakePictureFromHome,
+                    navigateToAlbums = navigateToAlbums,
                     navigateBack = navigateBack,
                     modifier = modifier,
                     contentType = contentType,
@@ -141,6 +143,7 @@ fun ResponsiveHomeScreen(
                 onChooseCamera = onChooseCamera,
                 onChooseMaps = onChooseMaps,
                 onTakePictureFromHome = onTakePictureFromHome,
+                navigateToAlbums = navigateToAlbums,
                 navigateBack = navigateBack,
                 modifier = modifier.weight(1f),
                 contentType = contentType,
@@ -179,6 +182,7 @@ private fun InAppNavigation(
     onPhotoClick: (Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
+    navigateToAlbums: () -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     contentType: PhotoCaptionerContentType,
@@ -281,6 +285,7 @@ private fun InAppNavigation(
             AddAlbumScreen(
                 onChooseCamera = onChooseCamera,
                 onChooseMaps = onChooseMaps,
+                navigateToAlbums = navigateToAlbums,
                 navigateBack = navigateBack,
                 contentType = contentType
             )
