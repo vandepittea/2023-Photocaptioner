@@ -76,7 +76,8 @@ fun StartUpScreen(
                     android.Manifest.permission.CAMERA,
                     android.Manifest.permission.READ_MEDIA_IMAGES,
                     android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.INTERNET
+                    android.Manifest.permission.INTERNET,
+                    android.Manifest.permission.POST_NOTIFICATIONS
                 )
 
                 if (!permissions.all {
