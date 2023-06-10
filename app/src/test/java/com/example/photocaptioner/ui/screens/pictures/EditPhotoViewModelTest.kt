@@ -31,6 +31,7 @@ class EditPhotoViewModelTest {
     @Test
     fun saveItemSuccessful() = runBlocking {
         viewModel.updatePhotoDescriptionUiState("Updated Description")
+
         viewModel.saveItem()
 
         val updatedPhoto = albumsRepository.getPhoto(1L).first()
@@ -39,13 +40,13 @@ class EditPhotoViewModelTest {
 
     @Test
     fun saveItemInvalidInput() = runBlocking {
-        val initalDescription = albumsRepository.getPhoto(1L).first().description
-
+        val initialDescription = albumsRepository.getPhoto(1L).first().description
         viewModel.updatePhotoDescriptionUiState("")
+
         viewModel.saveItem()
 
         val updatedPhoto = albumsRepository.getPhoto(1L).first()
-        assertEquals(initalDescription, updatedPhoto.description)
+        assertEquals(initialDescription, updatedPhoto.description)
     }
 
     @Test
@@ -68,6 +69,7 @@ class EditPhotoViewModelTest {
             photoDetails = Photo(id = 1L, description = ""),
             isEntryValid = false
         )
+
         viewModel.updatePhotoDescriptionUiState("")
 
         assertEquals(expectedUiState.photoDetails.id, viewModel.editPhotoUiState.photoDetails.id)
