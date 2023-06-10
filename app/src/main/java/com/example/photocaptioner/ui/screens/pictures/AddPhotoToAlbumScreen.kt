@@ -32,7 +32,7 @@ object AddPhotoToAlbumDestination : NavigationDestination {
     override val route = "add_photo_to_album"
     override val titleRes = R.string.add_photo_to_album
     const val photoIdArg = "photoId"
-    val routeWithArgs = "$route/{$photoIdArg}"
+    override val routeWithArgs = "$route/{$photoIdArg}/{title}"
 }
 
 @Composable
@@ -72,7 +72,7 @@ fun AddPhotoToAlbumScreen(
                 onAddPhoto = {
                     coroutineScope.launch {
                         viewModel.addPhotoToAlbum()
-                        navigateBack(HomeDestination.route, false)
+                        navigateBack(HomeDestination.routeWithArgs, false)
                     }
                 },
                 onNewAlbum = onNewAlbum

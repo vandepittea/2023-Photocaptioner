@@ -48,7 +48,7 @@ object CameraPageDestination : NavigationDestination {
     override val route = "Camera"
     override val titleRes = R.string.photo
     const val albumIdArg = "albumId"
-    val routeWithArgs = "$route/{$albumIdArg}"
+    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
 }
 
 @Composable

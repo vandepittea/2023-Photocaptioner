@@ -40,7 +40,7 @@ object AddAlbumDestination : NavigationDestination {
     override val route = "add_albums"
     override val titleRes = R.string.add_album
     const val albumIdArg = "albumId"
-    val routeWithArgs = "$route/{$albumIdArg}"
+    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
 }
 
 @Composable
@@ -152,7 +152,6 @@ fun AddAlbumInformation(
     Column(
         modifier = modifier
     ) {
-        TopBar(title = R.string.add_new_album)
         AlbumTextFields(
             title = viewModel.addAlbumUiState.albumDetails.album.name,
             description = viewModel.addAlbumUiState.albumDetails.album.description,

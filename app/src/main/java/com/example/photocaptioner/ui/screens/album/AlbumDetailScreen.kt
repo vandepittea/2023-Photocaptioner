@@ -34,14 +34,14 @@ object AlbumDetailDestination : NavigationDestination {
     override val route = "album_detail"
     override val titleRes = R.string.album_title
     const val albumIdArg = "albumId"
-    val routeWithArgs = "$route/{$albumIdArg}"
+    override val routeWithArgs = "$route/{$albumIdArg}/{title}"
 }
 
 @Composable
 fun AlbumDetailScreen(
     onEditClick: (Long) -> Unit,
     onAddClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit,
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AlbumDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -91,23 +91,36 @@ fun AlbumDetails(
     albumWithImages: AlbumWithImages,
     onDownloadClick: () -> Unit,
     onEditClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit
 ) {
-    AlbumHeader(
-        album = albumWithImages.album,
-        onDownloadClick = onDownloadClick,
-        onEditClick = onEditClick,
-    )
+    Row {
+        Column (
+            modifier = Modifier
+                .weight(6f)
+        ) {
+            AlbumHeader(
+                album = albumWithImages.album
+            )
 
-    DescriptionRow(
-        description = albumWithImages.album.description
-    )
+            DescriptionRow(
+                description = albumWithImages.album.description
+            )
 
-    TimeRow(
-        lastChanged = "${albumWithImages.album.lastChanged}",
-    )
+            TimeRow(
+                lastChanged = "${albumWithImages.album.lastChanged}",
+            )
+        }
+        AlbumButtons(
+            album = albumWithImages.album,
+            onDownloadClick = onDownloadClick,
+            onEditClick = onEditClick,
+            modifier = Modifier
+                .weight(1f)
+        )
+    }
 
     AlternatingColumn(
+        albumId = albumWithImages.album.id,
         items = albumWithImages.photos,
         onPhotoClick = onPhotoClick,
     )
@@ -115,49 +128,48 @@ fun AlbumDetails(
 
 @Composable
 fun AlbumHeader(
+    album: Album
+) {
+    Text(
+        text = album.name,
+        style = MaterialTheme.typography.subtitle1,
+        color = MaterialTheme.colors.onBackground,
+        modifier = Modifier
+            .padding(bottom = 4.dp)
+    )
+}
+
+@Composable
+fun AlbumButtons(
     album: Album,
     onDownloadClick: () -> Unit,
     onEditClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.SpaceAround
     ) {
-        Text(
-            text = album.name,
-            style = MaterialTheme.typography.subtitle1,
-            color = MaterialTheme.colors.onBackground,
-            modifier = Modifier
-                .padding(bottom = 4.dp)
-                .weight(6f)
-        )
-
-        Column(
-            modifier = Modifier.weight(1f)
+        IconButton(
+            onClick = onDownloadClick,
         ) {
-            IconButton(
-                onClick = onDownloadClick,
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_download_24),
-                    contentDescription = stringResource(R.string.download_icon),
-                    tint = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.size(45.dp)
-                )
-            }
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_download_24),
+                contentDescription = stringResource(R.string.download_icon),
+                tint = MaterialTheme.colors.onBackground,
+                modifier = Modifier.size(45.dp)
+            )
+        }
 
-            IconButton(
-                onClick = { onEditClick(album.id) },
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(R.string.edit_icon),
-                    tint = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.size(45.dp)
-                )
-            }
+        IconButton(
+            onClick = { onEditClick(album.id) },
+        ) {
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = stringResource(R.string.edit_icon),
+                tint = MaterialTheme.colors.onBackground,
+                modifier = Modifier.size(45.dp)
+            )
         }
     }
 }
@@ -224,6 +236,7 @@ fun AlbumFooter(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .height(56.dp)
             .padding(top = 10.dp, bottom = 10.dp),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
@@ -256,6 +269,6 @@ fun AlbumFooter(
 @Composable
 fun AlbumDetailScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumDetailScreen({}, {}, {})
+        AlbumDetailScreen({}, {}, {_, _ ->})
     }
 }

@@ -6,5 +6,6 @@ data class NavigationItemContent(
     val route: String,
     val menuItemType: MenuItemType,
     val icon: Int,
-    val text: Int
+    val text: Int,
+    val title: String
 )

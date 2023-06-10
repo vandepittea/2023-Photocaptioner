@@ -4,6 +4,7 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
+import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.screens.album.*
 import com.example.photocaptioner.ui.screens.home.HomeViewModel
 import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumViewModel
@@ -71,6 +72,9 @@ object AppViewModelProvider {
                 this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
+        }
+        initializer {
+            PhotoCaptionersViewModel()
         }
     }
 }

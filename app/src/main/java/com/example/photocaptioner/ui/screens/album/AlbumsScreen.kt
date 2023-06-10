@@ -30,6 +30,7 @@ import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 object AlbumsDestination : NavigationDestination {
     override val route = "albums"
     override val titleRes = R.string.my_albums
+    override val routeWithArgs = "$route/{title}"
 }
 
 @Composable

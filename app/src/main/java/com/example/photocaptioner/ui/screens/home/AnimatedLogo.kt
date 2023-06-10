@@ -3,6 +3,8 @@ package com.example.photocaptioner.ui.screens.home
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -11,6 +13,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.unit.dp
 
 private fun DrawScope.drawCamera(center: Offset, color1: Color, color2: Color) {
     val cameraSize = size.minDimension / 1.3f
@@ -50,7 +53,9 @@ fun AnimatedLogo() {
     val color2 = MaterialTheme.colors.onSurface
 
     Canvas(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
     ) {
         val center = Offset(size.width / 2f, size.height / 2f)
 

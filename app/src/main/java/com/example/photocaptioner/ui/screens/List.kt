@@ -11,8 +11,9 @@ import com.example.photocaptioner.model.Photo
 
 @Composable
 fun AlternatingColumn(
+    albumId: Long,
     items: List<Photo>,
-    onPhotoClick: (Long) -> Unit
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
@@ -31,7 +32,7 @@ fun AlternatingColumn(
                     ImageWithDescriptionAndDate(
                         photo = item,
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { onPhotoClick(item.id) }
+                        onClick = { onPhotoClick(albumId, item.id) }
                     )
                 }
 

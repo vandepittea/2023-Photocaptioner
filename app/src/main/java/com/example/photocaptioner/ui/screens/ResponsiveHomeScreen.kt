@@ -72,7 +72,7 @@ fun ResponsiveHomeScreen(
     onAlbumClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit,
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateToAlbums: () -> Unit,
@@ -81,28 +81,33 @@ fun ResponsiveHomeScreen(
     contentType: PhotoCaptionerContentType,
     onRecentlyEditedClick: (Long) -> Unit,
     onTakePictureFromHome: (photoId: Long) -> Unit,
+    bottomBarVisible: Boolean
 ) {
     Row(modifier = modifier.fillMaxSize()) {
-        AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
-            val navigationRailContentDescription = stringResource(R.string.navigation_rail)
-            NavigationRail(
-                currentTab = currentMenuItem,
-                onTabPressed = onMenuItemPress,
-                navigationItemContentList = navigationItemContentList,
-                modifier = Modifier.testTag(navigationRailContentDescription)
-            )
+        if (bottomBarVisible) {
+            AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.NAVIGATION_RAIL) {
+                val navigationRailContentDescription = stringResource(R.string.navigation_rail)
+                NavigationRail(
+                    currentTab = currentMenuItem,
+                    onTabPressed = onMenuItemPress,
+                    navigationItemContentList = navigationItemContentList,
+                    modifier = Modifier.testTag(navigationRailContentDescription)
+                )
+            }
         }
 
         AnimatedVisibility(visible = navigationType == PhotoCaptionerNavigationType.PERMANENT_NAVIGATION_DRAWER) {
             val navigationDrawerContentDescription = stringResource(R.string.navigation_drawer)
             PermanentNavigationDrawer(
                 drawerContent = {
-                    PermanentDrawerSheet(Modifier.width(240.dp)) {
-                        NavigationDrawerContent(
-                            selectedDestination = currentMenuItem,
-                            onTabPressed = onMenuItemPress,
-                            navigationItemContentList = navigationItemContentList
-                        )
+                    if (bottomBarVisible) {
+                        PermanentDrawerSheet(Modifier.width(240.dp)) {
+                            NavigationDrawerContent(
+                                selectedDestination = currentMenuItem,
+                                onTabPressed = onMenuItemPress,
+                                navigationItemContentList = navigationItemContentList
+                            )
+                        }
                     }
                 },
                 modifier = Modifier.testTag(navigationDrawerContentDescription)
@@ -150,18 +155,20 @@ fun ResponsiveHomeScreen(
                 onRecentlyEditedClick = onRecentlyEditedClick,
             )
 
-            Box(){
-                this@Row.AnimatedVisibility(
-                    visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                ) {
-                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                    BottomNavigationBar(
-                        currentTab = currentMenuItem,
-                        onTabPressed = onMenuItemPress,
-                        navigationItemContentList = navigationItemContentList,
-                        modifier = Modifier.testTag(bottomNavigationContentDescription)
-                    )
+            if (bottomBarVisible) {
+                Box {
+                    this@Row.AnimatedVisibility(
+                        visible = navigationType == PhotoCaptionerNavigationType.BOTTOM_NAVIGATION,
+                        modifier = Modifier.align(Alignment.BottomCenter)
+                    ) {
+                        val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                        BottomNavigationBar(
+                            currentTab = currentMenuItem,
+                            onTabPressed = onMenuItemPress,
+                            navigationItemContentList = navigationItemContentList,
+                            modifier = Modifier.testTag(bottomNavigationContentDescription)
+                        )
+                    }
                 }
             }
         }
@@ -179,7 +186,7 @@ private fun InAppNavigation(
     onAlbumClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit,
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateToAlbums: () -> Unit,
@@ -194,13 +201,19 @@ private fun InAppNavigation(
         startDestination = StartUpDestination.route,
         modifier = modifier
     ) {
-        composable(route = StartUpDestination.route) {
+        composable(
+            route = StartUpDestination.routeWithArgs,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
+        ) {
             StartUpScreen(
                 onButtonClick = onStartUpClick
             )
         }
 
-        composable(route = HomeDestination.route) {
+        composable(
+            route = HomeDestination.routeWithArgs,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
+        ) {
             HomeScreen(
                 onTakePictureClick = onTakePictureClick,
                 onAlbumsClick = onGoToAlbumsClick,
@@ -210,7 +223,10 @@ private fun InAppNavigation(
 
         composable(
             route = CameraPageDestination.routeWithArgs,
-            arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             val lifecycleOwner = LocalLifecycleOwner.current
             CameraPage(
@@ -219,7 +235,10 @@ private fun InAppNavigation(
             )
         }
 
-        composable(route = AlbumsDestination.route) {
+        composable(
+            route = AlbumsDestination.routeWithArgs,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
+        ) {
             AlbumsScreen(
                 onAddClick = onAddAlbumClick,
                 onAlbumClick = onAlbumClick
@@ -228,7 +247,10 @@ private fun InAppNavigation(
 
         composable(
             route = AlbumDetailDestination.routeWithArgs,
-            arguments = listOf(navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AlbumDetailDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumsAndAlbumDetailScreen(
@@ -249,7 +271,10 @@ private fun InAppNavigation(
 
         composable(
             route = ChoosePicturesDestination.routeWithArgs,
-            arguments = listOf(navArgument(ChoosePicturesDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(ChoosePicturesDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoSourceChooserScreen(
@@ -271,7 +296,10 @@ private fun InAppNavigation(
 
         composable(
             route = AddOnlinePicturesDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AddOnlinePicturesDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             AddOnlinePicturesScreen(
                 navigateBack = navigateBack
@@ -280,7 +308,10 @@ private fun InAppNavigation(
 
         composable(
             route = AddAlbumDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddAlbumDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AddAlbumDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             AddAlbumScreen(
                 onChooseCamera = onChooseCamera,
@@ -293,7 +324,10 @@ private fun InAppNavigation(
 
         composable(
             route = EditAlbumDestination.routeWithArgs,
-            arguments = listOf(navArgument(EditAlbumDestination.albumIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(EditAlbumDestination.albumIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndAlbumEditScreen(
@@ -311,7 +345,11 @@ private fun InAppNavigation(
 
         composable(
             route = EditPhotoDestination.routeWithArgs,
-            arguments = listOf(navArgument(EditPhotoDestination.photoIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(EditPhotoDestination.albumIdArg) { type = NavType.LongType },
+                navArgument(EditPhotoDestination.photoIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoEditScreen(
@@ -329,7 +367,10 @@ private fun InAppNavigation(
 
         composable(
             route = AddPhotoToAlbumDestination.routeWithArgs,
-            arguments = listOf(navArgument(AddPhotoToAlbumDestination.photoIdArg) { type = NavType.LongType })
+            arguments = listOf(
+                navArgument(AddPhotoToAlbumDestination.photoIdArg) { type = NavType.LongType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             AddPhotoToAlbumScreen(
                 navigateBack = navigateBack,
@@ -369,7 +410,11 @@ private fun BottomNavigationBar(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier
 ) {
-    NavigationBar(modifier = modifier.fillMaxWidth()) {
+    NavigationBar(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
         for (navItem in navigationItemContentList) {
             NavigationBarItem(
                 selected = currentTab == navItem.menuItemType,

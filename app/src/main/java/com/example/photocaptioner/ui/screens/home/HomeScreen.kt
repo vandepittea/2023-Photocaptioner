@@ -25,6 +25,7 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 object HomeDestination : NavigationDestination {
     override val route = "home"
     override val titleRes = R.string.app_name
+    override val routeWithArgs = "$route/{title}"
 }
 
 @Composable
