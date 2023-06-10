@@ -18,9 +18,8 @@ class EditPhotoViewModel(
 ) : ViewModel() {
     private val photoId: Long = checkNotNull(savedStateHandle[EditPhotoDestination.photoIdArg])
 
-    @set:TestOnly
     var editPhotoUiState by mutableStateOf(EditPhotoUiState())
-        internal set
+        private set
 
     init {
         viewModelScope.launch {
@@ -32,9 +31,15 @@ class EditPhotoViewModel(
     }
 
     fun updatePhotoDescriptionUiState(description: String) {
-        editPhotoUiState = EditPhotoUiState(
-            photoDetails = editPhotoUiState.photoDetails.copy(description = description),
-            isEntryValid = validateInput(editPhotoUiState.photoDetails)
+        editPhotoUiState = editPhotoUiState.copy(
+            photoDetails = editPhotoUiState.photoDetails.copy(
+                description = description
+            ),
+            isEntryValid = validateInput(
+                editPhotoUiState.photoDetails.copy(
+                    description = description
+                )
+            )
         )
     }
 

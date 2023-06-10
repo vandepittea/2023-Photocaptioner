@@ -30,10 +30,7 @@ class EditPhotoViewModelTest {
 
     @Test
     fun saveItemSuccessful() = runBlocking {
-        val photo = Photo(id = 1L, description = "Initial Description")
-        albumsRepository.insertPhoto(photo)
-        viewModel.editPhotoUiState = EditPhotoUiState(photoDetails = photo.copy(description = "Updated Description"), isEntryValid = true)
-
+        viewModel.updatePhotoDescriptionUiState("Updated Description")
         viewModel.saveItem()
 
         val updatedPhoto = albumsRepository.getPhoto(1L).first()
@@ -42,27 +39,21 @@ class EditPhotoViewModelTest {
 
     @Test
     fun saveItemInvalidInput() = runBlocking {
-        val photo = Photo(id = 21L, description = "Initial Description")
-        albumsRepository.insertPhoto(photo)
-        viewModel.editPhotoUiState = EditPhotoUiState(photoDetails = photo.copy(description = ""))
+        val initalDescription = albumsRepository.getPhoto(1L).first().description
 
+        viewModel.updatePhotoDescriptionUiState("")
         viewModel.saveItem()
 
-        val updatedPhoto = albumsRepository.getPhoto(21L).first()
-        assertEquals("Initial Description", updatedPhoto.description)
+        val updatedPhoto = albumsRepository.getPhoto(1L).first()
+        assertEquals(initalDescription, updatedPhoto.description)
     }
 
     @Test
     fun updatePhotoDescriptionUiStateEntryStateTrue() {
-        val initialUiState = EditPhotoUiState(
-            photoDetails = Photo(id = 1L, description = "Initial Description"),
-            isEntryValid = true
-        )
         val expectedUiState = EditPhotoUiState(
             photoDetails = Photo(id = 1L, description = "Updated Description"),
             isEntryValid = true
         )
-        viewModel.editPhotoUiState = initialUiState
 
         viewModel.updatePhotoDescriptionUiState("Updated Description")
 
@@ -73,16 +64,10 @@ class EditPhotoViewModelTest {
 
     @Test
     fun updatePhotoDescriptionUiStateEntryStateFalse() {
-        val initialUiState = EditPhotoUiState(
-            photoDetails = Photo(id = 1L, description = "Initial Description"),
-            isEntryValid = true
-        )
         val expectedUiState = EditPhotoUiState(
             photoDetails = Photo(id = 1L, description = ""),
             isEntryValid = false
         )
-        viewModel.editPhotoUiState = initialUiState
-
         viewModel.updatePhotoDescriptionUiState("")
 
         assertEquals(expectedUiState.photoDetails.id, viewModel.editPhotoUiState.photoDetails.id)
