@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,9 +62,11 @@ fun EditPhotoScreen(
             OutlinedTextField(
                 value = viewModel.editPhotoUiState.photoDetails.description,
                 onValueChange = { viewModel.updateAlbumDescriptionUiState(it) },
+                textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
                 label = {
                     Text(
                         text = stringResource(R.string.photo_description),
+                        color = MaterialTheme.colors.onBackground,
                         style = MaterialTheme.typography.body1
                     )
                 },

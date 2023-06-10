@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -182,6 +183,7 @@ fun AddAlbumPhoto(
         } else {
             Text(
                 text = stringResource(id = R.string.added_pictures),
+                color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.subtitle2,
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -208,7 +210,13 @@ fun AlbumTextFields(
         OutlinedTextField(
             value = title,
             onValueChange = { onAlbumTitleChange(it) },
+            textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
             label = {
+                Text(
+                    text = stringResource(id = R.string.album_title),
+                    color = MaterialTheme.colors.onBackground,
+                    style = MaterialTheme.typography.body1
+                )
                 if (!validEntry && title.isBlank()) {
                     Text(
                         text = stringResource(id = R.string.no_album_title),
@@ -232,15 +240,18 @@ fun AlbumTextFields(
         OutlinedTextField(
             value = description,
             onValueChange = { onAlbumDescriptionChange(it) },
+            textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
             label = {
                 if (!validEntry && description.isBlank()) {
                     Text(
                         text = stringResource(id = R.string.no_album_description),
+                        color = MaterialTheme.colors.onBackground,
                         style = MaterialTheme.typography.body1
                     )
                 } else {
                     Text(
                         text = stringResource(id = R.string.album_description),
+                        color = MaterialTheme.colors.onBackground,
                         style = MaterialTheme.typography.body1
                     )
                 }

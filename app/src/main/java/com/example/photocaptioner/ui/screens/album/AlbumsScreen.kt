@@ -73,6 +73,7 @@ fun TopBar(
     ) {
         Text(
             text = stringResource(id = R.string.my_albums),
+            color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
                 .padding(end = 8.dp)
