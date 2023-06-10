@@ -72,7 +72,7 @@ fun AddPhotoToAlbumScreen(
                 onAddPhoto = {
                     coroutineScope.launch {
                         viewModel.addPhotoToAlbum()
-                        navigateBack(HomeDestination.route, false)
+                        navigateBack(HomeDestination.routeWithArgs, false)
                     }
                 },
                 onNewAlbum = onNewAlbum
