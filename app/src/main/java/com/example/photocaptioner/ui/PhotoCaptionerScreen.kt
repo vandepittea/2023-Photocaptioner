@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.R
 import com.example.photocaptioner.data.MenuItemType
@@ -104,20 +105,10 @@ fun PhotoCaptionerApp(
                 canNavigateBack = uiState.canNavigateBack,
                 title = uiState.topBarTitle,
                 navigateUp = {
-                    navController.navigateUp()
-                    viewModel.updateTopBarTitle(navController.currentBackStackEntry?.arguments?.getString("title") ?: "")
-                    viewModel.canNavigateBack(
-                        navController.currentDestination?.route != HomeDestination.routeWithArgs &&
-                        navController.currentDestination?.route != StartUpDestination.route
-                    )
-                    viewModel.updateCurrentMenuItem(
-                        when (navController.currentDestination?.route) {
-                            HomeDestination.routeWithArgs -> MenuItemType.Home
-                            HomeDestination.route -> MenuItemType.Home
-                            AlbumsDestination.route -> MenuItemType.Albums
-                            CameraPageDestination.route -> MenuItemType.Photo
-                            else -> viewModel.uiState.value.currentMenuItem
-                        }
+                    navigateInBackStack(
+                        navFunction = { navController.navigateUp() },
+                        viewModel = viewModel,
+                        navController = navController
                     )
                 }
             )
@@ -189,15 +180,10 @@ fun PhotoCaptionerApp(
                     viewModel.updateTopBarTitle("Add Online Pictures")
                 },
                 navigateBack = { route, include ->
-                    navController.popBackStack(route, include)
-                    viewModel.updateCurrentMenuItem(
-                        when (route) {
-                            HomeDestination.routeWithArgs -> MenuItemType.Home
-                            HomeDestination.route -> MenuItemType.Home
-                            AlbumsDestination.route -> MenuItemType.Albums
-                            CameraPageDestination.route -> MenuItemType.Photo
-                            else -> viewModel.uiState.value.currentMenuItem
-                        }
+                    navigateInBackStack(
+                        navFunction = { navController.popBackStack(route, include) },
+                        viewModel = viewModel,
+                        navController = navController,
                     )
                 },
                 modifier = modifier,
@@ -224,4 +210,22 @@ fun PhotoCaptionerApp(
             )
         }
     }
+}
+
+private fun navigateInBackStack(navFunction: () -> Unit, navController: NavController, viewModel: PhotoCaptionersViewModel) {
+    navFunction()
+    viewModel.updateTopBarTitle(navController.currentBackStackEntry?.arguments?.getString("title") ?: "")
+    viewModel.canNavigateBack(
+        navController.currentDestination?.route != HomeDestination.routeWithArgs &&
+        navController.currentDestination?.route != StartUpDestination.route
+    )
+    viewModel.updateCurrentMenuItem(
+        when (navController.currentDestination?.route) {
+            HomeDestination.routeWithArgs -> MenuItemType.Home
+            HomeDestination.route -> MenuItemType.Home
+            AlbumsDestination.route -> MenuItemType.Albums
+            CameraPageDestination.route -> MenuItemType.Photo
+            else -> viewModel.uiState.value.currentMenuItem
+        }
+    )
 }
