@@ -161,8 +161,8 @@ fun PhotoCaptionerApp(
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Choose Pictures")
                 },
-                onPhotoClick = {
-                    navController.navigate("${EditPhotoDestination.route}/${it}/${"Edit Photo"}")
+                onPhotoClick = { albumId, photoId ->
+                    navController.navigate("${EditPhotoDestination.route}/${albumId}/${photoId}/${"Edit Photo"}")
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Edit Photo")
                 },

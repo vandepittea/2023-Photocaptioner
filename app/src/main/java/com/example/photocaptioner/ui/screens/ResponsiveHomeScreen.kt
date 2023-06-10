@@ -72,7 +72,7 @@ fun ResponsiveHomeScreen(
     onAlbumClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit,
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateToAlbums: () -> Unit,
@@ -186,7 +186,7 @@ private fun InAppNavigation(
     onAlbumClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit,
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     onChooseCamera: (Long) -> Unit,
     onChooseMaps: (Long) -> Unit,
     navigateToAlbums: () -> Unit,
@@ -346,6 +346,7 @@ private fun InAppNavigation(
         composable(
             route = EditPhotoDestination.routeWithArgs,
             arguments = listOf(
+                navArgument(EditPhotoDestination.albumIdArg) { type = NavType.LongType },
                 navArgument(EditPhotoDestination.photoIdArg) { type = NavType.LongType },
                 navArgument("title") { type = NavType.StringType }
             )

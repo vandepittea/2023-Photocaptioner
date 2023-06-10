@@ -41,7 +41,7 @@ object AlbumDetailDestination : NavigationDestination {
 fun AlbumDetailScreen(
     onEditClick: (Long) -> Unit,
     onAddClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit,
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AlbumDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -91,7 +91,7 @@ fun AlbumDetails(
     albumWithImages: AlbumWithImages,
     onDownloadClick: () -> Unit,
     onEditClick: (Long) -> Unit,
-    onPhotoClick: (Long) -> Unit
+    onPhotoClick: (albumId: Long, photoId: Long) -> Unit
 ) {
     Row {
         Column (
@@ -120,6 +120,7 @@ fun AlbumDetails(
     }
 
     AlternatingColumn(
+        albumId = albumWithImages.album.id,
         items = albumWithImages.photos,
         onPhotoClick = onPhotoClick,
     )
@@ -268,6 +269,6 @@ fun AlbumFooter(
 @Composable
 fun AlbumDetailScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumDetailScreen({}, {}, {})
+        AlbumDetailScreen({}, {}, {_, _ ->})
     }
 }

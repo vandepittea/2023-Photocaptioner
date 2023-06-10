@@ -35,7 +35,8 @@ object EditPhotoDestination : NavigationDestination {
     override val route = "edit_photo"
     override val titleRes = R.string.edit_photo
     const val photoIdArg = "photoId"
-    override val routeWithArgs = "$route/{$photoIdArg}/{title}"
+    const val albumIdArg = "albumId"
+    override val routeWithArgs = "$route/{$albumIdArg}/{$photoIdArg}/{title}"
 }
 
 @Composable
