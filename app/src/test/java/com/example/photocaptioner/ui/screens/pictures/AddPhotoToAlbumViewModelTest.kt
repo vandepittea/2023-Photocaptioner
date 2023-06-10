@@ -22,6 +22,7 @@ class AddPhotoToAlbumViewModelTest {
     @Before
     fun setup() {
         albumsRepository = TestAlbumsRepository()
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val savedStateHandle = SavedStateHandle().apply {
             set(AddPhotoToAlbumDestination.photoIdArg, 1L) // Set a valid photo ID here
         }
@@ -29,11 +30,10 @@ class AddPhotoToAlbumViewModelTest {
     }
 
     @Test
-    fun selectAlbum() = runTest(UnconfinedTestDispatcher()) {
+    fun selectAlbum() = runTest {
         var album = AlbumWithImages()
 
         launch { album = albumsRepository.getAlbums().first().first() }
-        advanceUntilIdle()
 
         viewModel.selectAlbum(album)
 

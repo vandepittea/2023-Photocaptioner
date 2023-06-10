@@ -174,31 +174,30 @@ class TestAlbumsRepository : AlbumsRepository {
     }
 
     override fun getAlbums(): Flow<List<AlbumWithImages>> {
-        return flow { getAlbumsWithImages().toList() }
+        return flow { emit(getAlbumsWithImages().toList()) }
     }
 
     override fun getAlbum(albumId: Long): Flow<AlbumWithImages> {
         return flow {
-            getAlbumsWithImages().find { it.album.id == albumId }
+            emit(getAlbumsWithImages().find { it.album.id == albumId } ?: throw IllegalArgumentException("No album found"))
         }
     }
 
     override fun getLatestAlbum(): Flow<AlbumWithImages> {
         return flow {
-            getAlbumsWithImages().last()
+            emit(getAlbumsWithImages().last())
         }
     }
 
     override fun getPhoto(imageId: Long): Flow<Photo> {
         return flow {
-            getAlbumsWithImages().find { it.photos.find { photo -> photo.id == imageId } != null }
-                ?.photos?.find { photo -> photo.id == imageId }
+            emit(photos.find { it.id == imageId } ?: throw IllegalArgumentException("No photo found"))
         }
     }
 
     override fun getPhotosWithoutAlbum(): Flow<List<Photo>> {
         return flow {
-            photos.filter { it.albumId < 0 }
+            emit(photos.filter { it.albumId < 0 })
         }
     }
 
