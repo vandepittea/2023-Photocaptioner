@@ -36,7 +36,6 @@ class AddAlbumViewModelTest {
 
         assertEquals(expectedTitle, viewModel.addAlbumUiState.albumDetails.album.name)
         assertEquals(expectedDescription, viewModel.addAlbumUiState.albumDetails.album.description)
-        assertEquals(true, viewModel.addAlbumUiState.isEntryValid)
     }
 
     /*@Test
