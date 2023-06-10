@@ -401,7 +401,11 @@ private fun BottomNavigationBar(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier
 ) {
-    NavigationBar(modifier = modifier.fillMaxWidth()) {
+    NavigationBar(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
         for (navItem in navigationItemContentList) {
             NavigationBarItem(
                 selected = currentTab == navItem.menuItemType,
