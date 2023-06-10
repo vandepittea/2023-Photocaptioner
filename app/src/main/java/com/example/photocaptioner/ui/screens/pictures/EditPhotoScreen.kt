@@ -3,9 +3,13 @@ package com.example.photocaptioner.ui.screens.pictures
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -40,6 +44,7 @@ fun EditPhotoScreen(
     modifier: Modifier = Modifier,
     viewModel: EditPhotoViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     Box(
         modifier = modifier
@@ -52,12 +57,30 @@ fun EditPhotoScreen(
         ) {
             com.example.photocaptioner.ui.TopBar(title = R.string.edit_photo)
             Spacer(modifier = Modifier.height(8.dp))
-            AsyncImage(
-                model = ImageRequest.Builder(context = LocalContext.current)
-                    .data(viewModel.editPhotoUiState.photoDetails.filePath)
-                    .build(),
-                contentDescription = viewModel.editPhotoUiState.photoDetails.description
-            )
+            Box {
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(viewModel.editPhotoUiState.photoDetails.filePath)
+                        .build(),
+                    contentDescription = viewModel.editPhotoUiState.photoDetails.description
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                ) {
+                    IconButton(
+                        onClick = { viewModel.editPhoto(context) },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(R.string.edit_icon),
+                            tint = MaterialTheme.colors.onBackground,
+                            modifier = Modifier.size(45.dp)
+                        )
+                    }
+                }
+            }
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = viewModel.editPhotoUiState.photoDetails.description,
