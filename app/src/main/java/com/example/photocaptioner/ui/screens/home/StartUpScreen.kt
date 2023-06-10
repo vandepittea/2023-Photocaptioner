@@ -60,7 +60,6 @@ fun StartUpScreen(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 32.dp)
         )
 
         AnimatedLogo()
