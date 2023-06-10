@@ -40,25 +40,12 @@ class EditPhotoViewModel(
         editPhotoUiState = editPhotoUiState.copy(
             photoDetails = editPhotoUiState.photoDetails.copy(
                 description = description
-            ),
-            isEntryValid = validateInput(
-                editPhotoUiState.photoDetails.copy(
-                    description = description
-                )
             )
         )
     }
 
-    private fun validateInput(uiState: Photo = editPhotoUiState.photoDetails): Boolean {
-        return with(uiState) {
-            description.isNotBlank()
-        }
-    }
-
     suspend fun saveItem() {
-        if (validateInput()) {
-            albumsRepository.updatePhoto(editPhotoUiState.photoDetails)
-        }
+        albumsRepository.updatePhoto(editPhotoUiState.photoDetails)
     }
 
     fun editPhoto(context: Context) {
@@ -106,6 +93,5 @@ class EditPhotoViewModel(
 }
 
 data class EditPhotoUiState(
-    val photoDetails: Photo = Photo(),
-    val isEntryValid: Boolean = false
+    val photoDetails: Photo = Photo()
 )
