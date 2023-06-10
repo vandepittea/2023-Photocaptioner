@@ -15,5 +15,5 @@ data class Photo(
     val description: String = "",
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val filePath: String = "",
-    val albumId: Long = 0
+    var albumId: Long = 0
 )

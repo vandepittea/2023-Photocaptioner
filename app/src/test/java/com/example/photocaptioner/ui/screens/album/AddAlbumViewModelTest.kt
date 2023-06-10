@@ -1,8 +1,8 @@
 package com.example.photocaptioner.ui.screens.album
 
-import androidx.lifecycle.SavedStateHandle
 import com.example.photocaptioner.data.database.TestAlbumsRepository
 import com.example.photocaptioner.model.Album
+import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,23 +44,27 @@ class AddAlbumViewModelTest {
         assertEquals(expectedDescription, viewModel.addAlbumUiState.albumDetails.album.description)
     }
 
-    // TODO
-   /* @Test
-    fun saveItem() = runBlocking {
+    @Test
+    fun saveItem() {
+        var newAlbumId: Long
+        var photosWithoutAlbum: List<Long>
+
         viewModel.updateAlbumTitleUiState("Updated Title")
         viewModel.updateAlbumDescriptionUiState("Updated Description")
-        val album = viewModel.addAlbumUiState.albumDetails.album
 
-        viewModel.saveItem { }
+        runBlocking { newAlbumId = albumsRepository.getAlbums().first().size.toLong() + 1 }
+        runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
-        assertEquals(true, viewModel.addAlbumUiState.isEntryValid)
+        runBlocking { viewModel.saveItem { } }
 
-        val savedAlbum = albumsRepository.getAlbums().first()
-        assertEquals(album, savedAlbum)
-
-        val photos = albumsRepository.getPhotosWithoutAlbum().first()
-        assertEquals(0, photos.size)
-    } */
+        photosWithoutAlbum.forEach {
+            run {
+                var photo: Photo
+                runBlocking { photo = albumsRepository.getPhoto(it).first() }
+                assertEquals(newAlbumId, photo.albumId)
+            }
+        }
+    }
 
     /*@Test
     fun `saveItem does not insert album and update photos without album if input is invalid`() = runBlocking {

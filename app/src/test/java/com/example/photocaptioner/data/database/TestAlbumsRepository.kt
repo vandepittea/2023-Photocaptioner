@@ -4,7 +4,6 @@ import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
 
@@ -239,7 +238,7 @@ class TestAlbumsRepository : AlbumsRepository {
     }
 
     override fun updatePhotosWithoutAlbum(albumId: Long) {
-        // We don't actually need this for the fake repository
+        photos.filter { it.albumId < 0 }.forEach { it.albumId = albumId }
     }
 
     override fun deletePhotosWithoutAlbum() {
