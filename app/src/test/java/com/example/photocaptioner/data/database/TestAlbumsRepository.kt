@@ -226,7 +226,8 @@ class TestAlbumsRepository : AlbumsRepository {
                 id = newId,
                 albumId = photo.albumId,
                 description = photo.description,
-                createdAt = LocalDateTime.now()
+                createdAt = LocalDateTime.now(),
+                filePath = photo.filePath
             )
         )
         return newId

@@ -96,18 +96,20 @@ class AddOnlinePicturesViewModelTest {
     }
 
     @Test
-    fun `addPhotosToAlbum inserts selected photos to the album`() = runBlocking {
-        val selectedPhotos = listOf(
-            Pair(true, Photo(1L, "Photo 1", LocalDateTime.now(), "https://example.com/photo1.jpg", -1)),
-            Pair(true, Photo(2L, "Photo 2", LocalDateTime.now(), "https://example.com/photo2.jpg", -1)),
-            Pair(false, Photo(3L, "Photo 3", LocalDateTime.now(), "https://example.com/photo3.jpg", -1)),
-            Pair(true, Photo(4L, "Photo 4", LocalDateTime.now(), "https://example.com/photo4.jpg", -1))
-        )
-        val expectedInsertedPhotos = selectedPhotos.filter { it.first }.map { it.second }
-        viewModel.addOnlinePicturesUiState.value = AddOnlinePicturesUiState(searchedPhotos = selectedPhotos)
+    fun addPhotosToAlbum() = runBlocking {
+        val imagesToSelect = List(3) { it }
+        viewModel.searchImages("Test")
+        imagesToSelect.forEachIndexed { idx, it -> if (idx % 2 == 0) viewModel.selectImage(it) }
+        val selectedImages = viewModel.addOnlinePicturesUiState.value.searchedPhotos
+            .filter { it.first }
+            .map { it.second }
 
         viewModel.addPhotosToAlbum()
 
-        assertEquals(expectedInsertedPhotos, albumsRepository.getAlbums().......)
+        selectedImages.forEach {
+            assertEquals(it.filePath, albumsRepository.getAlbum(1L).first().photos.find { photo ->
+                photo.filePath == it.filePath
+            }?.filePath)
+        }
     }
 }
