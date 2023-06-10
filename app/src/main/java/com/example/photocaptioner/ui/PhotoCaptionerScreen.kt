@@ -103,14 +103,10 @@ fun PhotoCaptionerApp(
                 canNavigateBack = uiState.canNavigateBack,
                 title = uiState.topBarTitle,
                 navigateUp = {
-                    Log.d("PhotoCaptionerApp", "PhotoCaptionerApp: ${navController.currentDestination?.route}")
-                    Log.d("PhotoCaptionerApp", "HomeDestination: ${HomeDestination.route}")
-                    Log.d("PhotoCaptionerApp", "AlbumsDestination: ${StartUpDestination.route}")
                     navController.navigateUp()
-                    Log.d("PhotoCaptionerApp", "PhotoCaptionerApp: ${navController.currentBackStackEntry?.arguments?.getString("title")}")
                     viewModel.updateTopBarTitle(navController.currentBackStackEntry?.arguments?.getString("title") ?: "")
                     viewModel.canNavigateBack(
-                        navController.currentDestination?.route != HomeDestination.route &&
+                        navController.currentDestination?.route != HomeDestination.routeWithArgs &&
                         navController.currentDestination?.route != StartUpDestination.route
                     )
                 }
