@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui.screens.album
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,8 +22,8 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.ButtonIcon
-import com.example.photocaptioner.ui.ImageWithDescription
+import com.example.photocaptioner.ui.screens.ButtonIcon
+import com.example.photocaptioner.ui.screens.ImageWithDescription
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 
 object AlbumsDestination : NavigationDestination {

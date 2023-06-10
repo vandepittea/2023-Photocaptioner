@@ -1,17 +1,9 @@
 package com.example.photocaptioner.ui.screens.album
 
-import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
-import android.webkit.MimeTypeMap
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -30,7 +22,7 @@ import java.io.*
 
 class AlbumDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val albumsRepository: AlbumsRepository,
+    albumsRepository: AlbumsRepository,
     private val workManagerDownloadRepository: WorkManagerDownloadRepository
 ) : ViewModel(){
     private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg])

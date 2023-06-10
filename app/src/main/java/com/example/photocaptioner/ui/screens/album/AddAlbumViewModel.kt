@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,7 +15,6 @@ class AddAlbumViewModel(
     private val albumsRepository: AlbumsRepository
 ) : ViewModel() {
     var addAlbumUiState by mutableStateOf(AlbumUiState())
-        private set
 
     init {
         viewModelScope.launch {

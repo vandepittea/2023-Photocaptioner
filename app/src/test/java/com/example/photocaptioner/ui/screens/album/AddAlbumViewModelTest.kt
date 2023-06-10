@@ -1,16 +1,13 @@
 package com.example.photocaptioner.ui.screens.album
 
 import com.example.photocaptioner.data.database.TestAlbumsRepository
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 

@@ -1,20 +1,17 @@
 package com.example.photocaptioner.data
 
-import CameraPageDestination
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.database.PhotoDB
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.model.NavigationItemContent
+import com.example.photocaptioner.ui.screens.navigation.NavigationItemContent
 import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.HomeDestination
+import com.example.photocaptioner.ui.screens.home.HomeDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
-import java.time.LocalDate
+import com.example.photocaptioner.ui.screens.navigation.MenuItemType
+import com.example.photocaptioner.ui.screens.pictures.CameraPageDestination
 import java.time.LocalDateTime
 
 object Datasource {
-    val defaultAlbum = getAlbums()[0]
-    val defaultPhoto = defaultAlbum.photos[0]
 
     fun getAlbums(): List<AlbumWithImages> {
         return listOf(

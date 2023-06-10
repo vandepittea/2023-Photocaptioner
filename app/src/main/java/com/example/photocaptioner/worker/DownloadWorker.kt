@@ -1,18 +1,16 @@
+package com.example.photocaptioner.worker
+
 import android.content.Context
 import android.net.Uri
-import android.os.Environment
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.documentfile.provider.DocumentFile
 import com.example.photocaptioner.PhotoCaptionerApplicationHolder
-import com.example.photocaptioner.worker.KEY_ALBUM_ID
-import com.example.photocaptioner.worker.showDownloadCompleteNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.io.*
 import java.net.URL
-import java.nio.file.Files.createFile
 import java.time.LocalDateTime
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream

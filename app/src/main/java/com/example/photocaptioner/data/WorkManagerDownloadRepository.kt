@@ -1,9 +1,9 @@
 package com.example.photocaptioner.data
 
-import DownloadWorker
 import android.content.Context
 import android.net.Uri
 import androidx.work.*
+import com.example.photocaptioner.worker.DownloadWorker
 import com.example.photocaptioner.worker.KEY_ALBUM_ID
 import com.example.photocaptioner.worker.WORK_TAG
 

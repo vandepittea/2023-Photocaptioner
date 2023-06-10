@@ -1,6 +1,6 @@
-package com.example.photocaptioner.model
+package com.example.photocaptioner.ui.screens.navigation
 
-import com.example.photocaptioner.data.MenuItemType
+import com.example.photocaptioner.ui.screens.navigation.MenuItemType
 
 data class NavigationItemContent(
     val route: String,

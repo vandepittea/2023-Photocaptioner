@@ -1,6 +1,6 @@
 package com.example.photocaptioner.ui.screens
 
-import com.example.photocaptioner.data.MenuItemType
+import com.example.photocaptioner.ui.screens.navigation.MenuItemType
 import org.junit.Assert
 import org.junit.Test
 

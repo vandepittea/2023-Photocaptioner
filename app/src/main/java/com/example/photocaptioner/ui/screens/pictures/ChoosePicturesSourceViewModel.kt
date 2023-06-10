@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.photocaptioner.data.database.AlbumsRepository
@@ -30,8 +28,8 @@ class ChoosePicturesSourceViewModel(
     suspend fun onGalleryResult(context: Context, uriList: List<Uri>) {
         uriList.forEach {
             val newUri = savePhotoInApplication(context, it)
-            if (!newUri.isNullOrEmpty()) {
-                val newPhoto: Photo = Photo(
+            if (newUri.isNotEmpty()) {
+                val newPhoto = Photo(
                     albumId = albumId,
                     filePath = newUri
                 )
@@ -40,10 +38,10 @@ class ChoosePicturesSourceViewModel(
         }
     }
 
-    suspend fun savePhotoInApplication(context: Context, contentUri: Uri): String {
+    private suspend fun savePhotoInApplication(context: Context, contentUri: Uri): String {
         var result = ""
         withContext(Dispatchers.IO) {
-            var bitmap: Bitmap? = null
+            var bitmap: Bitmap?
             var inputStream: InputStream? = null
             val outputStream: FileOutputStream?
             try {

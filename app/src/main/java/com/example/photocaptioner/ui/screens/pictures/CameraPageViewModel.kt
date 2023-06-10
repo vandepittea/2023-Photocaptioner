@@ -5,23 +5,18 @@ import android.os.Environment
 import android.util.Log
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.photocaptioner.PhotoCaptionerApplicationHolder
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.PhotoCaptionerApp
 import com.example.photocaptioner.ui.screens.album.AddAlbumDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Date
 import java.util.Locale
 import java.util.concurrent.Executors
 
@@ -55,19 +50,23 @@ class CameraPageViewModel(
                 }
 
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        val newPhoto: Photo = Photo(
+                        val newPhoto = Photo(
                         albumId = albumId,
                         filePath = outputFileResults.savedUri.toString(),
                         createdAt = LocalDateTime.now(),
                     )
                     viewModelScope.launch {
                         val newPhotoId = albumsRepository.insertPhoto(newPhoto)
-                        if (albumId == -1L) {
-                            navigateBack(AddAlbumDestination.routeWithArgs, false)
-                        } else if (albumId == -2L) {
-                            onTakePictureFromHome(newPhotoId)
-                        } else {
-                            navigateBack(AlbumDetailDestination.routeWithArgs, false)
+                        when (albumId) {
+                            -1L -> {
+                                navigateBack(AddAlbumDestination.routeWithArgs, false)
+                            }
+                            -2L -> {
+                                onTakePictureFromHome(newPhotoId)
+                            }
+                            else -> {
+                                navigateBack(AlbumDetailDestination.routeWithArgs, false)
+                            }
                         }
                     }
                 }

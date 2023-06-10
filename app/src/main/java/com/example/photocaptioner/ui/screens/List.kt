@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

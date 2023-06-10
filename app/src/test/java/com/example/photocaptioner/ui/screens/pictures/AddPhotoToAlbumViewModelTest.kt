@@ -1,11 +1,8 @@
+package com.example.photocaptioner.ui.screens.pictures
+
 import androidx.lifecycle.SavedStateHandle
 import com.example.photocaptioner.data.database.TestAlbumsRepository
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumDestination
-import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumUiState
-import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumViewModel
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

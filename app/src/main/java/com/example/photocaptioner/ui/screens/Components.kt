@@ -1,8 +1,7 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens
 
 import androidx.compose.ui.Alignment
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
@@ -27,14 +26,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.photocaptioner.R
-import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
 
@@ -285,25 +281,6 @@ fun SearchBox(
 }
 
 @Composable
-fun TopBar(
-    @StringRes title: Int,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        Text(
-            text = stringResource(id = title),
-            color = MaterialTheme.colors.onBackground,
-            style = MaterialTheme.typography.subtitle1
-        )
-    }
-}
-
-@Composable
 fun ImageOptions(
     onChooseCamera: () -> Unit,
     onChooseGallery: () -> Unit,
@@ -330,7 +307,7 @@ fun ImageOptions(
         ButtonWithIcon(
             painter = painterResource(id = R.drawable.baseline_camera_alt_24),
             contentDescription = R.string.camera_icon,
-            text = R.string.maps,
+            text = R.string.internet,
             onClick = onChooseMaps
         )
     }

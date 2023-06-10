@@ -1,8 +1,6 @@
 package com.example.photocaptioner.ui
 
-import CameraPageDestination
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,17 +23,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.R
-import com.example.photocaptioner.data.MenuItemType
-import com.example.photocaptioner.model.NavigationItemContent
+import com.example.photocaptioner.ui.screens.navigation.MenuItemType
+import com.example.photocaptioner.ui.screens.navigation.NavigationItemContent
 import com.example.photocaptioner.ui.*
 import com.example.photocaptioner.ui.screens.PhotoCaptionersViewModel
 import com.example.photocaptioner.ui.screens.ResponsiveHomeScreen
 import com.example.photocaptioner.ui.screens.album.AddAlbumDestination
-import com.example.photocaptioner.ui.screens.album.AddOnlinePicturesDestination
+import com.example.photocaptioner.ui.screens.pictures.AddOnlinePicturesDestination
 import com.example.photocaptioner.ui.screens.album.AlbumDetailDestination
 import com.example.photocaptioner.ui.screens.album.AlbumsDestination
 import com.example.photocaptioner.ui.screens.album.EditAlbumDestination
+import com.example.photocaptioner.ui.screens.home.HomeDestination
+import com.example.photocaptioner.ui.screens.home.StartUpDestination
 import com.example.photocaptioner.ui.screens.pictures.AddPhotoToAlbumDestination
+import com.example.photocaptioner.ui.screens.pictures.CameraPageDestination
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesDestination
 import com.example.photocaptioner.ui.screens.pictures.EditPhotoDestination
 import com.example.photocaptioner.ui.utils.PhotoCaptionerContentType
@@ -161,8 +162,8 @@ fun PhotoCaptionerApp(
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Edit Album")
                 },
-                onAddPictureClick = {
-                    navController.navigate("${ChoosePicturesDestination.route}/${it}/${"Choose Pictures"}")
+                onAddPictureClick = { albumId, navBackStackRoute ->
+                    navController.navigate("${ChoosePicturesDestination.route}/${albumId}/${navBackStackRoute.replace("/", " ")}/${"Choose Pictures"}")
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Choose Pictures")
                 },
@@ -176,8 +177,8 @@ fun PhotoCaptionerApp(
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Take Picture")
                 },
-                onChooseMaps = {
-                    navController.navigate("${AddOnlinePicturesDestination.route}/${it}/${"Add Online Pictures"}")
+                onChooseMaps = { albumId, navBackStackRoute ->
+                    navController.navigate("${AddOnlinePicturesDestination.route}/${albumId}/${navBackStackRoute.replace("/", " ")}/${"Add Online Pictures"}")
                     viewModel.canNavigateBack(true)
                     viewModel.updateTopBarTitle("Add Online Pictures")
                 },

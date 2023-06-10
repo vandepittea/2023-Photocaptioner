@@ -1,4 +1,5 @@
-import android.util.Log
+package com.example.photocaptioner.ui.screens.pictures
+
 import android.view.ViewGroup
 import androidx.compose.runtime.*
 import androidx.camera.core.CameraSelector
@@ -24,18 +25,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.mlkit.vision.face.Face
 import com.example.photocaptioner.R
 import androidx.compose.foundation.Image
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.model.SourceInfo
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.ButtonIcon
-import com.example.photocaptioner.ui.ButtonWithIcon
 import com.example.photocaptioner.ui.camera.PreviewScaleType
 import com.example.photocaptioner.ui.camera.calculateScale
 import com.example.photocaptioner.ui.camera.configureCamera

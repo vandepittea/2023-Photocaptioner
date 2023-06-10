@@ -1,8 +1,8 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.home
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,15 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
-import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.content.ContextCompat
 import com.example.photocaptioner.R
-import com.example.photocaptioner.ui.screens.home.AnimatedLogo
+import com.example.photocaptioner.ui.screens.Button
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 
@@ -68,11 +66,11 @@ fun StartUpScreen(
             text = R.string.get_started,
             onClick = {
                 val permissions = arrayOf(
-                    android.Manifest.permission.CAMERA,
-                    android.Manifest.permission.READ_MEDIA_IMAGES,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.INTERNET,
-                    android.Manifest.permission.POST_NOTIFICATIONS
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.POST_NOTIFICATIONS
                 )
 
                 if (!permissions.all {

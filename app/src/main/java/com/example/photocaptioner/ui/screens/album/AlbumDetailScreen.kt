@@ -25,8 +25,7 @@ import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.AlternatingColumn
+import com.example.photocaptioner.ui.screens.AlternatingColumn
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 

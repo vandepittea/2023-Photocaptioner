@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui.screens.album
+package com.example.photocaptioner.ui.screens.pictures
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,6 @@ import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 class AddOnlinePicturesViewModel(

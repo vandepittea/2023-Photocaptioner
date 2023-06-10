@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui
+package com.example.photocaptioner.ui.screens.home
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -17,8 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.AlbumWithImages
-import com.example.photocaptioner.model.Photo
-import com.example.photocaptioner.ui.screens.home.HomeViewModel
+import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.screens.ButtonWithIcon
+import com.example.photocaptioner.ui.screens.ImageWithDescription
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 

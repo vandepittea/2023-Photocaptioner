@@ -25,7 +25,6 @@ class EditPhotoViewModel(
     private val photoId: Long = checkNotNull(savedStateHandle[EditPhotoDestination.photoIdArg])
 
     var editPhotoUiState by mutableStateOf(EditPhotoUiState())
-        private set
 
     init {
         viewModelScope.launch {

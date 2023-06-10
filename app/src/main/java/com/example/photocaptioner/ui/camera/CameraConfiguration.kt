@@ -1,6 +1,5 @@
 package com.example.photocaptioner.ui.camera
 
-import FaceDetectorProcessor
 import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -17,7 +16,6 @@ import com.google.android.gms.tasks.TaskExecutors
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.face.Face
 import org.jetbrains.annotations.TestOnly
-import java.util.concurrent.Executor
 
 lateinit var imageCapture: ImageCapture
 

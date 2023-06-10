@@ -8,12 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class EditAlbumViewModel(
@@ -23,7 +19,6 @@ class EditAlbumViewModel(
     private val albumId: Long = checkNotNull(savedStateHandle[EditAlbumDestination.albumIdArg])
 
     var editAlbumUiState by mutableStateOf(AlbumUiState())
-        private set
 
     init {
         viewModelScope.launch {

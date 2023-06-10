@@ -1,5 +1,6 @@
+package com.example.photocaptioner.ui.camera
+
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.camera.core.ImageProxy
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.mlkit.vision.common.InputImage
