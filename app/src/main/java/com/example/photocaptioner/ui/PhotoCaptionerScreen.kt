@@ -110,6 +110,15 @@ fun PhotoCaptionerApp(
                         navController.currentDestination?.route != HomeDestination.routeWithArgs &&
                         navController.currentDestination?.route != StartUpDestination.route
                     )
+                    viewModel.updateCurrentMenuItem(
+                        when (navController.currentDestination?.route) {
+                            HomeDestination.routeWithArgs -> MenuItemType.Home
+                            HomeDestination.route -> MenuItemType.Home
+                            AlbumsDestination.route -> MenuItemType.Albums
+                            CameraPageDestination.route -> MenuItemType.Photo
+                            else -> viewModel.uiState.value.currentMenuItem
+                        }
+                    )
                 }
             )
         }
@@ -180,11 +189,11 @@ fun PhotoCaptionerApp(
                     viewModel.updateTopBarTitle("Add Online Pictures")
                 },
                 navigateBack = { route, include ->
-                    Log.d("PhotoCaptionerApp", "navigateBack: $route")
                     navController.popBackStack(route, include)
                     viewModel.updateCurrentMenuItem(
                         when (route) {
                             HomeDestination.routeWithArgs -> MenuItemType.Home
+                            HomeDestination.route -> MenuItemType.Home
                             AlbumsDestination.route -> MenuItemType.Albums
                             CameraPageDestination.route -> MenuItemType.Photo
                             else -> viewModel.uiState.value.currentMenuItem
