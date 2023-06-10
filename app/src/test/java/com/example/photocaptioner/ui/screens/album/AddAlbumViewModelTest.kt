@@ -27,35 +27,42 @@ class AddAlbumViewModelTest {
     }
 
     @Test
-    fun updateAlbumTitleAndAlbumDescriptionUiStateEntryValidTrue() {
-        val expectedDescription = "Updated Description"
+    fun updateAlbumTitleUiState() {
         val expectedTitle = "Updated Title"
 
         viewModel.updateAlbumTitleUiState(expectedTitle)
-        viewModel.updateAlbumDescriptionUiState(expectedDescription)
 
         assertEquals(expectedTitle, viewModel.addAlbumUiState.albumDetails.album.name)
+    }
+
+    @Test
+    fun updateAlbumDescriptionUiState() {
+        val expectedDescription = "Updated Description"
+
+        viewModel.updateAlbumDescriptionUiState(expectedDescription)
+
         assertEquals(expectedDescription, viewModel.addAlbumUiState.albumDetails.album.description)
     }
 
-    /*@Test
-    fun `saveItem inserts album and updates photos without album`() = runBlocking {
-        val album = Album(name = "Test Album", description = "Test Description")
-        viewModel.addAlbumUiState = viewModel.addAlbumUiState.copy(
-            albumDetails = viewModel.addAlbumUiState.albumDetails.copy(album = album),
-            isEntryValid = true
-        )
+    // TODO
+   /* @Test
+    fun saveItem() = runBlocking {
+        viewModel.updateAlbumTitleUiState("Updated Title")
+        viewModel.updateAlbumDescriptionUiState("Updated Description")
+        val album = viewModel.addAlbumUiState.albumDetails.album
 
         viewModel.saveItem { }
+
+        assertEquals(true, viewModel.addAlbumUiState.isEntryValid)
 
         val savedAlbum = albumsRepository.getAlbums().first()
         assertEquals(album, savedAlbum)
 
         val photos = albumsRepository.getPhotosWithoutAlbum().first()
         assertEquals(0, photos.size)
-    }
+    } */
 
-    @Test
+    /*@Test
     fun `saveItem does not insert album and update photos without album if input is invalid`() = runBlocking {
         val album = Album(name = "", description = "")
         viewModel.addAlbumUiState = viewModel.addAlbumUiState.copy(
