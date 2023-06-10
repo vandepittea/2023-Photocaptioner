@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.photocaptioner.R
@@ -70,7 +71,7 @@ fun PhotoCaptionerAppTopBar(
 fun PhotoCaptionerApp(
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
-    viewModel: PhotoCaptionersViewModel = PhotoCaptionersViewModel()
+    viewModel: PhotoCaptionersViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val navigationType: PhotoCaptionerNavigationType
     val contentType: PhotoCaptionerContentType
@@ -98,6 +99,7 @@ fun PhotoCaptionerApp(
             contentType = PhotoCaptionerContentType.LIST_ONLY
         }
     }
+
 
     Scaffold(
         topBar = {
