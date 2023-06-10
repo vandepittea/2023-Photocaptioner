@@ -34,19 +34,15 @@ class AddOnlinePicturesViewModel(
 
     fun searchImages(query: String) {
         viewModelScope.launch {
-            try {
-                val images = unsplashRepository.searchImages(query)
-                addOnlinePicturesUiState.update {
-                    it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, Photo(
-                        0,
-                        "",
-                        LocalDateTime.now(),
-                        imageUrl,
-                        albumId
-                    )) })
-                }
-            } catch (e: Exception) {
-                // Handle error
+            val images = unsplashRepository.searchImages(query)
+            addOnlinePicturesUiState.update {
+                it.copy(searchedPhotos = images.map { imageUrl -> Pair(false, Photo(
+                    0,
+                    "",
+                    LocalDateTime.now(),
+                    imageUrl,
+                    albumId
+                )) })
             }
         }
     }
