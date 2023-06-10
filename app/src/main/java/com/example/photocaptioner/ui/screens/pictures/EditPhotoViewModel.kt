@@ -10,6 +10,7 @@ import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.TestOnly
 
 class EditPhotoViewModel(
     savedStateHandle: SavedStateHandle,
@@ -17,8 +18,9 @@ class EditPhotoViewModel(
 ) : ViewModel() {
     private val photoId: Long = checkNotNull(savedStateHandle[EditPhotoDestination.photoIdArg])
 
+    @set:TestOnly
     var editPhotoUiState by mutableStateOf(EditPhotoUiState())
-        private set
+        internal set
 
     init {
         viewModelScope.launch {
