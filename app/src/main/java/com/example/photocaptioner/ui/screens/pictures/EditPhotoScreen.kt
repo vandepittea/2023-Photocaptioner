@@ -95,7 +95,8 @@ fun EditPhotoScreen(
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
-                )
+                ),
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         Column(
