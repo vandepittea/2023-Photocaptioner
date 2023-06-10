@@ -21,7 +21,7 @@ class CameraUnitTest {
     }
 
     @Test
-    fun testSwitchLens() {
+    fun switchLensTest() {
         val frontLens = CameraSelector.LENS_FACING_FRONT
         val backLens = CameraSelector.LENS_FACING_BACK
 
@@ -33,7 +33,7 @@ class CameraUnitTest {
     }
 
     @Test
-    fun testCalculateScale_FitCenter() {
+    fun calculateScaleFitCenterTest() {
         val constraints = Constraints(100, 100)
         val sourceInfo = SourceInfo(200, 150, false)
         val scaleType = PreviewScaleType.FIT_CENTER
@@ -44,7 +44,7 @@ class CameraUnitTest {
     }
 
     @Test
-    fun testCalculateScale_CenterCrop() {
+    fun calculateScaleCenterCropTest() {
         val constraints = Constraints(100, 100)
         val sourceInfo = SourceInfo(200, 150, false)
         val scaleType = PreviewScaleType.CENTER_CROP
@@ -55,7 +55,7 @@ class CameraUnitTest {
     }
 
     @Test
-    fun testObtainSourceInfo() {
+    fun obtainSourceInfoTest() {
         val lens = CameraSelector.LENS_FACING_BACK
         val imageProxy = createMockImageProxy(100, 200, 180)
 

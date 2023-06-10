@@ -8,7 +8,7 @@ class LocalDateTimeConverterTest {
     private val converter = LocalDateTimeConverter()
 
     @Test
-    fun testFromString() {
+    fun fromStringTest() {
         val dateString = "2023-06-10 15:30:00"
         val expectedDateTime = LocalDateTime.of(2023, 6, 10, 15, 30, 0)
 
@@ -18,7 +18,7 @@ class LocalDateTimeConverterTest {
     }
 
     @Test
-    fun testFromLocalDate() {
+    fun fromLocalDateTest() {
         val dateTime = LocalDateTime.of(2023, 6, 10, 15, 30, 0)
         val expectedDateString = "2023-06-10 15:30:00"
 
