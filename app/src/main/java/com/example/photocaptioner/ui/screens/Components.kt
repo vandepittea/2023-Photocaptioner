@@ -140,7 +140,7 @@ fun ImageWithDescription(
 
             Text(
                 text = description,
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.body2,
                 modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
             )
         }
