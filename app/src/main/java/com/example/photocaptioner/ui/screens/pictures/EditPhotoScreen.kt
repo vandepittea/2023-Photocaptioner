@@ -57,30 +57,38 @@ fun EditPhotoScreen(
             modifier = modifier
         ) {
             Spacer(modifier = Modifier.height(8.dp))
-            Box {
-                AsyncImage(
-                    model = ImageRequest.Builder(context = LocalContext.current)
-                        .data(viewModel.editPhotoUiState.photoDetails.filePath)
-                        .build(),
-                    contentDescription = viewModel.editPhotoUiState.photoDetails.description
-                )
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(8.dp)
-                ) {
-                    IconButton(
-                        onClick = { viewModel.editPhoto(context) },
+            Row(
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Box {
+                    AsyncImage(
+                        model = ImageRequest.Builder(context = LocalContext.current)
+                            .data(viewModel.editPhotoUiState.photoDetails.filePath)
+                            .build(),
+                        contentDescription = viewModel.editPhotoUiState.photoDetails.description,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(400.dp)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = stringResource(R.string.edit_icon),
-                            tint = MaterialTheme.colors.onBackground,
-                            modifier = Modifier.size(45.dp)
-                        )
+                        IconButton(
+                            onClick = { viewModel.editPhoto(context) },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = stringResource(R.string.edit_icon),
+                                tint = MaterialTheme.colors.onBackground,
+                                modifier = Modifier.size(45.dp)
+                            )
+                        }
                     }
                 }
             }
+
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = viewModel.editPhotoUiState.photoDetails.description,
