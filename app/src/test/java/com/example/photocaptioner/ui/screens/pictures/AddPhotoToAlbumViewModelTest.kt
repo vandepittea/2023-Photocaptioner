@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Before
@@ -30,10 +31,10 @@ class AddPhotoToAlbumViewModelTest {
     }
 
     @Test
-    fun selectAlbum() = runTest {
+    fun selectAlbum() {
         var album = AlbumWithImages()
 
-        launch { album = albumsRepository.getAlbums().first().first() }
+        runBlocking { album = albumsRepository.getAlbums().first().first() }
 
         viewModel.selectAlbum(album)
 
