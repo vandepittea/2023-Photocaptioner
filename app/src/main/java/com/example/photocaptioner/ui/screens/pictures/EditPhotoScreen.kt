@@ -55,7 +55,6 @@ fun EditPhotoScreen(
         Column(
             modifier = modifier
         ) {
-            com.example.photocaptioner.ui.TopBar(title = R.string.edit_photo)
             Spacer(modifier = Modifier.height(8.dp))
             Box {
                 AsyncImage(

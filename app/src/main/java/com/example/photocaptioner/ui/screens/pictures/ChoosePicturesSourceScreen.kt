@@ -54,7 +54,6 @@ fun ChoosePicturesSourceScreen(
             .padding(16.dp)
     ) {
         Column {
-            TopBar(title = R.string.choose_picture_source)
             ImageOptions(
                 onChooseCamera = { onChooseCamera(viewModel.albumId)},
                 onChooseGallery = {

@@ -42,7 +42,6 @@ fun EditAlbumScreen(
             .padding(16.dp)
     ) {
         Column {
-            com.example.photocaptioner.ui.TopBar(title = R.string.edit_album)
             AlbumTextFields(
                 title = viewModel.editAlbumUiState.albumDetails.album.name,
                 description = viewModel.editAlbumUiState.albumDetails.album.description,

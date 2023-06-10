@@ -152,7 +152,6 @@ fun AddAlbumInformation(
     Column(
         modifier = modifier
     ) {
-        TopBar(title = R.string.add_new_album)
         AlbumTextFields(
             title = viewModel.addAlbumUiState.albumDetails.album.name,
             description = viewModel.addAlbumUiState.albumDetails.album.description,
