@@ -9,6 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,6 +28,7 @@ import com.example.photocaptioner.model.Album
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.ui.screens.AlternatingColumn
 import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.screens.ButtonIcon
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 
 object AlbumDetailDestination : NavigationDestination {
@@ -160,16 +162,19 @@ fun AlbumButtons(
             )
         }
 
-        IconButton(
+        ButtonIcon(
             onClick = { onEditClick(album.id) },
-        ) {
-            Icon(
-                imageVector = Icons.Default.Edit,
-                contentDescription = stringResource(R.string.edit_icon),
-                tint = MaterialTheme.colors.onBackground,
-                modifier = Modifier.size(45.dp)
-            )
-        }
+            icon = Icons.Default.Edit,
+            description = R.string.edit_icon,
+            modifier = Modifier.size(45.dp)
+        )
+
+        ButtonIcon(
+            onClick = { /* Handle delete album action */ },
+            icon = Icons.Default.Delete,
+            description = R.string.delete_icon,
+            modifier = Modifier.size(45.dp)
+        )
     }
 }
 
