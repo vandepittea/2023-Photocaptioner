@@ -14,14 +14,14 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class AddAlbumViewModelTest {
 
-    private lateinit var viewModel: AddAlbumViewModel
+    private lateinit var viewModel: AlbumInformationViewModel
     private lateinit var albumsRepository: TestAlbumsRepository
 
     @Before
     fun setup() {
         albumsRepository = TestAlbumsRepository()
         Dispatchers.setMain(Dispatchers.Unconfined)
-        viewModel = AddAlbumViewModel(albumsRepository)
+        viewModel = AlbumInformationViewModel(albumsRepository)
     }
 
     @Test
@@ -30,7 +30,7 @@ class AddAlbumViewModelTest {
 
         viewModel.updateAlbumTitleUiState(expectedTitle)
 
-        assertEquals(expectedTitle, viewModel.addAlbumUiState.albumDetails.album.name)
+        assertEquals(expectedTitle, viewModel.albumUiState.albumDetails.album.name)
     }
 
     @Test
@@ -39,7 +39,7 @@ class AddAlbumViewModelTest {
 
         viewModel.updateAlbumDescriptionUiState(expectedDescription)
 
-        assertEquals(expectedDescription, viewModel.addAlbumUiState.albumDetails.album.description)
+        assertEquals(expectedDescription, viewModel.albumUiState.albumDetails.album.description)
     }
 
     @Test

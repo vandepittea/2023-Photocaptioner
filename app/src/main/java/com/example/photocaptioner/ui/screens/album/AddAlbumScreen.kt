@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -15,8 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,6 +22,7 @@ import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.model.Photo
 import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.screens.AlbumTextFields
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.screens.pictures.ChoosePicturesSourceScreen
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -46,7 +44,7 @@ fun AddAlbumScreen(
     navigateBack: (route: String, include: Boolean) -> Unit,
     contentType: PhotoCaptionerContentType,
     modifier: Modifier = Modifier,
-    viewModel: AddAlbumViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AlbumInformationViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     Box(
@@ -57,7 +55,7 @@ fun AddAlbumScreen(
     ) {
         if (contentType == PhotoCaptionerContentType.LIST_ONLY) {
             AddAlbumInnerScreenListOnly(
-                newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
+                newPhotos = viewModel.albumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
                 onChooseMaps = onChooseMaps,
                 navigateBack = navigateBack,
@@ -65,7 +63,7 @@ fun AddAlbumScreen(
             )
         } else {
             AddAlbumInnerScreenListAndDetails(
-                newPhotos = viewModel.addAlbumUiState.albumDetails.photos,
+                newPhotos = viewModel.albumUiState.albumDetails.photos,
                 onChooseCamera = onChooseCamera,
                 onChooseMaps = onChooseMaps,
                 navigateBack = navigateBack,
@@ -94,7 +92,7 @@ fun AddAlbumInnerScreenListOnly(
     onChooseMaps: (Long) -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AddAlbumViewModel
+    viewModel: AlbumInformationViewModel
 ) {
     Column(
         modifier = modifier
@@ -119,7 +117,7 @@ fun AddAlbumInnerScreenListAndDetails(
     onChooseMaps: (Long) -> Unit,
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AddAlbumViewModel
+    viewModel: AlbumInformationViewModel
 ) {
     Row(
         modifier = modifier
@@ -142,15 +140,16 @@ fun AddAlbumInnerScreenListAndDetails(
 @Composable
 fun AddAlbumInformation(
     modifier: Modifier = Modifier,
-    viewModel: AddAlbumViewModel
+    viewModel: AlbumInformationViewModel
 ) {
     Column(
         modifier = modifier
     ) {
         AlbumTextFields(
-            title = viewModel.addAlbumUiState.albumDetails.album.name,
-            description = viewModel.addAlbumUiState.albumDetails.album.description,
-            validEntry = viewModel.addAlbumUiState.isEntryValid,
+            title = viewModel.albumUiState.albumDetails.album.name,
+            description = viewModel.albumUiState.albumDetails.album.description,
+            validNameEntry = viewModel.albumUiState.isNameEntryValid,
+            validDescriptionEntry = viewModel.albumUiState.isDescriptionEntryValid,
             onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
             onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) },
         )
@@ -185,78 +184,6 @@ fun AddAlbumPhoto(
                 imagesList = newPhotos
             )
         }
-    }
-}
-
-@Composable
-fun AlbumTextFields(
-    title: String,
-    description: String,
-    validEntry: Boolean,
-    onAlbumTitleChange: (String) -> Unit,
-    onAlbumDescriptionChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        OutlinedTextField(
-            value = title,
-            onValueChange = { onAlbumTitleChange(it) },
-            textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
-            label = {
-                Text(
-                    text = stringResource(id = R.string.album_title),
-                    color = MaterialTheme.colors.onBackground,
-                    style = MaterialTheme.typography.body1
-                )
-                if (!validEntry && title.isBlank()) {
-                    Text(
-                        text = stringResource(id = R.string.no_album_title),
-                        style = MaterialTheme.typography.body1
-                    )
-                } else {
-                    Text(
-                        text = stringResource(id = R.string.album_title),
-                        style = MaterialTheme.typography.body1
-                    )
-                }
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
-            isError = !validEntry && title.isBlank(),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = description,
-            onValueChange = { onAlbumDescriptionChange(it) },
-            textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground),
-            label = {
-                if (!validEntry && description.isBlank()) {
-                    Text(
-                        text = stringResource(id = R.string.no_album_description),
-                        color = MaterialTheme.colors.onBackground,
-                        style = MaterialTheme.typography.body1
-                    )
-                } else {
-                    Text(
-                        text = stringResource(id = R.string.album_description),
-                        color = MaterialTheme.colors.onBackground,
-                        style = MaterialTheme.typography.body1
-                    )
-                }
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
-            ),
-            isError = !validEntry && description.isBlank(),
-            modifier = Modifier.fillMaxWidth()
-        )
     }
 }
 

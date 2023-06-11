@@ -314,6 +314,76 @@ fun ImageOptions(
 }
 
 @Composable
+fun AlbumTextFields(
+    title: String,
+    description: String,
+    validNameEntry: Boolean,
+    validDescriptionEntry: Boolean,
+    onAlbumTitleChange: (String) -> Unit,
+    onAlbumDescriptionChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            value = title,
+            onValueChange = { onAlbumTitleChange(it) },
+            textStyle = MaterialTheme.typography.body1.copy(color = colors.onBackground),
+            label = {
+                if (!validNameEntry && title.isBlank()) {
+                    Text(
+                        text = stringResource(id = R.string.no_album_title),
+                        color = colors.onBackground,
+                        style = MaterialTheme.typography.body1
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.album_title),
+                        color = colors.onBackground,
+                        style = MaterialTheme.typography.body1
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            isError = !validNameEntry && title.isBlank(),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = description,
+            onValueChange = { onAlbumDescriptionChange(it) },
+            textStyle = MaterialTheme.typography.body1.copy(color = colors.onBackground),
+            label = {
+                if (!validDescriptionEntry && description.isBlank()) {
+                    Text(
+                        text = stringResource(id = R.string.no_album_description),
+                        color = colors.onBackground,
+                        style = MaterialTheme.typography.body1
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.album_description),
+                        color = colors.onBackground,
+                        style = MaterialTheme.typography.body1
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            isError = !validDescriptionEntry && description.isBlank(),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
 fun AlbumSelectBox(
     albums: List<AlbumWithImages>,
     onAlbumSelected: (AlbumWithImages) -> Unit,

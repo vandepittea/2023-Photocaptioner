@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.AppViewModelProvider
+import com.example.photocaptioner.ui.screens.AlbumTextFields
 import com.example.photocaptioner.ui.screens.Button
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
@@ -27,7 +28,7 @@ object EditAlbumDestination : NavigationDestination {
 fun EditAlbumScreen(
     navigateBack: (route: String, include: Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: EditAlbumViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AlbumInformationViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     Box(
@@ -38,9 +39,10 @@ fun EditAlbumScreen(
     ) {
         Column {
             AlbumTextFields(
-                title = viewModel.editAlbumUiState.albumDetails.album.name,
-                description = viewModel.editAlbumUiState.albumDetails.album.description,
-                validEntry = viewModel.editAlbumUiState.isEntryValid,
+                title = viewModel.albumUiState.albumDetails.album.name,
+                description = viewModel.albumUiState.albumDetails.album.description,
+                validNameEntry = viewModel.albumUiState.isNameEntryValid,
+                validDescriptionEntry = viewModel.albumUiState.isDescriptionEntryValid,
                 onAlbumTitleChange = { viewModel.updateAlbumTitleUiState(it) },
                 onAlbumDescriptionChange = { viewModel.updateAlbumDescriptionUiState(it) }
             )
@@ -49,8 +51,11 @@ fun EditAlbumScreen(
                 text = R.string.save,
                 onClick = {
                     coroutineScope.launch {
-                        viewModel.saveItem()
-                        navigateBack(EditAlbumDestination.routeWithArgs, true)
+                        viewModel.saveItem(
+                            navigateToAlbums = {
+                                navigateBack(AlbumsDestination.route, true)
+                            }
+                        )
                     }
                 }
             )

@@ -12,13 +12,18 @@ import com.example.photocaptioner.data.WorkManagerDownloadRepository
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 class AlbumDetailViewModel(
     savedStateHandle: SavedStateHandle,
@@ -51,7 +56,10 @@ class AlbumDetailViewModel(
         val albumName = albumDetailUiState.value.albumDetails.album.name
 
         if (firstPhoto != null) {
-            val file = convertPhotoToFile(context, firstPhoto, albumName)
+            var file: File
+
+            runBlocking { file = convertPhotoToFile(context, firstPhoto, albumName) }
+
             val fileUri = file?.let { getFileUri(context, it) }
 
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -69,29 +77,49 @@ class AlbumDetailViewModel(
         }
     }
 
-    private fun convertPhotoToFile(context: Context, photo: Photo, albumName: String): File? {
-        val uri = Uri.parse(photo.filePath)
-        val inputStream = context.contentResolver.openInputStream(uri)
+    private suspend fun downloadImage(url: String, outputFile: File) {
+        withContext(Dispatchers.IO) {
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.connect()
+
+            val inputStream = connection.inputStream
+            val outputStream = FileOutputStream(outputFile)
+
+            try {
+                inputStream.use { input ->
+                    outputStream.use { output ->
+                        input.copyTo(output)
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                inputStream?.close()
+                outputStream.close()
+                connection.disconnect()
+            }
+        }
+    }
+
+    private suspend fun convertPhotoToFile(context: Context, photo: Photo, albumName: String): File {
         val tempDir = context.cacheDir
         val fileName = "photocaptioner-album-$albumName.jpg"
         val tempFile = File(tempDir, fileName)
-        val outputStream = FileOutputStream(tempFile)
 
-        try {
+        if (!photo.filePath.startsWith("http")) {
+            val uri = Uri.parse(photo.filePath)
+            val inputStream = context.contentResolver.openInputStream(uri)
+
             inputStream?.use { input ->
-                outputStream.use { output ->
+                FileOutputStream(tempFile).use { output ->
                     input.copyTo(output)
                 }
             }
-            return tempFile
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } finally {
-            inputStream?.close()
-            outputStream.close()
+        } else {
+            downloadImage(photo.filePath, tempFile)
         }
 
-        return null
+        return tempFile
     }
 
     private fun getFileUri(context: Context, file: File): Uri {

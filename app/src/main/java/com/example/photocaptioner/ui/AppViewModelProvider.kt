@@ -26,7 +26,8 @@ object AppViewModelProvider {
             )
         }
         initializer {
-            AddAlbumViewModel(
+            AlbumInformationViewModel(
+                this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
@@ -42,12 +43,6 @@ object AppViewModelProvider {
                 this.createSavedStateHandle(),
                 PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository(),
                 PhotoCaptionerApplicationHolder.instance.container.provideWorkManagerDownloadRepository()
-            )
-        }
-        initializer {
-            EditAlbumViewModel(
-                this.createSavedStateHandle(),
-                PhotoCaptionerApplicationHolder.instance.container.provideAlbumsRepository()
             )
         }
         initializer {
