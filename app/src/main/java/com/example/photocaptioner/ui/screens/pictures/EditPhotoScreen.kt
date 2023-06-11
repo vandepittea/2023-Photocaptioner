@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -58,7 +59,28 @@ fun EditPhotoScreen(
             Row(
                 horizontalArrangement = Arrangement.Center
             ) {
-                Box {
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 4.dp, bottom = 35.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        ButtonIcon(
+                            onClick = { viewModel.openPhotoInAnotherApp(context) },
+                            icon = Icons.Default.Info,
+                            description = R.string.info_icon,
+                            modifier = Modifier.size(45.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ButtonIcon(
+                            onClick = { /* Handle delete image action */ },
+                            icon = Icons.Default.Delete,
+                            description = R.string.delete_icon,
+                            modifier = Modifier.size(45.dp)
+                        )
+                    }
+
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
                             .data(viewModel.editPhotoUiState.photoDetails.filePath)
@@ -68,18 +90,6 @@ fun EditPhotoScreen(
                             .fillMaxWidth()
                             .height(400.dp)
                     )
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(8.dp)
-                    ) {
-                        ButtonIcon(
-                            onClick = { viewModel.openPhotoInAnotherApp(context) },
-                            icon = Icons.Default.Info,
-                            description = R.string.info_icon,
-                            modifier = Modifier.size(45.dp)
-                        )
-                    }
                 }
             }
 
