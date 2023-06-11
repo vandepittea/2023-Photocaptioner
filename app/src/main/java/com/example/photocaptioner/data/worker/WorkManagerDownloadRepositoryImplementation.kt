@@ -1,4 +1,4 @@
-package com.example.photocaptioner.data
+package com.example.photocaptioner.data.worker
 
 import android.content.Context
 import android.net.Uri
@@ -7,9 +7,10 @@ import com.example.photocaptioner.worker.DownloadWorker
 import com.example.photocaptioner.worker.KEY_ALBUM_ID
 import com.example.photocaptioner.worker.WORK_TAG
 
-class WorkManagerDownloadRepository(private val context: Context) {
+class WorkManagerDownloadRepositoryImplementation(private val context: Context):
+    WorkManagerDownloadRepository {
 
-    fun downloadAlbum(albumId: Long, uri: Uri?) {
+    override fun downloadAlbum(albumId: Long, uri: Uri?) {
         val inputData = Data.Builder()
             .putLong(KEY_ALBUM_ID, albumId)
             .putString("uri", uri.toString())
