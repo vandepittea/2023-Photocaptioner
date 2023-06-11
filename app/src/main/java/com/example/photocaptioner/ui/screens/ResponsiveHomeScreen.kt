@@ -273,7 +273,7 @@ private fun InAppNavigation(
             )
         ) {
             val backNavigationDestinationRoute =
-                navController.previousBackStackEntry?.arguments?.getString("backNavigationDestinationRoute")?.replace(" ", "/")
+                navController.currentBackStackEntry?.arguments?.getString("backNavigationDestinationRoute")?.replace(" ", "/")
                     ?: ""
             if (contentType == PhotoCaptionerContentType.LIST_AND_DETAIL) {
                 AlbumDetailAndPhotoSourceChooserScreen(
