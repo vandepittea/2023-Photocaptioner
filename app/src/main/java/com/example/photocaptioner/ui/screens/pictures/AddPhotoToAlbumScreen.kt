@@ -74,6 +74,7 @@ fun AddPhotoToAlbumScreen(
                 .background(MaterialTheme.colors.background)
         ) {
             AddPhotoToAlbumFooter(
+                albumsAvailable = viewModel.addPhotoToAlbumUiState.availableAlbums.isNotEmpty(),
                 onAddPhoto = {
                     coroutineScope.launch {
                         viewModel.addPhotoToAlbum()
@@ -88,6 +89,7 @@ fun AddPhotoToAlbumScreen(
 
 @Composable
 fun AddPhotoToAlbumFooter(
+    albumsAvailable: Boolean,
     onAddPhoto: () -> Unit,
     onNewAlbum: () -> Unit,
     modifier: Modifier = Modifier
@@ -99,13 +101,15 @@ fun AddPhotoToAlbumFooter(
             .fillMaxWidth()
             .padding(16.dp)
     )
-    Button(
-        text = R.string.add_photo_to_album,
-        onClick = onAddPhoto,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    )
+    if (albumsAvailable) {
+        Button(
+            text = R.string.add_photo_to_album,
+            onClick = onAddPhoto,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+    }
 }
 
 @Preview
