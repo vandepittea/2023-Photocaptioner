@@ -58,15 +58,21 @@ class AlbumInformationViewModel(
             isDescriptionEntryValid = validateDescriptionInput(albumUiState.albumDetails))
     }
 
-    suspend fun saveItem(navigateToAlbums: () -> Unit) {
+    suspend fun saveItem(
+        navigateToAlbums: () -> Unit,
+        navigateBack: (route: String, include: Boolean) -> Unit
+    ) {
         if (validateNameInput() && validateDescriptionInput()) {
+            var navToAlbum = true
             withContext(Dispatchers.IO) {
                 if (albumId == -1L) {
                     albumId = albumsRepository.insertAlbum(albumUiState.albumDetails.album)
+                    navToAlbum = false
                 }
                 albumsRepository.updatePhotosWithoutAlbum(albumId)
             }
-            navigateToAlbums()
+            if (navToAlbum) navigateBack(AlbumDetailDestination.routeWithArgs, false)
+            else navigateToAlbums()
         } else {
             albumUiState = albumUiState.copy(
                 isNameEntryValid = validateNameInput(),

@@ -54,7 +54,8 @@ fun EditAlbumScreen(
                         viewModel.saveItem(
                             navigateToAlbums = {
                                 navigateBack(AlbumsDestination.route, true)
-                            }
+                            },
+                            navigateBack = navigateBack
                         )
                     }
                 }

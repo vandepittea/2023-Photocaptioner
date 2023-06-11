@@ -78,7 +78,7 @@ fun AddAlbumScreen(
         ) {
             NewAlbumFooter(onAddNewAlbum = {
                 coroutineScope.launch {
-                    viewModel.saveItem(navigateToAlbums)
+                    viewModel.saveItem(navigateToAlbums, navigateBack)
                 }
             })
         }
