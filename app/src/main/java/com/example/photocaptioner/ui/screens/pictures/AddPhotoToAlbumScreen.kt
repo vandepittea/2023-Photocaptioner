@@ -53,13 +53,6 @@ fun AddPhotoToAlbumScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Text(
-                text = "Choose album",
-                style = MaterialTheme.typography.subtitle2,
-                modifier = Modifier
-                    .padding(top = 16.dp)
-            )
-
             AlbumSelectBox(
                 albums = viewModel.addPhotoToAlbumUiState.availableAlbums,
                 onAlbumSelected = {
