@@ -68,6 +68,8 @@ class AlbumInformationViewModel(
                 if (albumId == -1L) {
                     albumId = albumsRepository.insertAlbum(albumUiState.albumDetails.album)
                     navToAlbum = false
+                } else {
+                    albumsRepository.updateAlbum(albumUiState.albumDetails.album)
                 }
                 albumsRepository.updatePhotosWithoutAlbum(albumId)
             }
