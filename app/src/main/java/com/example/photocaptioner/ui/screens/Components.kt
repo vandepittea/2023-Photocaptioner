@@ -405,10 +405,12 @@ fun AlbumSelectBox(
 
     Box(
         modifier = modifier
+            .padding(top = 12.dp)
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 12.dp)
+            .background(colors.surface)
+            .padding(4.dp)
+            .clip(RoundedCornerShape(4.dp))
             .clickable { expanded = true }
-            .background(colors.primary)
     ) {
         Text(
             text = selectedAlbum.album.name,
@@ -419,7 +421,8 @@ fun AlbumSelectBox(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             albums.forEach { album ->
                 DropdownMenuItem(

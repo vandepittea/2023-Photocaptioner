@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -51,6 +52,14 @@ fun AddPhotoToAlbumScreen(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth()
             )
+
+            Text(
+                text = "Choose album",
+                style = MaterialTheme.typography.subtitle2,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            )
+
             AlbumSelectBox(
                 albums = viewModel.addPhotoToAlbumUiState.availableAlbums,
                 onAlbumSelected = {
