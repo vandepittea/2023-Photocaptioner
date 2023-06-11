@@ -69,6 +69,7 @@ fun StartUpScreen(
                     Manifest.permission.CAMERA,
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.INTERNET,
                     Manifest.permission.POST_NOTIFICATIONS
                 )

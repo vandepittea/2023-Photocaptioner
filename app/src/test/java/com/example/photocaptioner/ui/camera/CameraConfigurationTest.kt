@@ -2,6 +2,10 @@ package com.example.photocaptioner.ui.camera
 
 import androidx.camera.core.*
 import androidx.compose.ui.unit.Constraints
+import com.example.photocaptioner.camera.PreviewScaleType
+import com.example.photocaptioner.camera.calculateScale
+import com.example.photocaptioner.camera.obtainSourceInfo
+import com.example.photocaptioner.camera.switchLens
 import com.example.photocaptioner.model.SourceInfo
 import org.junit.Assert.assertEquals
 import org.junit.Before

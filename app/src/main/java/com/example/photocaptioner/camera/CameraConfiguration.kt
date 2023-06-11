@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui.camera
+package com.example.photocaptioner.camera
 
 import android.content.Context
 import androidx.camera.core.CameraSelector

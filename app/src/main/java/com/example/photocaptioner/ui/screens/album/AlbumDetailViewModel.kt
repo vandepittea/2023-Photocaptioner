@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.worker.WorkManagerDownloadRepositoryImplementation
 import com.example.photocaptioner.data.database.AlbumsRepository
+import com.example.photocaptioner.intent.convertPhotoToFile
+import com.example.photocaptioner.intent.getFileUri
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +60,7 @@ class AlbumDetailViewModel(
         if (firstPhoto != null) {
             var file: File
 
-            runBlocking { file = convertPhotoToFile(context, firstPhoto, albumName) }
+            runBlocking { file = convertPhotoToFile(context, firstPhoto) }
 
             val fileUri = file?.let { getFileUri(context, it) }
 
@@ -75,55 +77,6 @@ class AlbumDetailViewModel(
         } else {
             Toast.makeText(context, "Cannot share. The album '$albumName' has no images.", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private suspend fun downloadImage(url: String, outputFile: File) {
-        withContext(Dispatchers.IO) {
-            val connection = URL(url).openConnection() as HttpURLConnection
-            connection.connect()
-
-            val inputStream = connection.inputStream
-            val outputStream = FileOutputStream(outputFile)
-
-            try {
-                inputStream.use { input ->
-                    outputStream.use { output ->
-                        input.copyTo(output)
-                    }
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } finally {
-                inputStream?.close()
-                outputStream.close()
-                connection.disconnect()
-            }
-        }
-    }
-
-    private suspend fun convertPhotoToFile(context: Context, photo: Photo, albumName: String): File {
-        val tempDir = context.cacheDir
-        val fileName = "photocaptioner-album-$albumName.jpg"
-        val tempFile = File(tempDir, fileName)
-
-        if (!photo.filePath.startsWith("http")) {
-            val uri = Uri.parse(photo.filePath)
-            val inputStream = context.contentResolver.openInputStream(uri)
-
-            inputStream?.use { input ->
-                FileOutputStream(tempFile).use { output ->
-                    input.copyTo(output)
-                }
-            }
-        } else {
-            downloadImage(photo.filePath, tempFile)
-        }
-
-        return tempFile
-    }
-
-    private fun getFileUri(context: Context, file: File): Uri {
-        return FileProvider.getUriForFile(context, "com.example.photocaptioner.fileprovider", file)
     }
 }
 

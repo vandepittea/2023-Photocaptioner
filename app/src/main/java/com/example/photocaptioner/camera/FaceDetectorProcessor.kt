@@ -1,4 +1,4 @@
-package com.example.photocaptioner.ui.camera
+package com.example.photocaptioner.camera
 
 import android.annotation.SuppressLint
 import androidx.camera.core.ImageProxy

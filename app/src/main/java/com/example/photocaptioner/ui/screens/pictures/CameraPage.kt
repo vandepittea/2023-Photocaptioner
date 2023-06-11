@@ -32,11 +32,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.photocaptioner.model.SourceInfo
 import com.example.photocaptioner.ui.AppViewModelProvider
-import com.example.photocaptioner.ui.camera.PreviewScaleType
-import com.example.photocaptioner.ui.camera.calculateScale
-import com.example.photocaptioner.ui.camera.configureCamera
-import com.example.photocaptioner.ui.camera.imageCapture
-import com.example.photocaptioner.ui.camera.switchLens
+import com.example.photocaptioner.camera.PreviewScaleType
+import com.example.photocaptioner.camera.calculateScale
+import com.example.photocaptioner.camera.configureCamera
+import com.example.photocaptioner.camera.imageCapture
+import com.example.photocaptioner.camera.switchLens
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.screens.pictures.CameraPageViewModel
 

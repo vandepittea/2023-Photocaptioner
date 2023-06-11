@@ -11,12 +11,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photocaptioner.data.database.AlbumsRepository
+import com.example.photocaptioner.intent.convertPhotoToFile
+import com.example.photocaptioner.intent.getFileUri
 import com.example.photocaptioner.model.Photo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
 class EditPhotoViewModel(
     savedStateHandle: SavedStateHandle,
@@ -48,8 +55,10 @@ class EditPhotoViewModel(
     }
 
     fun openPhotoInAnotherApp(context: Context) {
-        val photoFile = convertPhotoToPhile(context, editPhotoUiState.photoDetails)
+        var photoFile: File
+        runBlocking { photoFile = convertPhotoToFile(context, editPhotoUiState.photoDetails) }
         val photoUri = photoFile?.let {getFileUri(context, it)}
+
         val viewIntent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(
                 photoUri,
@@ -57,37 +66,9 @@ class EditPhotoViewModel(
             )
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
+
         val chooserIntent = Intent.createChooser(viewIntent, "View Image")
         context.startActivity(chooserIntent)
-    }
-
-    private fun convertPhotoToPhile(context: Context, photo: Photo): File? {
-        val uri = Uri.parse(photo.filePath)
-        val inputStream = context.contentResolver.openInputStream(uri)
-        val tempDir = context.cacheDir
-        val fileName = "photocaptioner-photo.jpg"
-        val tempFile = File(tempDir, fileName)
-        val outputStream = FileOutputStream(tempFile)
-
-        try {
-            inputStream?.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
-                }
-            }
-            return tempFile
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } finally {
-            inputStream?.close()
-            outputStream.close()
-        }
-
-        return null
-    }
-
-    private fun getFileUri(context: Context, file: File): Uri {
-        return FileProvider.getUriForFile(context, "com.example.photocaptioner.fileprovider", file)
     }
 }
 
