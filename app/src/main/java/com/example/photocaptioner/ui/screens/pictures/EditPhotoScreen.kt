@@ -74,7 +74,10 @@ fun EditPhotoScreen(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ButtonIcon(
-                            onClick = { /* Handle delete image action */ },
+                            onClick = {
+                                viewModel.deletePhoto()
+                                navigateBack(EditPhotoDestination.routeWithArgs, true)
+                            },
                             icon = Icons.Default.Delete,
                             description = R.string.delete_icon,
                             modifier = Modifier.size(45.dp)

@@ -181,7 +181,7 @@ fun AlbumButtons(
         ButtonIcon(
             onClick = {
                 viewModel.deleteAlbum()
-                navigateBack(AlbumsDestination.routeWithArgs, false)
+                navigateBack(AlbumDetailDestination.routeWithArgs, true)
               },
             icon = Icons.Default.Delete,
             description = R.string.delete_icon,

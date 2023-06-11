@@ -70,6 +70,12 @@ class EditPhotoViewModel(
         val chooserIntent = Intent.createChooser(viewIntent, "View Image")
         context.startActivity(chooserIntent)
     }
+
+    fun deletePhoto() {
+        viewModelScope.launch {
+            albumsRepository.deletePhoto(photoId)
+        }
+    }
 }
 
 data class EditPhotoUiState(
