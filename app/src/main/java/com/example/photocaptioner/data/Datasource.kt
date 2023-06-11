@@ -66,7 +66,7 @@ object Datasource {
             title = "Home"
         ),
         NavigationItemContent(
-            route = "${CameraPageDestination.route}/${-1}",
+            route = "${CameraPageDestination.route}/${-2}",
             menuItemType = MenuItemType.Photo,
             icon = R.drawable.baseline_camera_alt_24,
             text = R.string.camera_menu,
