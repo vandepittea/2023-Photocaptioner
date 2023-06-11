@@ -3,7 +3,7 @@ package com.example.photocaptioner.ui.screens.pictures
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.photocaptioner.data.UnsplashRepository
+import com.example.photocaptioner.data.api.UnsplashRepository
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
