@@ -18,6 +18,7 @@ fun AlbumsAndAlbumDetailScreen(
     onAlbumClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
     onAddPictureClick: (Long) -> Unit,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -34,7 +35,8 @@ fun AlbumsAndAlbumDetailScreen(
             onEditClick = onEditClick,
             onAddClick = onAddPictureClick,
             onPhotoClick = onPhotoClick,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            navigateBack = navigateBack
         )
     }
 }
@@ -55,7 +57,8 @@ fun AlbumDetailAndAlbumEditScreen(
             onEditClick = onEditClick,
             onAddClick = onAddPictureClick,
             onPhotoClick = onPhotoClick,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            navigateBack = navigateBack
         )
         EditAlbumScreen(
             navigateBack = navigateBack,
@@ -80,7 +83,8 @@ fun AlbumDetailAndPhotoEditScreen(
             onEditClick = onEditClick,
             onAddClick = onAddPictureClick,
             onPhotoClick = onPhotoClick,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            navigateBack = navigateBack
         )
         EditPhotoScreen(
             navigateBack = navigateBack,
@@ -107,7 +111,8 @@ fun AlbumDetailAndPhotoSourceChooserScreen(
             onEditClick = onEditClick,
             onAddClick = onAddPictureClick,
             onPhotoClick = onPhotoClick,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            navigateBack = navigateBack
         )
         ChoosePicturesSourceScreen(
             onChooseCamera = onChooseCamera,

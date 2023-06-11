@@ -29,7 +29,7 @@ import java.net.URL
 
 class AlbumDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    albumsRepository: AlbumsRepository,
+    private val albumsRepository: AlbumsRepository,
     private val workManagerDownloadRepository: WorkManagerDownloadRepositoryImplementation
 ) : ViewModel(){
     private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg])
@@ -76,6 +76,13 @@ class AlbumDetailViewModel(
             context.startActivity(chooserIntent)
         } else {
             Toast.makeText(context, "Cannot share. The album '$albumName' has no images.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun deleteAlbum() {
+        viewModelScope.launch {
+            albumDetailUiState.value.albumDetails.photos.forEach { albumsRepository.deletePhoto(it.id) }
+            albumsRepository.deleteAlbum(albumId)
         }
     }
 }

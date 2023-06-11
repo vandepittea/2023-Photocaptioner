@@ -40,6 +40,7 @@ object AlbumDetailDestination : NavigationDestination {
 
 @Composable
 fun AlbumDetailScreen(
+    navigateBack: (route: String, include: Boolean) -> Unit,
     onEditClick: (Long) -> Unit,
     onAddClick: (Long) -> Unit,
     onPhotoClick: (albumId: Long, photoId: Long) -> Unit,
@@ -64,6 +65,8 @@ fun AlbumDetailScreen(
         ) {
             AlbumDetails(
                 albumWithImages = albumUiState.albumDetails,
+                viewModel = viewModel,
+                navigateBack = navigateBack,
                 onDownloadClick = {
                     openDocumentTreeLauncher.launch(null)
                 },
@@ -90,6 +93,8 @@ fun AlbumDetailScreen(
 @Composable
 fun AlbumDetails(
     albumWithImages: AlbumWithImages,
+    viewModel: AlbumDetailViewModel,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     onDownloadClick: () -> Unit,
     onEditClick: (Long) -> Unit,
     onPhotoClick: (albumId: Long, photoId: Long) -> Unit
@@ -113,6 +118,8 @@ fun AlbumDetails(
         }
         AlbumButtons(
             album = albumWithImages.album,
+            viewModel = viewModel,
+            navigateBack = navigateBack,
             onDownloadClick = onDownloadClick,
             onEditClick = onEditClick,
             modifier = Modifier
@@ -143,6 +150,8 @@ fun AlbumHeader(
 @Composable
 fun AlbumButtons(
     album: Album,
+    viewModel: AlbumDetailViewModel,
+    navigateBack: (route: String, include: Boolean) -> Unit,
     onDownloadClick: () -> Unit,
     onEditClick: (Long) -> Unit,
     modifier: Modifier = Modifier
@@ -170,7 +179,10 @@ fun AlbumButtons(
         )
 
         ButtonIcon(
-            onClick = { /* Handle delete album action */ },
+            onClick = {
+                viewModel.deleteAlbum()
+                navigateBack(AlbumsDestination.routeWithArgs, false)
+              },
             icon = Icons.Default.Delete,
             description = R.string.delete_icon,
             modifier = Modifier.size(45.dp)
@@ -273,6 +285,6 @@ fun AlbumFooter(
 @Composable
 fun AlbumDetailScreenPreview(){
     PhotoCaptionerTheme {
-        AlbumDetailScreen({}, {}, {_, _ ->})
+        AlbumDetailScreen({_, _ ->}, {}, {}, {_, _ ->})
     }
 }

@@ -253,13 +253,15 @@ private fun InAppNavigation(
                     onAlbumClick = onAlbumClick,
                     onEditClick = onEditClick,
                     onAddPictureClick = { onAddPictureClick(it, AlbumDetailDestination.routeWithArgs) },
-                    onPhotoClick = onPhotoClick
+                    onPhotoClick = onPhotoClick,
+                    navigateBack = navigateBack
                 )
             } else {
                 AlbumDetailScreen(
                     onEditClick = onEditClick,
                     onAddClick = { onAddPictureClick(it, AlbumDetailDestination.routeWithArgs) },
-                    onPhotoClick = onPhotoClick
+                    onPhotoClick = onPhotoClick,
+                    navigateBack = navigateBack
                 )
             }
         }

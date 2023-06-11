@@ -16,4 +16,6 @@ class OfflineAlbumsRepository(private val albumDAO: AlbumDAO) : AlbumsRepository
     override suspend fun insertPhoto(photo: Photo): Long = albumDAO.insertPhoto(photo)
     override suspend fun updatePhoto(photo: Photo) = albumDAO.updatePhoto(photo)
     override fun updatePhotosWithoutAlbum(albumId: Long) = albumDAO.updatePhotosWithoutAlbum(albumId)
+    override suspend fun deleteAlbum(albumId: Long) = albumDAO.deleteAlbum(albumId)
+    override suspend fun deletePhoto(photoId: Long) = albumDAO.deletePhoto(photoId)
 }

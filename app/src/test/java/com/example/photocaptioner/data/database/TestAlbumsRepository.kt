@@ -240,4 +240,12 @@ class TestAlbumsRepository : AlbumsRepository {
     override fun updatePhotosWithoutAlbum(albumId: Long) {
         photos.filter { it.albumId < 0 }.forEach { it.albumId = albumId }
     }
+
+    override suspend fun deleteAlbum(albumId: Long) {
+        albums.removeIf { it.id == albumId }
+    }
+
+    override suspend fun deletePhoto(photoId: Long) {
+        photos.removeIf { it.id == photoId }
+    }
 }

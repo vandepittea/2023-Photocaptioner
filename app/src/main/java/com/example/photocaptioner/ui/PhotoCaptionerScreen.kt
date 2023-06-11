@@ -215,8 +215,10 @@ fun PhotoCaptionerApp(
     }
 }
 
-private fun navigateInBackStack(navFunction: () -> Unit, navController: NavController, viewModel: PhotoCaptionersViewModel) {
-    navFunction()
+private fun navigateInBackStack(navFunction: () -> Boolean, navController: NavController, viewModel: PhotoCaptionersViewModel) {
+    if (!navFunction()) {
+        navController.popBackStack(HomeDestination.routeWithArgs, false)
+    }
     viewModel.updateTopBarTitle(navController.currentBackStackEntry?.arguments?.getString("title") ?: "")
     viewModel.canNavigateBack(
         navController.currentDestination?.route != HomeDestination.routeWithArgs &&

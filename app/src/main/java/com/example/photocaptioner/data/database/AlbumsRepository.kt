@@ -16,4 +16,6 @@ interface AlbumsRepository {
     suspend fun insertPhoto(photo: Photo): Long
     suspend fun updatePhoto(photo: Photo)
     fun updatePhotosWithoutAlbum(albumId: Long)
+    suspend fun deleteAlbum(albumId: Long)
+    suspend fun deletePhoto(photoId: Long)
 }
