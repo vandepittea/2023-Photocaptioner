@@ -195,6 +195,7 @@ fun AlbumImages(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
+            .padding(bottom = 85.dp)
     ) {
         items(imagesList) { photo ->
             Row(
@@ -227,7 +228,7 @@ fun NewAlbumFooter(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(top = 16.dp, bottom = 0.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         com.example.photocaptioner.ui.screens.Button(
