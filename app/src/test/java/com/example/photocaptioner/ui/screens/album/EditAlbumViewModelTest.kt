@@ -14,12 +14,12 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class AddAlbumViewModelTest {
+class EditAlbumViewModelTest {
 
     private lateinit var viewModel: AlbumInformationViewModel
     private lateinit var albumsRepository: TestAlbumsRepository
     private val savedStateHandle = SavedStateHandle().apply {
-        set(AddOnlinePicturesDestination.albumIdArg, -1L)
+        set(AddOnlinePicturesDestination.albumIdArg, 1L)
     }
 
     @Before
@@ -55,7 +55,6 @@ class AddAlbumViewModelTest {
         viewModel.updateAlbumTitleUiState("Updated Title")
         viewModel.updateAlbumDescriptionUiState("Updated Description")
 
-        runBlocking { newAlbumId = albumsRepository.getAlbums().first().size.toLong() + 1 }
         runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
         runBlocking { viewModel.saveItem { } }
@@ -64,7 +63,7 @@ class AddAlbumViewModelTest {
             run {
                 var photo: Photo
                 runBlocking { photo = albumsRepository.getPhoto(it).first() }
-                assertEquals(newAlbumId, photo.albumId)
+                assertEquals(1L, photo.albumId)
             }
         }
     }
