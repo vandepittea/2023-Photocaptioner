@@ -57,8 +57,8 @@ fun AlbumDetailScreen(
     ) {
         Column(
             Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxSize(1f)
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 60.dp)
         ) {
             AlbumDetails(
                 albumWithImages = albumUiState.albumDetails,
