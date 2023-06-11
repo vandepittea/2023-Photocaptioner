@@ -8,7 +8,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.photocaptioner.data.WorkManagerDownloadRepository
+import com.example.photocaptioner.data.worker.WorkManagerDownloadRepositoryImplementation
 import com.example.photocaptioner.data.database.AlbumsRepository
 import com.example.photocaptioner.model.AlbumWithImages
 import com.example.photocaptioner.model.Photo
@@ -28,7 +28,7 @@ import java.net.URL
 class AlbumDetailViewModel(
     savedStateHandle: SavedStateHandle,
     albumsRepository: AlbumsRepository,
-    private val workManagerDownloadRepository: WorkManagerDownloadRepository
+    private val workManagerDownloadRepository: WorkManagerDownloadRepositoryImplementation
 ) : ViewModel(){
     private val albumId: Long = checkNotNull(savedStateHandle[AlbumDetailDestination.albumIdArg])
 

@@ -1,10 +1,11 @@
 package com.example.photocaptioner.data
 
+import com.example.photocaptioner.data.api.UnsplashRepository
 import com.example.photocaptioner.model.UnsplashPhoto
 import com.example.photocaptioner.model.UnsplashSearchResponse
 import com.example.photocaptioner.model.UnsplashUrls
 
-class TestUnsplashRepository : UnsplashRepository() {
+class TestUnsplashRepository : UnsplashRepository {
     override suspend fun searchImages(query: String): List<String> {
         val response = UnsplashSearchResponse(
             listOf(

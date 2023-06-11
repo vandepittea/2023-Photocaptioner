@@ -112,6 +112,7 @@ fun PicturesList(
                 ) {
                     Checkbox(
                         checked = image.first,
+                        colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colors.primary),
                         onCheckedChange = { onCheckChange(index) }
                     )
                     AsyncImage(
