@@ -47,7 +47,7 @@ class EditPhotoViewModel(
         albumsRepository.updatePhoto(editPhotoUiState.photoDetails)
     }
 
-    fun editPhoto(context: Context) {
+    fun openPhotoInAnotherApp(context: Context) {
         val photoFile = convertPhotoToPhile(context, editPhotoUiState.photoDetails)
         val photoUri = photoFile?.let {getFileUri(context, it)}
         val viewIntent = Intent(Intent.ACTION_VIEW).apply {

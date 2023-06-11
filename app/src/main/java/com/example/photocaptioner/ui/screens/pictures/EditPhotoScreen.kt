@@ -3,13 +3,11 @@ package com.example.photocaptioner.ui.screens.pictures
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -26,6 +24,7 @@ import coil.request.ImageRequest
 import com.example.photocaptioner.R
 import com.example.photocaptioner.ui.AppViewModelProvider
 import com.example.photocaptioner.ui.screens.Button
+import com.example.photocaptioner.ui.screens.ButtonIcon
 import com.example.photocaptioner.ui.screens.navigation.NavigationDestination
 import com.example.photocaptioner.ui.theme.PhotoCaptionerTheme
 import kotlinx.coroutines.launch
@@ -74,16 +73,12 @@ fun EditPhotoScreen(
                             .align(Alignment.TopEnd)
                             .padding(8.dp)
                     ) {
-                        IconButton(
-                            onClick = { viewModel.editPhoto(context) },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = stringResource(R.string.edit_icon),
-                                tint = MaterialTheme.colors.onBackground,
-                                modifier = Modifier.size(45.dp)
-                            )
-                        }
+                        ButtonIcon(
+                            onClick = { viewModel.openPhotoInAnotherApp(context) },
+                            icon = Icons.Default.Info,
+                            description = R.string.info_icon,
+                            modifier = Modifier.size(45.dp)
+                        )
                     }
                 }
             }
