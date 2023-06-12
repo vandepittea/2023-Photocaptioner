@@ -57,7 +57,10 @@ class EditAlbumViewModelTest {
 
         runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
-        runBlocking { viewModel.saveItem { } }
+        runBlocking { viewModel.saveItem(
+            {},
+            {_, _ ->}
+        ) }
 
         photosWithoutAlbum.forEach {
             run {
@@ -77,7 +80,10 @@ class EditAlbumViewModelTest {
 
         runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
-        runBlocking { viewModel.saveItem { } }
+        runBlocking { viewModel.saveItem(
+            {},
+            {_, _ ->}
+        ) }
 
         photosWithoutAlbum.forEach {
             run {
@@ -97,7 +103,10 @@ class EditAlbumViewModelTest {
 
         runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
-        runBlocking { viewModel.saveItem { } }
+        runBlocking { viewModel.saveItem(
+            {},
+            {_, _ ->}
+        ) }
 
         photosWithoutAlbum.forEach {
             run {
@@ -117,7 +126,10 @@ class EditAlbumViewModelTest {
 
         runBlocking { photosWithoutAlbum = albumsRepository.getPhotosWithoutAlbum().first().map { it.id } }
 
-        runBlocking { viewModel.saveItem { } }
+        runBlocking { viewModel.saveItem(
+            {},
+            {_, _ ->}
+        ) }
 
         photosWithoutAlbum.forEach {
             run {
